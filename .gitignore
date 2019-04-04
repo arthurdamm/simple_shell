@@ -7,3 +7,5 @@ prompt
 pid_max
 strtokex
 wait
+a.out
+cmd
