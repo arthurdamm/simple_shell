@@ -16,5 +16,6 @@ char **mystrtok(char *str, char *delim);
 
 /* string.c module */
 int _strlen(char *s);
+int _strcmp(char *s1, char *s2);
 
 #endif
