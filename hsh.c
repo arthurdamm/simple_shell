@@ -12,7 +12,6 @@ int main(int ac, char **av)
 	size_t len = 0;
 	char *buf = NULL, **argv;
 	ssize_t r = 0;
-	
 
 	(void)ac;
 	(void)av;
@@ -27,7 +26,6 @@ int main(int ac, char **av)
 		r = mygetline(&buf, &len);
 		if (starts_with(buf, "exit"))
 			break;
-		printf("BUF:[%s]\n", buf);
 		argv = mystrtok(_strdup(buf), " ");
 		find_cmd(argv);
 		if (0)
@@ -46,46 +44,30 @@ int main(int ac, char **av)
 void find_cmd(char **argv)
 {
 	struct stat st;
-	char path[256], **paths, *str;
+	char path[1024], **paths, *str;
 
-	_memset(path, '\0', 256);
 	if (!stat(argv[0], &st))
 		fork_cmd(argv, NULL);
 	else
 	{
 		str = _strdup(_getenv("PATH="));
-		printf(">>%s<<\n", str);
 		if (!str)
 			return;
 		paths = mystrtok(str, ":");
 		while (*paths)
 		{
-			//printf("?");
-			_memset(path, '\0', 256);
+			path[0] = '\0';
 			strcpy(path, *paths);
 			strcat(path, "/");
 			strcat(path, argv[0]);
-			
-			//printf("!\n");
-			
 			if (!stat(path, &st))
 			{
-				
-				printf("PATH:[%s] [%d] \n", path, _strlen(path));
-				//puts("IF TRUE!");
 				fork_cmd(argv, path);
 				break;
 			}
-			//printf("IF FALSE!");
-			
 			paths++;
-
-			//printf("#");
-
 		}
-		puts("DONE1");
 		free(str);
-		//puts("DONE2");
 	}
 
 }
@@ -93,6 +75,7 @@ void find_cmd(char **argv)
 /**
  * fork_cmd - forks a an exec thread to run cmd
  * @argv: arg vector
+ * @path: the full command path
  *
  * Return: void
  */
@@ -103,8 +86,7 @@ void fork_cmd(char **argv, char *path)
 
 	if (!path)
 		path = argv[0];
-	while (argv[status])
-		printf("FORK: %d [%s]\n", status, argv[status]), status++;
+
 	child_pid = fork();
 	if (child_pid == -1)
 	{
