@@ -34,6 +34,52 @@ int main(int ac, char **av)
 }
 
 /**
+ * find_cmd - finds a command in PATH
+ * @argv: arg vector
+ *
+ * Return: void
+ */
+void find_cmd(char **argv)
+{
+	struct stat st;
+	char path[256], **paths, *str;
+
+	path[0] = '\0';
+	if (!stat(argv[0], &st))
+		fork_cmd(argv);
+	else
+	{
+		str = _strdup(_getenv("PATH="));
+		printf(">>%s<<\n", str);
+		if (!str)
+			return;
+		paths = mystrtok(str, ":");
+		while (*paths)
+		{
+			printf("!");
+			strcpy(path, *paths);
+			strcat(path, "/");
+			strcat(path, argv[0]);
+			printf("!\n");
+			printf(">>%s\n", path);
+			if (!stat(path, &st))
+			{
+				puts("IF TRUE!");
+				argv[0] = path;
+				fork_cmd(argv);
+				break;
+			}
+			puts("IF FALSE!");
+			paths++;
+		}
+		puts("DONE1");
+		free(str);
+		puts("DONE2");
+	}
+
+}
+
+/**
  * fork_cmd - forks a an exec thread to run cmd
  * @argv: arg vector
  *
@@ -44,6 +90,7 @@ void fork_cmd(char **argv)
 	pid_t child_pid;
 	int status = 0;
 
+	printf("FORK: %s\n", argv[0]);
 	child_pid = fork();
 	if (child_pid == -1)
 	{
