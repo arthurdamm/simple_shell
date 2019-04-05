@@ -13,7 +13,7 @@ extern char **environ;
 
 /* shell.c module */
 void find_cmd(char **argv);
-void fork_cmd(char **argv);
+void fork_cmd(char **argv, char *path);
 ssize_t mygetline(char **buf, size_t *len);
 
 /* strtok.c module */

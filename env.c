@@ -13,7 +13,6 @@ char *_getenv(const char *name)
 
 	while (*env)
 	{
-		puts("");
 		ret = starts_with(*env++, name);
 		if (ret && *ret)
 			return (ret);

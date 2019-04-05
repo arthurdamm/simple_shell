@@ -26,6 +26,7 @@ char **mystrtok(char *str, char *delim)
 				break;
 			}
 	retarray = malloc(sizeof(char *) * (wordcount + 1));
+	printf("WORDCOUNT:%d\n", wordcount);
 	if (!retarray)
 		return (NULL);
 	token = strtok(str, delim);
@@ -34,5 +35,6 @@ char **mystrtok(char *str, char *delim)
 		retarray[i] = token;
 		token = strtok(NULL, delim);
 	}
+
 	return (retarray);
 }

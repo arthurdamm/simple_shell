@@ -12,6 +12,7 @@ int main(int ac, char **av)
 	size_t len = 0;
 	char *buf = NULL, **argv;
 	ssize_t r = 0;
+	
 
 	(void)ac;
 	(void)av;
@@ -21,11 +22,14 @@ int main(int ac, char **av)
 	while (r != -1)
 	{
 		printf("$ ");
+		buf = NULL;
+		len = 0;
 		r = mygetline(&buf, &len);
 		if (starts_with(buf, "exit"))
 			break;
-		argv = mystrtok(buf, " ");
-		fork_cmd(argv);
+		printf("BUF:[%s]\n", buf);
+		argv = mystrtok(_strdup(buf), " ");
+		find_cmd(argv);
 		if (0)
 			write(STDOUT_FILENO, buf, len);
 	}
@@ -44,9 +48,9 @@ void find_cmd(char **argv)
 	struct stat st;
 	char path[256], **paths, *str;
 
-	path[0] = '\0';
+	_memset(path, '\0', 256);
 	if (!stat(argv[0], &st))
-		fork_cmd(argv);
+		fork_cmd(argv, NULL);
 	else
 	{
 		str = _strdup(_getenv("PATH="));
@@ -56,25 +60,32 @@ void find_cmd(char **argv)
 		paths = mystrtok(str, ":");
 		while (*paths)
 		{
-			printf("!");
+			//printf("?");
+			_memset(path, '\0', 256);
 			strcpy(path, *paths);
 			strcat(path, "/");
 			strcat(path, argv[0]);
-			printf("!\n");
-			printf(">>%s\n", path);
+			
+			//printf("!\n");
+			
 			if (!stat(path, &st))
 			{
-				puts("IF TRUE!");
-				argv[0] = path;
-				fork_cmd(argv);
+				
+				printf("PATH:[%s] [%d] \n", path, _strlen(path));
+				//puts("IF TRUE!");
+				fork_cmd(argv, path);
 				break;
 			}
-			puts("IF FALSE!");
+			//printf("IF FALSE!");
+			
 			paths++;
+
+			//printf("#");
+
 		}
 		puts("DONE1");
 		free(str);
-		puts("DONE2");
+		//puts("DONE2");
 	}
 
 }
@@ -85,12 +96,15 @@ void find_cmd(char **argv)
  *
  * Return: void
  */
-void fork_cmd(char **argv)
+void fork_cmd(char **argv, char *path)
 {
 	pid_t child_pid;
 	int status = 0;
 
-	printf("FORK: %s\n", argv[0]);
+	if (!path)
+		path = argv[0];
+	while (argv[status])
+		printf("FORK: %d [%s]\n", status, argv[status]), status++;
 	child_pid = fork();
 	if (child_pid == -1)
 	{
@@ -99,7 +113,7 @@ void fork_cmd(char **argv)
 	}
 	if (child_pid == 0)
 	{
-		execve(argv[0], argv, NULL);
+		execve(path, argv, NULL);
 		printf("Command not found...\n");
 		exit(98);
 	}
@@ -120,10 +134,9 @@ ssize_t mygetline(char **buf, size_t *len)
 {
 	ssize_t r = getline(buf, len, stdin);
 
-	*len = _strlen(*buf);
-	if (*len > 1 && (*buf)[*len - 1] == '\n')
+	if (r > 1 && (*buf)[r - 1] == '\n')
 	{
-		(*buf)[--*len] = '\0'; /* remove trailing newline */
+		(*buf)[r - 1] = '\0'; /* remove trailing newline */
 		r--;
 	}
 	return (r);
