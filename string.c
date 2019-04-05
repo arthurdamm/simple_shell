@@ -36,3 +36,42 @@ int _strcmp(char *s1, char *s2)
 	else
 		return (*s1 < *s2 ? -1 : 1);
 }
+
+/**
+ * _strstr - searches string for a substring
+ * @haystack: string to search
+ * @needle: the substring to find
+ *
+ * Return: pointer to first matching substring or NULL
+ */
+char *_strstr(char *haystack, char *needle)
+{
+	int i;
+
+	while (*haystack)
+	{
+		for (i = 0; *(needle + i); i++)
+			if (*(needle + i) != *(haystack + i))
+				break;
+		if (!*(needle + i))
+			return (haystack);
+		haystack++;
+	}
+	return (NULL);
+}
+
+/**
+ * starts_with - checks if needle starts with haystack
+ * @haystack: string to search
+ * @needle: the substring to find
+ *
+ * Return: 1 if true, 0 if false
+ */
+int starts_with(const char *haystack, const char *needle)
+{
+	while (*needle)
+		if (*needle++ != *haystack++)
+			return (0);
+	return (1);
+}
+
