@@ -14,4 +14,7 @@ void fork_cmd(char **argv);
 /* strtok.c module */
 char **mystrtok(char *str, char *delim);
 
+/* string.c module */
+int _strlen(char *s);
+
 #endif
