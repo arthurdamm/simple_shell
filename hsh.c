@@ -28,12 +28,12 @@ int main(int ac, char **av)
 		r = getline(&buf, &len, stdin);
 		len = _strlen(buf);
 		if (len > 1 && buf[len - 1] == '\n')
-			printf("TES!\n"), buf[--len] = '\0'; /* remove trailing newline */
+			buf[--len] = '\0'; /* remove trailing newline */
 		if (!strncmp(buf, "exit", 4))
 			break;
 		argv = mystrtok(buf, " ");
 		fork_cmd(argv);
-		if (r > 0)
+		if (0)
 			write(STDOUT_FILENO, buf, len);
 	}
 	printf("Exiting...\n");
@@ -49,10 +49,8 @@ int main(int ac, char **av)
 void fork_cmd(char **argv)
 {
 	pid_t child_pid;
-	int status = 0, i = 0;
-	while (argv[i])
-		printf(">>%s,", argv[i++]);
-	printf("\n");
+	int status = 0;
+
 	child_pid = fork();
 	if (child_pid == -1)
 	{
@@ -62,7 +60,7 @@ void fork_cmd(char **argv)
 	if (child_pid == 0)
 	{
 		execve(argv[0], argv, NULL);
-		printf("NO DEST!\n");
+		printf("Command not found...\n");
 		exit(98);
 	}
 	else
