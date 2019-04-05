@@ -21,10 +21,7 @@ int main(int ac, char **av)
 	while (r != -1)
 	{
 		printf("$ ");
-		r = getline(&buf, &len, stdin);
-		len = _strlen(buf);
-		if (len > 1 && buf[len - 1] == '\n')
-			buf[--len] = '\0'; /* remove trailing newline */
+		r = mygetline(&buf, &len);
 		if (starts_with(buf, "exit"))
 			break;
 		argv = mystrtok(buf, " ");
@@ -63,4 +60,24 @@ void fork_cmd(char **argv)
 	{
 		wait(&status);
 	}
+}
+
+/**
+ * mygetline - gets a line minus the newline
+ * @buf: address of buffer
+ * @len: address of len var
+ *
+ * Return: bytes read
+ */
+ssize_t mygetline(char **buf, size_t *len)
+{
+	ssize_t r = getline(buf, len, stdin);
+
+	*len = _strlen(*buf);
+	if (*len > 1 && (*buf)[*len - 1] == '\n')
+	{
+		(*buf)[--*len] = '\0'; /* remove trailing newline */
+		r--;
+	}
+	return (r);
 }

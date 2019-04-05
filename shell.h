@@ -13,6 +13,7 @@ extern char **environ;
 
 /* shell.c module */
 void fork_cmd(char **argv);
+ssize_t mygetline(char **buf, size_t *len);
 
 /* strtok.c module */
 char **mystrtok(char *str, char *delim);
