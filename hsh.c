@@ -1,7 +1,5 @@
 #include "shell.h"
 
-char **environ;
-
 /**
  * main - entry point
  * @ac: arg count
