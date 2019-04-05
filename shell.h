@@ -7,6 +7,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 
 extern char **environ;
 
@@ -20,7 +21,7 @@ char **mystrtok(char *str, char *delim);
 int _strlen(char *s);
 int _strcmp(char *s1, char *s2);
 char *_strstr(char *haystack, char *needle);
-int starts_with(const char *haystack, const char *needle);
+char *starts_with(const char *haystack, const char *needle);
 
 /* env.c module */
 char *_getenv(const char *name);

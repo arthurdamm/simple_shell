@@ -9,16 +9,12 @@
  */
 int main(int ac, char **av)
 {
-	int i = 0;
 	size_t len = 0;
-	char *buf = NULL;
+	char *buf = NULL, **argv;
 	ssize_t r = 0;
-	/* char *argv[] = {"/bin/ls", "-l", "/vagrant", NULL}; */
-	char **argv;
 
 	(void)ac;
-	while (av[i])
-		printf("[%s]\n", av[i++]);
+	(void)av;
 
 	printf("PID: %u PPID: %u\n", getpid(), getppid());
 

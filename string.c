@@ -65,13 +65,13 @@ char *_strstr(char *haystack, char *needle)
  * @haystack: string to search
  * @needle: the substring to find
  *
- * Return: 1 if true, 0 if false
+ * Return: address of next char of haystack or NULL
  */
-int starts_with(const char *haystack, const char *needle)
+char *starts_with(const char *haystack, const char *needle)
 {
 	while (*needle)
 		if (*needle++ != *haystack++)
-			return (0);
-	return (1);
+			return (NULL);
+	return ((char *)haystack);
 }
 

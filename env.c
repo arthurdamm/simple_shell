@@ -9,12 +9,13 @@
 char *_getenv(const char *name)
 {
 	char **env = environ;
+	char *ret = NULL;
 
 	while (*env)
 	{
-		if (starts_with(*env, name))
-			return (*env + strlen(name));
-		env++;
+		ret = starts_with(*env++, name);
+		if (ret && *ret)
+			return (ret);
 	}
 	return (NULL);
 }
