@@ -27,7 +27,7 @@ int main(void)
 	}
 	else
 	{
-		sleep(1);
+//		sleep(1);
 		printf("1b - The parent has not yet waited\n");
 		wait(&status);
 		sleep(1);
