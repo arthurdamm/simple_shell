@@ -1,5 +1,7 @@
 #include "shell.h"
 
+char **environ;
+
 /**
  * main - entry point
  * @ac: arg count
@@ -29,7 +31,7 @@ int main(int ac, char **av)
 		len = _strlen(buf);
 		if (len > 1 && buf[len - 1] == '\n')
 			buf[--len] = '\0'; /* remove trailing newline */
-		if (!strncmp(buf, "exit", 4))
+		if (starts_with(buf, "exit"))
 			break;
 		argv = mystrtok(buf, " ");
 		fork_cmd(argv);
