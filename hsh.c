@@ -133,9 +133,9 @@ ssize_t mygetline(char **buf, size_t *len)
  */
 int _printenv(void)
 {
-        int i;
+	int i;
 
-        for(i = 0; environ[i]; i++)
-                printf("%s\n", environ[i]);
-        return (0);
+	for (i = 0; environ[i]; i++)
+		printf("%s\n", environ[i]);
+	return (0);
 }
