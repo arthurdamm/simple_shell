@@ -15,6 +15,17 @@ int _printenv(void)
 }
 
 /**
+ * _exit - exits the shell
+ *
+ *  Return: Always 0
+ */
+int _exit(void)
+{
+	printf("Exiting...\n");
+	return (-1);
+}
+
+/**
  * notdone - placeholder function for unfinished built in emulators
  *
  *  Return: Always 0
