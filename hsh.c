@@ -26,6 +26,8 @@ int main(int ac, char **av)
 		r = mygetline(&buf, &len);
 		if (starts_with(buf, "exit"))
 			break;
+		if (starts_with(buf, "env"))
+			_printenv();
 		argv = mystrtok(_strdup(buf), " ");
 		find_cmd(argv);
 		if (0)
@@ -122,4 +124,19 @@ ssize_t mygetline(char **buf, size_t *len)
 		r--;
 	}
 	return (r);
+}
+
+extern char **environ;
+/**
+ * _printenv - prints the current environment
+ *
+ *  Return: Always 0
+ */
+int _printenv(void)
+{
+        int i;
+
+        for(i = 0; environ[i]; i++)
+                printf("%s\n", environ[i]);
+        return (0);
 }
