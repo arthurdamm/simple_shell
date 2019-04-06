@@ -8,8 +8,9 @@
  */
 int main(void)
 {
-	pid_t my_pid;
+	/* pid_t my_pid; */
 	pid_t child_pid;
+	int i;
 
 	child_pid = fork();
 	if (child_pid == -1)
@@ -17,6 +18,7 @@ int main(void)
 		perror("Error:");
 		return (1);
 	}
+	/*
 	my_pid = getpid();
 	printf("My pid is %u\n", my_pid);
 	if (child_pid == 0)
@@ -28,5 +30,8 @@ int main(void)
 		printf("(%u) %u, I am your father\n", my_pid, child_pid);
 	}
 	printf("This one prints in both cases omg\n");
+	*/
+	for (i = 0; i < 10000; i++)
+		printf("%s%i\n", child_pid ? "" : "\t", i);
 	return (0);
 }

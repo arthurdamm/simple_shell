@@ -48,7 +48,7 @@ int main(void)
 {
 	char str[200] = "/usr/local:/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games";
 	char **tokarray;
-	int i, count = 0;
+	int i;
 
 	tokarray = mystrtok(str, ":");
 	for (i = 0; tokarray[i]; i++)

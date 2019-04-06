@@ -1,6 +1,21 @@
 #include "shell.h"
 
 /**
+ * ffree - frees a string of strings
+ * @pp - string of strings
+ */
+void ffree(char **pp)
+{
+	char **a = pp;
+
+	if (!pp)
+		return;
+	while (*pp)
+		free(*pp++);
+	(void)a;
+}
+
+/**
  * _realloc - reallocates a block of memory
  * @ptr: pointer to previous malloc'ated block
  * @old_size: byte size of previous block

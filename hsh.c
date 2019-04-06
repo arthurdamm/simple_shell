@@ -42,7 +42,7 @@ int main(int ac, char **av)
 				if (built_in_ret == -1)
 					return(-1);
 			}
-		argv = mystrtok(_strdup(buf), " ");
+		argv = strtow(_strdup(buf), " ");
 		find_cmd(argv);
 		if (0)
 			write(STDOUT_FILENO, buf, len);
@@ -69,7 +69,7 @@ void find_cmd(char **argv)
 		str = _strdup(_getenv("PATH="));
 		if (!str)
 			return;
-		paths = mystrtok(str, ":");
+		paths = strtow(str, ":");
 		while (*paths)
 		{
 			path[0] = '\0';
@@ -84,6 +84,7 @@ void find_cmd(char **argv)
 			paths++;
 		}
 		free(str);
+		
 	}
 
 }

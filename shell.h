@@ -63,6 +63,7 @@ int _isalpha(int c);
 void *_calloc(unsigned int nmemb, unsigned int size);
 
 /* strmem5.c module */
+void ffree(char **pp);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 
 /* env.c module */
