@@ -17,7 +17,7 @@ int _printenv(void)
 /**
  * _exit - exits the shell
  *
- *  Return: Always 0
+ *  Return: Always -1
  */
 int _myexit(void)
 {
