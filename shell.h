@@ -31,6 +31,9 @@ int _printenv(void);
 /* strtok.c module */
 char **mystrtok(char *str, char *delim);
 
+/* strtow.c module */
+char **strtow(char *str);
+
 /* string.c module */
 int _strlen(char *s);
 int _strcmp(char *s1, char *s2);
