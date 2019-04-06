@@ -9,18 +9,18 @@
  */
 int main(int ac, char **av)
 {
-	int i;
+	int i, built_in_ret;
 	size_t len = 0;
 	char *buf = NULL, **argv;
 	ssize_t r = 0;
 	builtin_table builtintbl[] = {
-		{"env"},
-		{"help"},
-		{"history"},
-		{"setenv"},
-		{"cd"},
-		{"alias"},
-		{NULL}
+		{"env", _printenv},
+		{"help", notdone},
+		{"history", notdone},
+		{"setenv", notdone},
+		{"cd", notdone},
+		{"alias", notdone},
+		{NULL, NULL}
 	};
 	(void)ac;
 	(void)av;
@@ -37,7 +37,11 @@ int main(int ac, char **av)
 			break;
 		for (i = 0; builtintbl[i].type; i++)
 			if (starts_with(buf, builtintbl[i].type))
-				printf("match!\n");
+			{
+				built_in_ret = builtintbl[i].func();
+				if (built_in_ret == -1)
+					return(-1);
+			}
 		argv = mystrtok(_strdup(buf), " ");
 		find_cmd(argv);
 		if (0)
@@ -133,18 +137,4 @@ ssize_t mygetline(char **buf, size_t *len)
 		r--;
 	}
 	return (r);
-}
-
-/**
- * _printenv - prints the current environment
- *
- *  Return: Always 0
- */
-int _printenv(void)
-{
-	int i;
-
-	for (i = 0; environ[i]; i++)
-		printf("%s\n", environ[i]);
-	return (0);
 }

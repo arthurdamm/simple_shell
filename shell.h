@@ -20,13 +20,13 @@ extern char **environ;
 typedef struct builtin
 {
 	char *type;
+	int (*func)(void);
 } builtin_table;
 
 /* shell.c module */
 void find_cmd(char **argv);
 void fork_cmd(char **argv, char *path);
 ssize_t mygetline(char **buf, size_t *len);
-int _printenv(void);
 
 /* strtok.c module */
 char **mystrtok(char *str, char *delim);
@@ -67,5 +67,9 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 
 /* env.c module */
 char *_getenv(const char *name);
+
+/* builtin_emulators.c module */
+int notdone(void);
+int _printenv(void);
 
 #endif
