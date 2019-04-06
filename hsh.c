@@ -30,7 +30,7 @@ int main(int ac, char **av)
 
 	while (r != -1)
 	{
-		printf("$ ");
+		_puts("$ ");
 		buf = NULL;
 		len = 0;
 		r = mygetline(&buf, &len);
