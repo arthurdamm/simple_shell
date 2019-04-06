@@ -1,24 +1,38 @@
 #include "shell.h"
 
 /**
+ * is_delim - checks if character is a delimeter
+ * @c: the char to check
+ * @delim: the delimeter string
+ * Return: 1 if true, 0 if false
+ */
+int is_delim(char c, char *delim)
+{
+	while (*delim)
+		if (*delim++ == c)
+			return (1);
+	return (0);
+}
+
+/**
  * **strtow - splits a string into words
  * @str: the input string
+ * @d: the delimeter string
  * Return: a pointer to an array of strings, or NULL on failure
  */
-char **strtow(char *str)
+char **strtow(char *str, char *d)
 {
-	int i, j, k, numwords = 0;
+	int i, j, k, m, numwords = 0;
 	char **s;
 
 	if (str == NULL || str[0] == 0)
 		return (NULL);
+	if (!d)
+		d = " ";
 	for (i = 0; str[i] != '\0'; i++)
-	{
-		if ((str[i] != ' ') && (str[i + 1] == ' '))
+		if (!is_delim(str[i], d) && (is_delim(str[i + 1], d) || !str[i + 1]))
 			numwords++;
-		if ((str[i] != ' ') && (str[i + 1] == '\0'))
-			numwords++;
-	}
+
 	if (numwords == 0)
 		return (NULL);
 	s = malloc((1 + numwords) * sizeof(char *));
@@ -26,10 +40,10 @@ char **strtow(char *str)
 		return (NULL);
 	for (i = 0, j = 0; j < numwords; j++)
 	{
-		while (str[i] == ' ')
+		while (is_delim(str[i], d))
 			i++;
 		k = 0;
-		while (str[i + k] != ' ' && str[i + k])
+		while (!is_delim(str[i + k], d) && str[i + k])
 			k++;
 		s[j] = malloc((k + 1) * sizeof(char));
 		if (!s[j])
@@ -39,10 +53,10 @@ char **strtow(char *str)
 			free(s);
 			return (NULL);
 		}
-		for (k = 0; str[i] && str[i] != ' '; k++)
-			s[j][k] = str[i++];
-		s[j][k] = 0;
+		for (m = 0; m < k; m++)
+			s[j][m] = str[i++];
+		s[j][m] = 0;
 	}
-	s[j] = 0;
+	s[j] = NULL;
 	return (s);
 }

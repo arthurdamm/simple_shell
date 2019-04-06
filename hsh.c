@@ -37,7 +37,7 @@ int main(int ac, char **av)
 			break;
 		for (i = 0; builtintbl[i].type; i++)
 			if (starts_with(buf, builtintbl[i].type))
-			    printf("match!\n");
+				printf("match!\n");
 		argv = mystrtok(_strdup(buf), " ");
 		find_cmd(argv);
 		if (0)
@@ -108,7 +108,6 @@ void fork_cmd(char **argv, char *path)
 	if (child_pid == 0)
 	{
 		execve(path, argv, NULL);
-		printf("Command not found...\n");
 		exit(98);
 	}
 	else

@@ -32,7 +32,7 @@ int _printenv(void);
 char **mystrtok(char *str, char *delim);
 
 /* strtow.c module */
-char **strtow(char *str);
+char **strtow(char *str, char *d);
 
 /* string.c module */
 int _strlen(char *s);
