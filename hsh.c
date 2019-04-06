@@ -9,10 +9,19 @@
  */
 int main(int ac, char **av)
 {
+	int i;
 	size_t len = 0;
 	char *buf = NULL, **argv;
 	ssize_t r = 0;
-
+	builtin_table builtintbl[] = {
+		{"env"},
+		{"help"},
+		{"history"},
+		{"setenv"},
+		{"cd"},
+		{"alias"},
+		{NULL}
+	};
 	(void)ac;
 	(void)av;
 
@@ -26,8 +35,9 @@ int main(int ac, char **av)
 		r = mygetline(&buf, &len);
 		if (starts_with(buf, "exit"))
 			break;
-		if (starts_with(buf, "env"))
-			_printenv();
+		for (i = 0; builtintbl[i].type; i++)
+			if (starts_with(buf, builtintbl[i].type))
+			    printf("match!\n");
 		argv = mystrtok(_strdup(buf), " ");
 		find_cmd(argv);
 		if (0)

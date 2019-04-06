@@ -11,6 +11,17 @@
 
 extern char **environ;
 
+/**
+ *struct builtin - contains a builtin string and related function
+ *@type: the builtin command flag
+ *@func: the function
+ */
+
+typedef struct builtin
+{
+	char *type;
+} builtin_table;
+
 /* shell.c module */
 void find_cmd(char **argv);
 void fork_cmd(char **argv, char *path);
