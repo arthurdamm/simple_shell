@@ -33,14 +33,14 @@ int main(int ac, char **av)
 		buf = NULL;
 		len = 0;
 		r = mygetline(&buf, &len);
-		if (starts_with(buf, "exit"))
+		if (r == -1 || starts_with(buf, "exit"))
 			break;
 		for (i = 0; builtintbl[i].type; i++)
 			if (starts_with(buf, builtintbl[i].type))
 			{
 				built_in_ret = builtintbl[i].func();
 				if (built_in_ret == -1)
-					return(-1);
+					return(0);
 			}
 		argv = strtow(_strdup(buf), " ");
 		find_cmd(argv);
