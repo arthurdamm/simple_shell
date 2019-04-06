@@ -126,7 +126,6 @@ ssize_t mygetline(char **buf, size_t *len)
 	return (r);
 }
 
-extern char **environ;
 /**
  * _printenv - prints the current environment
  *
