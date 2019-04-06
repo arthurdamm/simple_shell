@@ -2,7 +2,7 @@
 
 /**
  * ffree - frees a string of strings
- * @pp - string of strings
+ * @pp: string of strings
  */
 void ffree(char **pp)
 {

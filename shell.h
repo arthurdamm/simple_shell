@@ -72,5 +72,6 @@ char *_getenv(const char *name);
 /* builtin_emulators.c module */
 int notdone(void);
 int _printenv(void);
+int _myexit(void);
 
 #endif

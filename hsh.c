@@ -14,6 +14,7 @@ int main(int ac, char **av)
 	char *buf = NULL, **argv;
 	ssize_t r = 0;
 	builtin_table builtintbl[] = {
+		{"exit", _myexit},
 		{"env", _printenv},
 		{"help", notdone},
 		{"history", notdone},
@@ -33,7 +34,7 @@ int main(int ac, char **av)
 		buf = NULL;
 		len = 0;
 		r = mygetline(&buf, &len);
-		if (r == -1 || starts_with(buf, "exit"))
+		if (r == -1)
 			break;
 		for (i = 0; builtintbl[i].type; i++)
 			if (starts_with(buf, builtintbl[i].type))
@@ -47,7 +48,6 @@ int main(int ac, char **av)
 		if (0)
 			write(STDOUT_FILENO, buf, len);
 	}
-	printf("Exiting...\n");
 	return (0);
 }
 
@@ -84,7 +84,6 @@ void find_cmd(char **argv)
 			paths++;
 		}
 		free(str);
-		
 	}
 
 }

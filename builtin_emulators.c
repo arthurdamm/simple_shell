@@ -19,7 +19,7 @@ int _printenv(void)
  *
  *  Return: Always 0
  */
-int _exit(void)
+int _myexit(void)
 {
 	printf("Exiting...\n");
 	return (-1);
