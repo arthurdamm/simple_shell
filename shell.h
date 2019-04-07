@@ -24,6 +24,7 @@ typedef struct builtin
 } builtin_table;
 
 /* shell.c module */
+int find_builtin(char *arg);
 void find_cmd(char **argv);
 void fork_cmd(char **argv, char *path);
 ssize_t mygetline(char **buf, size_t *len);

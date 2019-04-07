@@ -9,20 +9,10 @@
  */
 int main(int ac, char **av)
 {
-	int i, built_in_ret;
 	size_t len = 0;
 	char *buf = NULL, **argv;
 	ssize_t r = 0;
-	builtin_table builtintbl[] = {
-		{"exit", _myexit},
-		{"env", _printenv},
-		{"help", notdone},
-		{"history", notdone},
-		{"setenv", notdone},
-		{"cd", notdone},
-		{"alias", notdone},
-		{NULL, NULL}
-	};
+
 	(void)ac;
 	(void)av;
 
@@ -32,17 +22,8 @@ int main(int ac, char **av)
 		buf = NULL;
 		len = 0;
 		r = mygetline(&buf, &len);
-		for (i = 0; builtintbl[i].type; i++)
-			if (starts_with(buf, builtintbl[i].type))
-			{
-				built_in_ret = builtintbl[i].func();
-				if (built_in_ret == -1)
-				{
-					r = -1;
-					break;
-				}
-
-			}
+		if (find_builtin(buf) == -1)
+			r = -1;
 		if (r != -1)
 		{
 			argv = strtow(buf, " ");
@@ -54,6 +35,36 @@ int main(int ac, char **av)
 			write(STDOUT_FILENO, buf, len);
 	}
 	return (0);
+}
+
+/**
+ * find_builtin - finds a builtim command
+ * @arg: arg vector
+ *
+ * Return: 1, 0, or -1 on exit
+ */
+int find_builtin(char *arg)
+{
+	int i, built_in_ret;
+	builtin_table builtintbl[] = {
+		{"exit", _myexit},
+		{"env", _printenv},
+		{"help", notdone},
+		{"history", notdone},
+		{"setenv", notdone},
+		{"cd", notdone},
+		{"alias", notdone},
+		{NULL, NULL}
+	};
+
+	for (i = 0; builtintbl[i].type; i++)
+		if (starts_with(arg, builtintbl[i].type))
+		{
+			built_in_ret = builtintbl[i].func();
+			if (built_in_ret == -1)
+				break;
+		}
+	return (built_in_ret);
 }
 
 /**
@@ -136,6 +147,7 @@ void fork_cmd(char **argv, char *path)
 ssize_t mygetline(char **buf, size_t *len)
 {
 	ssize_t r = getline(buf, len, stdin);
+
 	if (r > 1 && (*buf)[r - 1] == '\n')
 	{
 		(*buf)[r - 1] = '\0'; /* remove trailing newline */
