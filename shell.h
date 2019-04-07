@@ -17,10 +17,19 @@ extern char **environ;
  *@func: the function
  */
 
+typedef struct passinfo
+{
+	char *arg;
+	char **argv;
+	int flag;
+	int exit_code;
+	char *growth;
+} info_t;
+
 typedef struct builtin
 {
 	char *type;
-	int (*func)(void);
+	int (*func)(info_t);
 } builtin_table;
 
 /* shell.c module */
@@ -71,8 +80,8 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 char *_getenv(const char *name);
 
 /* builtin_emulators.c module */
-int notdone(void);
-int _printenv(void);
-int _myexit(void);
+int notdone(info_t);
+int _printenv(info_t);
+int _myexit(info_t);
 
 #endif

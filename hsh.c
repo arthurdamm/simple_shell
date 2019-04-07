@@ -9,6 +9,7 @@
  */
 int main(int ac, char **av)
 {
+	int builtin_ret = 0;
 	size_t len = 0;
 	char *buf = NULL, **argv;
 	ssize_t r = 0;
@@ -23,7 +24,8 @@ int main(int ac, char **av)
 		buf = NULL;
 		len = 0;
 		r = mygetline(&buf, &len);
-		if (find_builtin(buf) == -1)
+		builtin_ret = find_builtin(buf);
+		if (builtin_ret == -1)
 			r = -1;
 		if (r != -1)
 		{
@@ -35,11 +37,12 @@ int main(int ac, char **av)
 		if (0)
 			write(STDOUT_FILENO, buf, len);
 	}
-	return (0);
+	printf("return value = %i\n", builtin_ret);
+	return (builtin_ret);
 }
 
 /**
- * find_builtin - finds a builtim command
+ * find_builtin - finds a builtin command
  * @arg: arg vector
  *
  * Return: 1, 0, or -1 on exit
@@ -57,11 +60,15 @@ int find_builtin(char *arg)
 		{"alias", notdone},
 		{NULL, NULL}
 	};
+	info_t info[] = {
+		{arg, strtow(arg, " "), 0, 0, NULL},
+		{NULL, NULL, 0, 0, NULL}
+	};
 
 	for (i = 0; builtintbl[i].type; i++)
 		if (starts_with(arg, builtintbl[i].type))
 		{
-			built_in_ret = builtintbl[i].func();
+			built_in_ret = builtintbl[i].func(*info);
 			if (built_in_ret == -1)
 				break;
 		}

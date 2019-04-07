@@ -2,35 +2,46 @@
 
 /**
  * _printenv - prints the current environment
- *
- *  Return: Always 0
+ * @info: Structure containing potential arguments. Used to maintain
+ *          constant function prototype.
+ * Return: Always 0
  */
-int _printenv(void)
+int _printenv(__attribute__((unused)) info_t info)
 {
 	int i;
 
 	for (i = 0; environ[i]; i++)
-		_puts(environ[i]);
+	{
+		_puts(environ[i]); /* _puts does not add a newline */
+		_putchar('\n');
+	}
 	return (0);
 }
 
 /**
- * _exit - exits the shell
- *
+ * _myexit - exits the shell
+ * @info: Structure containing potential arguments. Used to maintain
+ *          constant function prototype.
  *  Return: Always -1
  */
-int _myexit(void)
+int _myexit(info_t info)
 {
+	char **arg_array;
+
+	arg_array = strtow(info.arg, " ");
 	_puts("Exiting...\n");
-	return (-1);
+	if (arg_array[1])
+		exit(_atoi(arg_array[1]));
+	exit(0);
 }
 
 /**
  * notdone - placeholder function for unfinished built in emulators
- *
+ * @info: Structure containing potential arguments. Used to maintain
+ *          constant function prototype.
  *  Return: Always 0
  */
-int notdone(void)
+int notdone(__attribute__((unused)) info_t info)
 {
 	_puts("Not implemented yet.\n");
 	return (0);
