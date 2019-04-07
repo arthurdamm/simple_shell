@@ -18,7 +18,8 @@ int main(int ac, char **av)
 
 	while (r != -1)
 	{
-		_puts("$ ");
+		if (isatty(STDIN_FILENO))
+			_puts("$ ");
 		buf = NULL;
 		len = 0;
 		r = mygetline(&buf, &len);
@@ -83,7 +84,10 @@ void find_cmd(char **argv)
 	if (paths)
 	{
 		if (_getenv("PATH=")[0] == ':' && !stat(argv[0], &st))
+		{
 			fork_cmd(argv, NULL);
+			found++;
+		}
 		else
 			while (*paths)
 			{
