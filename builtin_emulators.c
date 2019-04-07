@@ -21,7 +21,7 @@ int _printenv(void)
  */
 int _myexit(void)
 {
-	printf("Exiting...\n");
+	printf("Exiting...");
 	return (-1);
 }
 
