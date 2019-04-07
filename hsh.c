@@ -26,8 +26,6 @@ int main(int ac, char **av)
 	(void)ac;
 	(void)av;
 
-	printf("PID: %u PPID: %u\n", getpid(), getppid());
-
 	while (r != -1)
 	{
 		_puts("$ ");
@@ -73,20 +71,23 @@ void find_cmd(char **argv)
 	_paths = paths = strtow(_getenv("PATH="), ":");
 	if (paths)
 	{
-		while (*paths)
-		{
-			path[0] = '\0';
-			strcpy(path, *paths);
-			strcat(path, "/");
-			strcat(path, argv[0]);
-			if (!stat(path, &st))
+		if (_getenv("PATH=")[0] == ':' && !stat(argv[0], &st))
+			fork_cmd(argv, NULL);
+		else
+			while (*paths)
 			{
-				found++;
-				fork_cmd(argv, path);
-				break;
+				path[0] = '\0';
+				strcpy(path, *paths);
+				strcat(path, "/");
+				strcat(path, argv[0]);
+				if (!stat(path, &st))
+				{
+					found++;
+					fork_cmd(argv, path);
+					break;
+				}
+				paths++;
 			}
-			paths++;
-		}
 		ffree(_paths);
 	}
 	if (!found && !stat(argv[0], &st))
