@@ -41,7 +41,10 @@ int main(int ac, char **av)
 			{
 				built_in_ret = builtintbl[i].func();
 				if (built_in_ret == -1)
+				{
+					putchar('\n');
 					return(0);
+				}
 			}
 		argv = strtow(_strdup(buf), " ");
 		find_cmd(argv);
