@@ -68,28 +68,26 @@ void find_cmd(char **argv)
 {
 	struct stat st;
 	char path[1024], **paths, **_paths;
+	int found = 0;
 
-	if (!stat(argv[0], &st))
-		fork_cmd(argv, NULL);
-	else
+	_paths = paths = strtow(_getenv("PATH="), ":");
+	while (*paths)
 	{
-		_paths = paths = strtow(_getenv("PATH="), ":");
-		while (*paths)
+		path[0] = '\0';
+		strcpy(path, *paths);
+		strcat(path, "/");
+		strcat(path, argv[0]);
+		if (!stat(path, &st))
 		{
-			path[0] = '\0';
-			strcpy(path, *paths);
-			strcat(path, "/");
-			strcat(path, argv[0]);
-			if (!stat(path, &st))
-			{
-				fork_cmd(argv, path);
-				break;
-			}
-			paths++;
+			found++;
+			fork_cmd(argv, path);
+			break;
 		}
-		ffree(_paths);
+		paths++;
 	}
-
+	ffree(_paths);
+	if (!found && !stat(argv[0], &st))
+		fork_cmd(argv, NULL);
 }
 
 /**
