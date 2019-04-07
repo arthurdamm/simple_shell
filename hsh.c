@@ -34,8 +34,6 @@ int main(int ac, char **av)
 		buf = NULL;
 		len = 0;
 		r = mygetline(&buf, &len);
-		if (r == -1)
-			break;
 		for (i = 0; builtintbl[i].type; i++)
 			if (starts_with(buf, builtintbl[i].type))
 			{
