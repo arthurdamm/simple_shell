@@ -31,7 +31,6 @@ int main(int ac, char **av)
 	while (r != -1)
 	{
 		printf("$ ");
-		buf = NULL;
 		len = 0;
 		r = mygetline(&buf, &len);
 		if (r == -1)
@@ -41,10 +40,19 @@ int main(int ac, char **av)
 			{
 				built_in_ret = builtintbl[i].func();
 				if (built_in_ret == -1)
-					return(0);
+				{
+					r = -1;
+					break;
+				}
+
 			}
-		argv = strtow(_strdup(buf), " ");
-		find_cmd(argv);
+		if (r != -1)
+		{
+			argv = strtow(buf, " ");
+			find_cmd(argv);
+			ffree(argv);
+		}
+		free(buf);
 		if (0)
 			write(STDOUT_FILENO, buf, len);
 	}
@@ -60,16 +68,13 @@ int main(int ac, char **av)
 void find_cmd(char **argv)
 {
 	struct stat st;
-	char path[1024], **paths, *str;
+	char path[1024], **paths, **_paths;
 
 	if (!stat(argv[0], &st))
 		fork_cmd(argv, NULL);
 	else
 	{
-		str = _strdup(_getenv("PATH="));
-		if (!str)
-			return;
-		paths = strtow(str, ":");
+		_paths = paths = strtow(_getenv("PATH="), ":");
 		while (*paths)
 		{
 			path[0] = '\0';
@@ -83,7 +88,7 @@ void find_cmd(char **argv)
 			}
 			paths++;
 		}
-		free(str);
+		ffree(_paths);
 	}
 
 }
@@ -130,7 +135,6 @@ void fork_cmd(char **argv, char *path)
 ssize_t mygetline(char **buf, size_t *len)
 {
 	ssize_t r = getline(buf, len, stdin);
-
 	if (r > 1 && (*buf)[r - 1] == '\n')
 	{
 		(*buf)[r - 1] = '\0'; /* remove trailing newline */

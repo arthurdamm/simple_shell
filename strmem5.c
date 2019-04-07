@@ -12,7 +12,7 @@ void ffree(char **pp)
 		return;
 	while (*pp)
 		free(*pp++);
-	(void)a;
+	free(a);
 }
 
 /**
