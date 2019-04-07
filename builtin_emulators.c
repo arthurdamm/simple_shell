@@ -21,11 +21,7 @@ int _printenv(void)
  */
 int _myexit(void)
 {
-<<<<<<< HEAD
-	printf("Exiting...");
-=======
 	_puts("Exiting...\n");
->>>>>>> dev
 	return (-1);
 }
 

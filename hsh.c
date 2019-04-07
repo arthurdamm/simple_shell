@@ -23,22 +23,6 @@ int main(int ac, char **av)
 		buf = NULL;
 		len = 0;
 		r = mygetline(&buf, &len);
-<<<<<<< HEAD
-		if (r == -1)
-			break;
-		for (i = 0; builtintbl[i].type; i++)
-			if (starts_with(buf, builtintbl[i].type))
-			{
-				built_in_ret = builtintbl[i].func();
-				if (built_in_ret == -1)
-				{
-					putchar('\n');
-					return(0);
-				}
-			}
-		argv = strtow(_strdup(buf), " ");
-		find_cmd(argv);
-=======
 		if (find_builtin(buf) == -1)
 			r = -1;
 		if (r != -1)
@@ -48,7 +32,6 @@ int main(int ac, char **av)
 			ffree(argv);
 		}
 		free(buf);
->>>>>>> dev
 		if (0)
 			write(STDOUT_FILENO, buf, len);
 	}
