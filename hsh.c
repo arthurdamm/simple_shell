@@ -53,11 +53,12 @@ int find_builtin(char *arg)
 	builtin_table builtintbl[] = {
 		{"exit", _myexit},
 		{"env", _printenv},
-		{"help", notdone},
-		{"history", notdone},
-		{"setenv", notdone},
-		{"cd", notdone},
-		{"alias", notdone},
+		{"help", _myhelp},
+		{"history", _myhistory},
+		{"setenv", _mysetenv},
+		{"unsetenv", _myunsetenv},
+		{"cd", _mycd},
+		{"alias", _myalias},
 		{NULL, NULL}
 	};
 	info_t info[] = {

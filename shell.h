@@ -80,8 +80,15 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 char *_getenv(const char *name);
 
 /* builtin_emulators.c module */
-int notdone(info_t);
 int _printenv(info_t);
 int _myexit(info_t);
+int _mycd(info_t);
+int _myhelp(info_t);
+
+/* builtin_emulators.c module */
+int _myhistory(info_t);
+int _mysetenv(info_t);
+int _myunsetenv(info_t);
+int _myalias(info_t);
 
 #endif
