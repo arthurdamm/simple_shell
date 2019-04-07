@@ -9,31 +9,21 @@
  */
 int main(int ac, char **av)
 {
-	int i, built_in_ret;
 	size_t len = 0;
 	char *buf = NULL, **argv;
 	ssize_t r = 0;
-	builtin_table builtintbl[] = {
-		{"exit", _myexit},
-		{"env", _printenv},
-		{"help", notdone},
-		{"history", notdone},
-		{"setenv", notdone},
-		{"cd", notdone},
-		{"alias", notdone},
-		{NULL, NULL}
-	};
+
 	(void)ac;
 	(void)av;
 
-	printf("PID: %u PPID: %u\n", getpid(), getppid());
-
 	while (r != -1)
 	{
-		printf("$ ");
+		if (isatty(STDIN_FILENO))
+			_puts("$ ");
 		buf = NULL;
 		len = 0;
 		r = mygetline(&buf, &len);
+<<<<<<< HEAD
 		if (r == -1)
 			break;
 		for (i = 0; builtintbl[i].type; i++)
@@ -48,10 +38,51 @@ int main(int ac, char **av)
 			}
 		argv = strtow(_strdup(buf), " ");
 		find_cmd(argv);
+=======
+		if (find_builtin(buf) == -1)
+			r = -1;
+		if (r != -1)
+		{
+			argv = strtow(buf, " ");
+			find_cmd(argv);
+			ffree(argv);
+		}
+		free(buf);
+>>>>>>> dev
 		if (0)
 			write(STDOUT_FILENO, buf, len);
 	}
 	return (0);
+}
+
+/**
+ * find_builtin - finds a builtim command
+ * @arg: arg vector
+ *
+ * Return: 1, 0, or -1 on exit
+ */
+int find_builtin(char *arg)
+{
+	int i, built_in_ret;
+	builtin_table builtintbl[] = {
+		{"exit", _myexit},
+		{"env", _printenv},
+		{"help", notdone},
+		{"history", notdone},
+		{"setenv", notdone},
+		{"cd", notdone},
+		{"alias", notdone},
+		{NULL, NULL}
+	};
+
+	for (i = 0; builtintbl[i].type; i++)
+		if (starts_with(arg, builtintbl[i].type))
+		{
+			built_in_ret = builtintbl[i].func();
+			if (built_in_ret == -1)
+				break;
+		}
+	return (built_in_ret);
 }
 
 /**
@@ -63,32 +94,36 @@ int main(int ac, char **av)
 void find_cmd(char **argv)
 {
 	struct stat st;
-	char path[1024], **paths, *str;
+	char path[1024], **paths, **_paths;
+	int found = 0;
 
-	if (!stat(argv[0], &st))
-		fork_cmd(argv, NULL);
-	else
+	_paths = paths = strtow(_getenv("PATH="), ":");
+	if (paths)
 	{
-		str = _strdup(_getenv("PATH="));
-		if (!str)
-			return;
-		paths = strtow(str, ":");
-		while (*paths)
+		if (_getenv("PATH=")[0] == ':' && !stat(argv[0], &st))
 		{
-			path[0] = '\0';
-			strcpy(path, *paths);
-			strcat(path, "/");
-			strcat(path, argv[0]);
-			if (!stat(path, &st))
-			{
-				fork_cmd(argv, path);
-				break;
-			}
-			paths++;
+			fork_cmd(argv, NULL);
+			found++;
 		}
-		free(str);
+		else
+			while (*paths)
+			{
+				path[0] = '\0';
+				strcpy(path, *paths);
+				strcat(path, "/");
+				strcat(path, argv[0]);
+				if (!stat(path, &st))
+				{
+					found++;
+					fork_cmd(argv, path);
+					break;
+				}
+				paths++;
+			}
+		ffree(_paths);
 	}
-
+	if (!found && !stat(argv[0], &st))
+		fork_cmd(argv, NULL);
 }
 
 /**

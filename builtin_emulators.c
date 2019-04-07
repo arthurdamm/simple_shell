@@ -10,7 +10,7 @@ int _printenv(void)
 	int i;
 
 	for (i = 0; environ[i]; i++)
-		printf("%s\n", environ[i]);
+		_puts(environ[i]);
 	return (0);
 }
 
@@ -21,7 +21,11 @@ int _printenv(void)
  */
 int _myexit(void)
 {
+<<<<<<< HEAD
 	printf("Exiting...");
+=======
+	_puts("Exiting...\n");
+>>>>>>> dev
 	return (-1);
 }
 
@@ -32,6 +36,6 @@ int _myexit(void)
  */
 int notdone(void)
 {
-	printf("Not implemented yet.\n");
+	_puts("Not implemented yet.\n");
 	return (0);
 }
