@@ -20,7 +20,7 @@ int main(int ac, char **av)
 	signal(SIGINT, SIG_IGN);
 	while (r != -1)
 	{
-		if (isatty(STDIN_FILENO))
+		if (interactive())
 			_puts("$ ");
 		buf = NULL;
 		len = 0;
@@ -38,7 +38,8 @@ int main(int ac, char **av)
 		if (0)
 			write(STDOUT_FILENO, buf, len);
 	}
-	printf("return value = %i\n", builtin_ret);
+	if (interactive())
+		printf("return value = %i\n", builtin_ret);
 	return (builtin_ret);
 }
 
