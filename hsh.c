@@ -24,11 +24,9 @@ int main(int ac, char **av)
 		buf = NULL;
 		len = 0;
 		r = mygetline(&buf, &len);
-		builtin_ret = find_builtin(buf);
-		if (builtin_ret == -1)
-			r = -1;
 		if (r != -1)
 		{
+			builtin_ret = find_builtin(buf);
 			argv = strtow(buf, " ");
 			find_cmd(argv);
 			ffree(argv);
