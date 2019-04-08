@@ -17,6 +17,7 @@ int main(int ac, char **av)
 	(void)ac;
 	(void)av;
 
+	signal(SIGINT, SIG_IGN);
 	while (r != -1)
 	{
 		if (isatty(STDIN_FILENO))
