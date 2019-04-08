@@ -38,6 +38,9 @@ void find_cmd(char **argv);
 void fork_cmd(char **argv, char *path);
 ssize_t mygetline(char **buf, size_t *len);
 
+/* pipe.c module */
+int interactive(void);
+
 /* strtok.c module */
 char **mystrtok(char *str, char *delim);
 
