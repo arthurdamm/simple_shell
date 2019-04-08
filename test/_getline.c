@@ -34,7 +34,7 @@ int main(int ac, char **av)
 		printf("strlen: [" BLU "%d" RES "]\n", _strlen(buf));
 		printf("buf: [" RED "%s" RES "]\n", buf);
 		printf("getline1(): <" CYA "%d" RES ">\n", r);
-		
+
 		free(buf);
 		buf = NULL;
 		i++;
@@ -49,7 +49,7 @@ int main(int ac, char **av)
  * @ptr: address of pointer to buffer, preallocated or NULL
  * @len: size of preallocated ptr buffer if not NULL
  *
- * Return: 
+ * Return:
  */
 int _getline(char **ptr, size_t *length)
 {
@@ -80,6 +80,11 @@ int _getline(char **ptr, size_t *length)
 		_strncpy(new_p, buf + i, k - i);
 	s += k - i;
 	i = k + 1;
+	/* cat in a newline here */
+	printf("new_p before newline = (%s)\n", new_p);
+	new_p = _strcat(new_p, "\n");
+	printf("new_p after newline = (%s)\n", new_p);
+	/* end cat */
 	p = new_p;
 	*length = s;
 	*ptr = p;
