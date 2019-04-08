@@ -159,8 +159,11 @@ void fork_cmd(char **argv, char *path)
  */
 ssize_t mygetline(char **buf, size_t *len)
 {
+#if USE_GETLINE
 	ssize_t r = getline(buf, len, stdin);
-
+#else
+	ssize_t r = _getline(buf, len);
+#endif
 	if (r > 1 && (*buf)[r - 1] == '\n')
 	{
 		(*buf)[r - 1] = '\0'; /* remove trailing newline */
