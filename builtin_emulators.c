@@ -35,7 +35,6 @@ int _myexit(info_t info)
 	exit(0);
 }
 
-
 /**
  * _mycd - changes the current directory of the process
  * @info: Structure containing potential arguments. Used to maintain
@@ -52,7 +51,6 @@ int _mycd(info_t info)
 		puts(*arg_array); /* temp att_unused workaround */
 	return (0);
 }
-
 
 /**
  * _myhelp - changes the current directory of the process
