@@ -11,11 +11,11 @@ int _myhistory(info_t info)
 {
 	char **arg_array;
 
-	arg_array = strtow(info.arg, " ");
+	arg_array = info.argv;
 	_puts("history call works. Function not yet implemented \n");
 	if (0)
-		puts(*arg_array);
-	return(0);
+		puts(*arg_array);  /* temp att_unused workaround */
+	return (0);
 }
 
 
@@ -30,11 +30,11 @@ int _mysetenv(info_t info)
 {
 	char **arg_array;
 
-	arg_array = strtow(info.arg, " ");
+	arg_array = info.argv;
 	_puts("setenv call works. Function not yet implemented \n");
 	if (0)
-		puts(*arg_array);
-	return(0);
+		puts(*arg_array);  /* temp att_unused workaround */
+	return (0);
 }
 
 
@@ -48,11 +48,11 @@ int _myunsetenv(info_t info)
 {
 	char **arg_array;
 
-	arg_array = strtow(info.arg, " ");
+	arg_array = info.argv;
 	_puts("unsetenv call works. Function not yet implemented \n");
 	if (0)
-		puts(*arg_array);
-	return(0);
+		puts(*arg_array);  /* temp att_unused workaround */
+	return (0);
 }
 
 /**
@@ -65,9 +65,9 @@ int _myalias(info_t info)
 {
 	char **arg_array;
 
-	arg_array = strtow(info.arg, " ");
+	arg_array = info.argv;
 	_puts("alias call works. Function not yet implemented \n");
 	if (0)
-		puts(*arg_array);
-	return(0);
+		puts(*arg_array);  /* temp att_unused workaround */
+	return (0);
 }

@@ -53,7 +53,7 @@ int find_builtin(char *arg)
 	int i, built_in_ret;
 	builtin_table builtintbl[] = {
 		{"exit", _myexit},
-		{"env", _printenv},
+		{"env", _myenv},
 		{"help", _myhelp},
 		{"history", _myhistory},
 		{"setenv", _mysetenv},
@@ -63,8 +63,8 @@ int find_builtin(char *arg)
 		{NULL, NULL}
 	};
 	info_t info[] = {
-		{arg, strtow(arg, " "), 0, 0, NULL},
-		{NULL, NULL, 0, 0, NULL}
+		{arg, strtow(arg, " ")},
+		{NULL, NULL}
 	};
 
 	for (i = 0; builtintbl[i].type; i++)
