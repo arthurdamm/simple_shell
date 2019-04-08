@@ -1,6 +1,63 @@
 #include "shell.h"
 
 /**
+ **_strncpy - copies a string
+ *@dest: the destination string to be copied to
+ *@src: the source string
+ *@n: the amount of characters to be copied
+ *Return: the concatenated string
+ */
+char *_strncpy(char *dest, char *src, int n)
+{
+	int i, j;
+	char *s = dest;
+
+	i = 0;
+	while (src[i] != '\0' && i < n)
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	if (i < n)
+	{
+		j = i;
+		while (j < n)
+		{
+			dest[j] = '\0';
+			j++;
+		}
+	}
+	return (s);
+}
+
+/**
+ **_strncat - concatenates two strings
+ *@dest: the first string
+ *@src: the second string
+ *@n: the amount of bytes to be maximally used
+ *Return: the concatenated string
+ */
+char *_strncat(char *dest, char *src, int n)
+{
+	int i, j;
+	char *s = dest;
+
+	i = 0;
+	j = 0;
+	while (dest[i] != '\0')
+		i++;
+	while (src[j] != '\0' && j < n)
+	{
+		dest[i] = src[j];
+		i++;
+		j++;
+	}
+	if (j < n)
+		dest[i] = '\0';
+	return (s);
+}
+
+/**
  **_strchr - locates a character in a string
  *@s: the string to be parsed
  *@c: the character to look for
@@ -59,37 +116,4 @@ char *_strpbrk(char *s, char *accept)
 			if (*s == accept[j])
 				return (s);
 	return (NULL);
-}
-
-/**
- * _isalpha - checks if character is a letter
- * @c: the character to test
- *
- * Return: 1 if c is a letter, 0 otherwise
- */
-int _isalpha(int c)
-{
-	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
-}
-
-/**
- * _calloc - allocates memory for an array, initialized to 0
- * @nmemb: number of elements
- * @size: byte size of each element
- *
- * Return: void pointer to array space
- */
-void *_calloc(unsigned int nmemb, unsigned int size)
-{
-	char *p;
-
-	if (!nmemb || !size)
-		return (NULL);
-	p = malloc(nmemb * size);
-	if (!p)
-		return (NULL);
-	nmemb *= size;
-	while (nmemb--)
-		p[nmemb] = 0;
-	return (p);
 }

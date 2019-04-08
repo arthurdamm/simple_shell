@@ -18,7 +18,6 @@ int _myhistory(info_t info)
 	return (0);
 }
 
-
 /**
  * _mysetenv - Initialize a new environment variable,
  *             or modify an existing one
@@ -36,7 +35,6 @@ int _mysetenv(info_t info)
 		puts(*arg_array);  /* temp att_unused workaround */
 	return (0);
 }
-
 
 /**
  * _myunsetenv - Remove an environment variable
