@@ -68,7 +68,7 @@ void find_cmd(char **argv);
 void fork_cmd(char **argv, char *path);
 ssize_t mygetline(char **buf, size_t *len);
 
-/* string_functions.c */
+/* string_functions1.c */
 int _strlen(char *s);
 int _strcmp(char *s1, char *s2);
 char *_strstr(char *haystack, char *needle);
@@ -100,7 +100,7 @@ char *_memcpy(char *dest, char *src, unsigned int n);
 void ffree(char **pp);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 
-/* more_functions.c */
+/* more_functions1.c */
 int is_delim(char c, char *delim);
 int _isalpha(int c);
 int _atoi(char *s);
@@ -110,7 +110,7 @@ int interactive(void);
 /* more_functions2.c */
 int _erratoi(char *s);
 
-/* builtin_emulators.c */
+/* builtin_emulators1.c */
 int _myenv(info_t *);
 int _myexit(info_t *);
 int _mycd(info_t *);
