@@ -48,6 +48,7 @@ typedef struct passinfo
 	char *arg;
 	char **argv;
 	unsigned int err_count;
+	int test;
 } info_t;
 
 /**

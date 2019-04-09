@@ -62,7 +62,7 @@ int find_builtin(char *arg)
 		{NULL, NULL}
 	};
 	info_t info[] = {
-		{arg, p = strtow(arg, " "), 0}
+		{arg, p = strtow(arg, " "), 0, 0}
 	};
 
 	for (i = 0; builtintbl[i].type; i++)
