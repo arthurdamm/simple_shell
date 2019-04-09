@@ -5,9 +5,9 @@ ssize_t read_buf(char *buf, size_t *i);
 /**
  * _getline - gets the next line of input from STDIN
  * @ptr: address of pointer to buffer, preallocated or NULL
- * @len: size of preallocated ptr buffer if not NULL
+ * @length: size of preallocated ptr buffer if not NULL
  *
- * Return:
+ * Return: [pointer]
  */
 int _getline(char **ptr, size_t *length)
 {
@@ -28,8 +28,8 @@ int _getline(char **ptr, size_t *length)
 		return (-1);
 
 	c = _strchr(buf + i, '\n');
-	k = c ? 1 + (unsigned)(c - buf): len - 1;
-	new_p = _realloc(p, s, s ? s + k : k + 1);
+	k = c ? (unsigned int)(c - buf) : len - 1;
+	new_p = _realloc(p, s, s + k + 1);
 	if (!new_p) /* MALLOC FAILURE! */
 		return (p ? free(p), -1 : -1);
 	if (s)
@@ -44,6 +44,13 @@ int _getline(char **ptr, size_t *length)
 	return (s);
 }
 
+/**
+ * read_buf - reads a buffer
+ * @buf: thus specified buffer
+ * @i: pointer
+ *
+ * Return: [r pointer]
+ */
 ssize_t read_buf(char *buf, size_t *i)
 {
 	ssize_t r = 0;
