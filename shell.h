@@ -119,6 +119,9 @@ int _mysetenv(info_t *);
 int _myunsetenv(info_t *);
 int _myalias(info_t *);
 
+/* print_error.c */
+void print_error(info_t info, char *emsg);
+
 /* getline.c module */
 int _getline(char **ptr, size_t *len);
 
