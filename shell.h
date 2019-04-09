@@ -31,7 +31,7 @@
 #define READ_BUF_SIZE 1024
 
 /* 1 if using system getline() */
-#define USE_GETLINE 0
+#define USE_GETLINE 1
 
 extern char **environ;
 
@@ -41,11 +41,13 @@ extern char **environ;
                     allowing uniform prototype for function pointer struct
  *@arg: a string generated from getline containing arguements
  *@argv: an array of strings generated from arg
+ *@err_count: the error count
  */
 typedef struct passinfo
 {
 	char *arg;
 	char **argv;
+	unsigned int err_count;
 } info_t;
 
 /**
@@ -56,7 +58,7 @@ typedef struct passinfo
 typedef struct builtin
 {
 	char *type;
-	int (*func)(info_t);
+	int (*func)(info_t *);
 } builtin_table;
 
 
@@ -106,16 +108,16 @@ char *_getenv(const char *name);
 int interactive(void);
 
 /* builtin_emulators.c */
-int _myenv(info_t);
-int _myexit(info_t);
-int _mycd(info_t);
-int _myhelp(info_t);
+int _myenv(info_t *);
+int _myexit(info_t *);
+int _mycd(info_t *);
+int _myhelp(info_t *);
 
 /* builtin_emulators2.c */
-int _myhistory(info_t);
-int _mysetenv(info_t);
-int _myunsetenv(info_t);
-int _myalias(info_t);
+int _myhistory(info_t *);
+int _mysetenv(info_t *);
+int _myunsetenv(info_t *);
+int _myalias(info_t *);
 
 /* getline.c module */
 int _getline(char **ptr, size_t *len);
