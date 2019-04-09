@@ -107,6 +107,9 @@ int _atoi(char *s);
 char *_getenv(const char *name);
 int interactive(void);
 
+/* more_functions2.c */
+int _erratoi(char *s);
+
 /* builtin_emulators.c */
 int _myenv(info_t *);
 int _myexit(info_t *);

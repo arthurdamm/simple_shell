@@ -31,10 +31,10 @@ int _myexit(info_t *info)
 
 	if (info->argv[1])  /* If there is an exit arguement */
 	{
-		exitcheck = _atoi(info->argv[1]);
+		exitcheck = _erratoi(info->argv[1]);
 		if (exitcheck == -1)
 		{
-			printf("error not a number\n");
+			printf("Invalid exit status\n");
 			/* errorfunc functionality here */
 			info->err_count = 98;
 			return (0);
