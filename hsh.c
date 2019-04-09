@@ -48,6 +48,7 @@ int main(int ac, char **av)
  */
 int find_builtin(char *arg)
 {
+	char **p;
 	int i, built_in_ret;
 	builtin_table builtintbl[] = {
 		{"exit", _myexit},
@@ -61,17 +62,17 @@ int find_builtin(char *arg)
 		{NULL, NULL}
 	};
 	info_t info[] = {
-		{arg, strtow(arg, " ")},
-		{NULL, NULL}
+		{arg, p = strtow(arg, " "), 0}
 	};
 
 	for (i = 0; builtintbl[i].type; i++)
 		if (starts_with(arg, builtintbl[i].type))
 		{
-			built_in_ret = builtintbl[i].func(*info);
+			built_in_ret = builtintbl[i].func(info);
 			if (built_in_ret == -1)
 				break;
 		}
+	ffree(p);
 	return (built_in_ret);
 }
 
