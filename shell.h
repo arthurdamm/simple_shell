@@ -31,7 +31,7 @@
 #define READ_BUF_SIZE 1024
 
 /* 1 if using system getline() */
-#define USE_GETLINE 1
+#define USE_GETLINE 0
 
 extern char **environ;
 

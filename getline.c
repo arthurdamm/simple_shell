@@ -7,7 +7,7 @@ ssize_t read_buf(char *buf, size_t *i);
  * @ptr: address of pointer to buffer, preallocated or NULL
  * @len: size of preallocated ptr buffer if not NULL
  *
- * Return: 
+ * Return:
  */
 int _getline(char **ptr, size_t *length)
 {
@@ -28,8 +28,8 @@ int _getline(char **ptr, size_t *length)
 		return (-1);
 
 	c = _strchr(buf + i, '\n');
-	k = c ? (unsigned)(c - buf): len - 1;
-	new_p = _realloc(p, s, s + k + 1);
+	k = c ? 1 + (unsigned)(c - buf): len - 1;
+	new_p = _realloc(p, s, s ? s + k : k + 1);
 	if (!new_p) /* MALLOC FAILURE! */
 		return (p ? free(p), -1 : -1);
 	if (s)
@@ -37,7 +37,7 @@ int _getline(char **ptr, size_t *length)
 	else
 		_strncpy(new_p, buf + i, k - i);
 	s += k - i;
-	i = k + 1;
+	i = k;
 	p = new_p;
 	*length = s;
 	*ptr = p;
