@@ -29,9 +29,9 @@ int _myexit(info_t *info)
 {
 	int exitcheck;
 
-	if (info.argv[1])  /* If there is an exit arguement */
+	if (info->argv[1])  /* If there is an exit arguement */
 	{
-		exitcheck = _atoi(info.argv[1]);
+		exitcheck = _atoi(info->argv[1]);
 		if (exitcheck == -1)
 		{
 			printf("error not a number\n");
@@ -39,7 +39,7 @@ int _myexit(info_t *info)
 			info->err_count = 98;
 			return (0);
 		}
-		exit(_atoi(info.argv[1]));
+		exit(_atoi(info->argv[1]));
 	}
 	exit(0);
 }
