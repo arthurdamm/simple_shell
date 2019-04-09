@@ -70,8 +70,8 @@ int _getline(char **ptr, size_t *length)
 		return (-1);
 
 	c = _strchr(buf + i, '\n');
-	k = c ? (unsigned)(c - buf): len - 1;
-	new_p = _realloc(p, s, s + k + 1);
+	k = c ? 1 + (unsigned)(c - buf): len - 1;
+	new_p = _realloc(p, s, s ? s + k : k + 1);
 	if (!new_p) /* MALLOC FAILURE! */
 		return (p ? free(p), -1 : -1);
 	if (s)
@@ -79,11 +79,9 @@ int _getline(char **ptr, size_t *length)
 	else
 		_strncpy(new_p, buf + i, k - i);
 	s += k - i;
-	i = k + 1;
+	i = k;
 	/* cat in a newline here */
-	printf("new_p before newline = (%s)\n", new_p);
-	new_p = _strcat(new_p, "\n");
-	printf("new_p after newline = (%s)\n", new_p);
+	/* new_p = _strcat(new_p, "\n"); */
 	/* end cat */
 	p = new_p;
 	*length = s;

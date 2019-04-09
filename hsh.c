@@ -67,7 +67,7 @@ int find_builtin(char *arg)
 	};
 
 	for (i = 0; builtintbl[i].type; i++)
-		if (starts_with(arg, builtintbl[i].type))
+		if (_strcmp(info->argv[0], builtintbl[i].type) == 0)
 		{
 			built_in_ret = builtintbl[i].func(info);
 			if (built_in_ret == -1)
