@@ -1,13 +1,30 @@
 #include "shell.h"
 
-ssize_t read_buf(char *buf, size_t *i);
+/**
+ * read_buf - reads a buffer
+ * @buf: buffer
+ * @i: size
+ *
+ * Return: r
+ */
+ssize_t read_buf(char *buf, size_t *i)
+{
+	ssize_t r = 0;
+
+	if (*i)
+		return (0);
+	r = read(STDIN_FILENO, buf, READ_BUF_SIZE);
+	if (r >= 0)
+		*i = r;
+	return (r);
+}
 
 /**
  * _getline - gets the next line of input from STDIN
  * @ptr: address of pointer to buffer, preallocated or NULL
- * @len: size of preallocated ptr buffer if not NULL
+ * @length: size of preallocated ptr buffer if not NULL
  *
- * Return:
+ * Return: s
  */
 int _getline(char **ptr, size_t *length)
 {
@@ -28,7 +45,7 @@ int _getline(char **ptr, size_t *length)
 		return (-1);
 
 	c = _strchr(buf + i, '\n');
-	k = c ? 1 + (unsigned)(c - buf): len - 1;
+	k = c ? 1 + (unsigned int)(c - buf) : len - 1;
 	new_p = _realloc(p, s, s ? s + k : k + 1);
 	if (!new_p) /* MALLOC FAILURE! */
 		return (p ? free(p), -1 : -1);
@@ -42,16 +59,4 @@ int _getline(char **ptr, size_t *length)
 	*length = s;
 	*ptr = p;
 	return (s);
-}
-
-ssize_t read_buf(char *buf, size_t *i)
-{
-	ssize_t r = 0;
-
-	if (*i)
-		return (0);
-	r = read(STDIN_FILENO, buf, READ_BUF_SIZE);
-	if (r >= 0)
-		*i = r;
-	return (r);
 }

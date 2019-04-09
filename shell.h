@@ -48,6 +48,7 @@ typedef struct passinfo
 	char *arg;
 	char **argv;
 	unsigned int err_count;
+	int test;
 } info_t;
 
 /**
@@ -106,6 +107,9 @@ int _isalpha(int c);
 int _atoi(char *s);
 char *_getenv(const char *name);
 int interactive(void);
+
+/* more_functions2.c */
+int _erratoi(char *s);
 
 /* builtin_emulators.c */
 int _myenv(info_t *);
