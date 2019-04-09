@@ -25,11 +25,9 @@ int main(int ac, char **av)
 		buf = NULL;
 		len = 0;
 		r = mygetline(&buf, &len);
-		builtin_ret = find_builtin(buf);
-		if (builtin_ret == -1)
-			r = -1;
 		if (r != -1)
 		{
+			builtin_ret = find_builtin(buf);
 			argv = strtow(buf, " ");
 			find_cmd(argv);
 			ffree(argv);
@@ -51,6 +49,7 @@ int main(int ac, char **av)
  */
 int find_builtin(char *arg)
 {
+	char **p;
 	int i, built_in_ret;
 	builtin_table builtintbl[] = {
 		{"exit", _myexit},
@@ -64,17 +63,17 @@ int find_builtin(char *arg)
 		{NULL, NULL}
 	};
 	info_t info[] = {
-		{arg, strtow(arg, " ")},
-		{NULL, NULL}
+		{arg, p = strtow(arg, " "), 0}
 	};
 
 	for (i = 0; builtintbl[i].type; i++)
 		if (starts_with(arg, builtintbl[i].type))
 		{
-			built_in_ret = builtintbl[i].func(*info);
+			built_in_ret = builtintbl[i].func(info);
 			if (built_in_ret == -1)
 				break;
 		}
+	ffree(p);
 	return (built_in_ret);
 }
 
@@ -160,8 +159,11 @@ void fork_cmd(char **argv, char *path)
  */
 ssize_t mygetline(char **buf, size_t *len)
 {
+#if USE_GETLINE
 	ssize_t r = getline(buf, len, stdin);
-
+#else
+	ssize_t r = _getline(buf, len);
+#endif
 	if (r > 1 && (*buf)[r - 1] == '\n')
 	{
 		(*buf)[r - 1] = '\0'; /* remove trailing newline */

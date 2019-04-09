@@ -11,6 +11,28 @@
 #include <sys/stat.h>
 #include <signal.h>
 
+#define BLA "\033[30m"
+#define RED "\033[31m"
+#define GRE "\033[32m"
+#define YEL "\033[33m"
+#define BLU "\033[34m"
+#define MAG "\033[35m"
+#define CYA "\033[36m"
+#define RES "\033[37m"
+
+
+#define _RED "\033[41m"
+#define _GRE "\033[42m"
+#define _YEL "\033[43m"
+#define _BLU "\033[44m"
+#define _MAG "\033[45m"
+#define _CYA "\033[46m"
+#define _RES "\033[40m"
+
+#define READ_BUF_SIZE 1024
+
+/* 1 if using system getline() */
+#define USE_GETLINE 1
 
 extern char **environ;
 
@@ -20,11 +42,13 @@ extern char **environ;
                     allowing uniform prototype for function pointer struct
  *@arg: a string generated from getline containing arguements
  *@argv: an array of strings generated from arg
+ *@err_count: the error count
  */
 typedef struct passinfo
 {
 	char *arg;
 	char **argv;
+	unsigned int err_count;
 } info_t;
 
 /**
@@ -35,7 +59,7 @@ typedef struct passinfo
 typedef struct builtin
 {
 	char *type;
-	int (*func)(info_t);
+	int (*func)(info_t *);
 } builtin_table;
 
 
@@ -85,16 +109,21 @@ char *_getenv(const char *name);
 int interactive(void);
 
 /* builtin_emulators.c */
-int _myenv(info_t);
-int _myexit(info_t);
-int _mycd(info_t);
-int _myhelp(info_t);
+int _myenv(info_t *);
+int _myexit(info_t *);
+int _mycd(info_t *);
+int _myhelp(info_t *);
 
 /* builtin_emulators2.c */
-int _myhistory(info_t);
-int _mysetenv(info_t);
-int _myunsetenv(info_t);
-int _myalias(info_t);
+int _myhistory(info_t *);
+int _mysetenv(info_t *);
+int _myunsetenv(info_t *);
+int _myalias(info_t *);
 
+/* print_error.c */
+void print_error(info_t info, char *emsg);
+
+/* getline.c module */
+int _getline(char **ptr, size_t *len);
 
 #endif
