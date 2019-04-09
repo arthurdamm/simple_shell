@@ -30,6 +30,7 @@ int _isalpha(int c)
  *_atoi - converts a string to an integer
  *@s: the string to be converted
  *Return: 0 if no numbers in string, converted number otherwise
+         -1 on error
  */
 int _atoi(char *s)
 {
@@ -46,6 +47,8 @@ int _atoi(char *s)
 			result *= 10;
 			result += (s[i] - '0');
 		}
+		else if (s[i] != '-')
+			return (-1);
 		else if (flag == 1)
 			flag = 2;
 	}
