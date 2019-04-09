@@ -39,9 +39,9 @@ int _myexit(info_t *info)
 			info->err_count = 98;
 			return (0);
 		}
-		exit(_atoi(info->argv[1]));
+		info->err_num = _atoi(info->argv[1]);
 	}
-	exit(0);
+	return (-1);
 }
 
 /**

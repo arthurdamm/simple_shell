@@ -11,8 +11,11 @@ int main(int ac, char **av)
 {
 	int builtin_ret = 0;
 	size_t len = 0;
-	char *buf = NULL, **argv;
+	char *buf = NULL;
 	ssize_t r = 0;
+	info_t info[] = {
+		{0, 0, 0, 0}
+	};
 
 	(void)ac;
 	(void)av;
@@ -26,15 +29,25 @@ int main(int ac, char **av)
 		r = mygetline(&buf, &len);
 		if (r != -1)
 		{
-			builtin_ret = find_builtin(buf);
-			argv = strtow(buf, " ");
-			find_cmd(argv);
-			ffree(argv);
+			info->arg = buf;
+			info->argv = strtow(buf, " ");
+			builtin_ret = find_builtin(info);
+			if (builtin_ret != -1)
+			{
+				find_cmd(info->argv);
+			}
+			else
+				r = -1;
 		}
-		free(buf);
+		if (buf)
+			buf = (free(buf), NULL);
+		if (info->argv)
+			info->argv = (ffree(info->argv), NULL);
 		if (0)
 			write(STDOUT_FILENO, buf, len);
 	}
+	if (builtin_ret == -1)
+		exit(info->err_num);
 	if (interactive())
 		printf("return value = %i\n", builtin_ret);
 	return (builtin_ret);
@@ -42,13 +55,12 @@ int main(int ac, char **av)
 
 /**
  * find_builtin - finds a builtin command
- * @arg: arg vector
+ * @info: the parameter & return info struct
  *
  * Return: 1, 0, or -1 on exit
  */
-int find_builtin(char *arg)
+int find_builtin(info_t *info)
 {
-	char **p;
 	int i, built_in_ret;
 	builtin_table builtintbl[] = {
 		{"exit", _myexit},
@@ -61,9 +73,6 @@ int find_builtin(char *arg)
 		{"alias", _myalias},
 		{NULL, NULL}
 	};
-	info_t info[] = {
-		{arg, p = strtow(arg, " "), 0, 0}
-	};
 
 	for (i = 0; builtintbl[i].type; i++)
 		if (_strcmp(info->argv[0], builtintbl[i].type) == 0)
@@ -72,7 +81,6 @@ int find_builtin(char *arg)
 			if (built_in_ret == -1)
 				break;
 		}
-	ffree(p);
 	return (built_in_ret);
 }
 

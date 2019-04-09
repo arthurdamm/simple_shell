@@ -38,17 +38,18 @@ extern char **environ;
 
 /**
  *struct passinfo - contains pseudo-arguements to pass into a function,
-                    allowing uniform prototype for function pointer struct
+ *					allowing uniform prototype for function pointer struct
  *@arg: a string generated from getline containing arguements
  *@argv: an array of strings generated from arg
  *@err_count: the error count
+ *@err_num: the error code for exit()s
  */
 typedef struct passinfo
 {
 	char *arg;
 	char **argv;
 	unsigned int err_count;
-	int test;
+	int err_num;
 } info_t;
 
 /**
@@ -64,7 +65,7 @@ typedef struct builtin
 
 
 /* hsh.c */
-int find_builtin(char *arg);
+int find_builtin(info_t *info);
 void find_cmd(char **argv);
 void fork_cmd(char **argv, char *path);
 ssize_t mygetline(char **buf, size_t *len);
