@@ -23,7 +23,7 @@ int _myenv(__attribute__((unused)) info_t *info)
  * @info: Structure containing potential arguments. Used to maintain
  *          constant function prototype.
  *  Return: exits with a given exit status
-            (0) if info.argv[0] != "exit"
+ *         (0) if info.argv[0] != "exit"
  */
 int _myexit(info_t *info)
 {
