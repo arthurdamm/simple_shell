@@ -130,4 +130,8 @@ void print_error(info_t info, char *emsg);
 /* getline.c module */
 int _getline(char **ptr, size_t *len);
 
+/* info.c module */
+void init_info(info_t *info);
+void set_info(info_t *info, char *arg);
+
 #endif

@@ -7,20 +7,15 @@
  *
  * Return: 0 on success, 1 on error
  */
-int main(int ac, char **av)
+int main(__attribute__((unused))int ac, __attribute__((unused))char **av)
 {
 	int builtin_ret = 0;
 	size_t len = 0;
 	char *buf = NULL;
 	ssize_t r = 0;
-	info_t info[] = {
-		{0, 0, 0, 0}
-	};
+	info_t info[] = { {0, 0, 0, 0} };
 
-	(void)ac;
-	(void)av;
-
-	while (r != -1)
+	while (r != -1 && builtin_ret != -1)
 	{
 		if (interactive())
 			_puts("$ ");
@@ -29,15 +24,10 @@ int main(int ac, char **av)
 		r = mygetline(&buf, &len);
 		if (r != -1)
 		{
-			info->arg = buf;
-			info->argv = strtow(buf, " ");
+			set_info(info, buf);
 			builtin_ret = find_builtin(info);
 			if (builtin_ret != -1)
-			{
 				find_cmd(info->argv);
-			}
-			else
-				r = -1;
 		}
 		if (buf)
 			buf = (free(buf), NULL);
