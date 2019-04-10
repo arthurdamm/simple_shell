@@ -25,3 +25,14 @@ void set_info(info_t *info, char *arg)
 		info->argv = strtow(arg, " ");
 	}
 }
+
+/**
+ * free_info - frees info_t struct fields
+ * @info: struct address
+ */
+void free_info(info_t *info)
+{
+	bfree((void **)&(info->arg));
+	ffree(info->argv);
+	info->argv = NULL;
+}

@@ -58,7 +58,7 @@ int _getline(char **ptr, size_t *length)
 	char *c;
 
 	p = *ptr;
-	if (p)
+	if (p && length)
 		s = *length;
 	if (i == len)
 		i = len = 0;
@@ -78,7 +78,8 @@ int _getline(char **ptr, size_t *length)
 	s += k - i;
 	i = k;
 	p = new_p;
-	*length = s;
+	if (length)
+		*length = s;
 	*ptr = p;
 	return (s);
 }

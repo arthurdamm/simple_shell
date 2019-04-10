@@ -104,6 +104,9 @@ char *_memcpy(char *dest, char *src, unsigned int n);
 void ffree(char **pp);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 
+/* memory_functions2.c */
+int bfree(void **ptr);
+
 /* more_functions.c */
 int is_delim(char c, char *delim);
 int _isalpha(int c);
@@ -136,5 +139,6 @@ int _getline(char **ptr, size_t *len);
 /* info.c module */
 void init_info(info_t *info);
 void set_info(info_t *info, char *arg);
+void free_info(info_t *info);
 
 #endif

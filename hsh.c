@@ -20,32 +20,25 @@ int main(__attribute__((unused))int ac, char **av)
  */
 int hsh(__attribute__((unused))char **av)
 {
-	int builtin_ret = 0;
-	size_t len = 0;
-	char *buf = NULL;
 	ssize_t r = 0;
+	int builtin_ret = 0;
 	info_t info[] = { {0, 0, 0, 0} };
 
 	while (r != -1 && builtin_ret != -1)
 	{
 		if (interactive())
 			_puts("$ ");
-		buf = NULL;
-		len = 0;
-		r = mygetline(&buf, &len);
+		r = mygetline(&(info->arg), NULL);
 		if (r != -1)
 		{
-			set_info(info, buf);
+			set_info(info, info->arg);
 			builtin_ret = find_builtin(info);
 			if (builtin_ret != -1)
 				find_cmd(info->argv);
 		}
-		if (buf)
-			buf = (free(buf), NULL);
-		if (info->argv)
-			info->argv = (ffree(info->argv), NULL);
+		free_info(info);
 		if (0)
-			write(STDOUT_FILENO, buf, len);
+			write(STDOUT_FILENO, info->arg, _strlen(info->arg));
 	}
 	if (builtin_ret == -1)
 		exit(info->err_num);
