@@ -18,7 +18,7 @@ int main(__attribute__((unused))int ac, char **av)
  *
  * Return: 0 on success, 1 on error, or error code
  */
-int hsh(__attribute__((unused))char **av)
+int hsh(char **av)
 {
 	ssize_t r = 0;
 	size_t len = 0;
@@ -33,7 +33,7 @@ int hsh(__attribute__((unused))char **av)
 		r = mygetline(&(info->arg), &len);
 		if (r != -1)
 		{
-			set_info(info);
+			set_info(info, av);
 			builtin_ret = find_builtin(info);
 			if (builtin_ret != -1)
 				find_cmd(info);
@@ -98,6 +98,7 @@ void find_cmd(info_t *info)
 	{
 		if (_getenv("PATH=")[0] == ':' && !stat(info->argv[0], &st))
 		{
+			info->line_count++;
 			fork_cmd(info);
 			found++;
 		}
@@ -110,6 +111,7 @@ void find_cmd(info_t *info)
 				strcat(path, info->argv[0]);
 				if (!stat(path, &st))
 				{
+					info->line_count++;
 					found++;
 					info->path = path;
 					fork_cmd(info);
@@ -117,6 +119,11 @@ void find_cmd(info_t *info)
 				}
 				paths++;
 			}
+		if (!*paths)
+		{
+			info->line_count++;
+			print_error(info);
+		}
 		ffree(_paths);
 	}
 	if (!found && !stat(info->argv[0], &st))

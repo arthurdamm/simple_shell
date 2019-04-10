@@ -11,14 +11,16 @@ void clear_info(info_t *info)
 	info->path = NULL;
 	/* info->line_count; should not reset */
 	info->err_num = 0;
+	/* info->fname; should not reset */
 }
 
 /**
  * set_info - initializes info_t struct
  * @info: struct address
  */
-void set_info(info_t *info)
+void set_info(info_t *info, char **av)
 {
+	info->fname = av[0];
 	if (info->arg)
 		info->argv = strtow(info->arg, " ");
 }
@@ -51,5 +53,6 @@ void print_info(info_t *info)
 	printf("info->path:[%s]\n", info->path);
 	printf("info->line_count:[%d]\n", info->line_count);
 	printf("info->err_num:[%d]\n", info->err_num);
+	printf("info->fname:[%s]\n", info->fname);
 	printf("==========================\n");
 }

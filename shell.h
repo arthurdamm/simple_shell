@@ -32,7 +32,6 @@
 
 #define READ_BUF_SIZE 1024
 
-
 /* 1 if using system getline() */
 #define USE_GETLINE 0
 
@@ -56,9 +55,10 @@ typedef struct passinfo
 	char *path;
 	unsigned int line_count;
 	int err_num;
+	char *fname;
 } info_t;
 
-#define INFO_INIT {NULL, NULL, NULL, 0, 0}
+#define INFO_INIT {NULL, NULL, NULL, 0, 0, NULL}
 
 /**
  *struct builtin - contains a builtin string and related function
@@ -122,6 +122,8 @@ int interactive(void);
 
 /* more_functions2.c */
 int _erratoi(char *);
+void print_error(info_t *);
+int print_d(info_t *);
 
 /* builtin_emulators.c */
 int _myenv(info_t *);
@@ -135,16 +137,13 @@ int _mysetenv(info_t *);
 int _myunsetenv(info_t *);
 int _myalias(info_t *);
 
-/* print_error.c */
-void print_error(info_t, char *);
-
 /* getline.c module */
 ssize_t mygetline(char **, size_t *);
 int _getline(char **, size_t *);
 
 /* info.c module */
 void clear_info(info_t *);
-void set_info(info_t *);
+void set_info(info_t *, char **);
 void free_info(info_t *);
 void print_info(info_t *);
 
