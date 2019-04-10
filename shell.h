@@ -43,8 +43,9 @@ extern char **environ;
  *struct passinfo - contains pseudo-arguements to pass into a function,
  *					allowing uniform prototype for function pointer struct
  *@arg: a string generated from getline containing arguements
- *@path: a string path for the current command
  *@argv: an array of strings generated from arg
+ *@path: a string path for the current command
+ *@argc: the argument count
  *@line_count: the error count
  *@err_num: the error code for exit()s
  */
@@ -53,12 +54,13 @@ typedef struct passinfo
 	char *arg;
 	char **argv;
 	char *path;
+	int argc;
 	unsigned int line_count;
 	int err_num;
 	char *fname;
 } info_t;
 
-#define INFO_INIT {NULL, NULL, NULL, 0, 0, NULL}
+#define INFO_INIT {NULL, NULL, NULL, 0, 0, 0, NULL}
 
 /**
  *struct builtin - contains a builtin string and related function
