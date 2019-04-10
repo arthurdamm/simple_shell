@@ -105,9 +105,9 @@ void find_cmd(info_t *info)
 			while (*paths)
 			{
 				path[0] = '\0';
-				strcpy(path, *paths);
-				strcat(path, "/");
-				strcat(path, info->argv[0]);
+				_strcpy(path, *paths);
+				_strcat(path, "/");
+				_strcat(path, info->argv[0]);
 				if (!stat(path, &st))
 				{
 					found++;
@@ -143,7 +143,7 @@ void fork_cmd(info_t *info)
 	}
 	if (child_pid == 0)
 	{
-		execve(info->path, info->argv, NULL);
+		execve(info->path, info->argv, environ);
 		/* TODO: PUT ERROR FUNCTION */
 		exit(98);
 	}
