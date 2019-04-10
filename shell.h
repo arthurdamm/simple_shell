@@ -28,6 +28,7 @@
 #define _CYA "\033[46m"
 #define _RES "\033[40m"
 
+#define MAX_INT 2147483647
 #define READ_BUF_SIZE 1024
 
 /* 1 if using system getline() */
@@ -65,7 +66,7 @@ typedef struct builtin
 
 
 /* hsh.c */
-int hsh(__attribute__((unused))char **av);
+int hsh(char **av);
 int find_builtin(info_t *info);
 void find_cmd(char **argv);
 void fork_cmd(char **argv, char *path);
