@@ -9,6 +9,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
+#include <limits.h>
 
 #define BLA "\033[30m"
 #define RED "\033[31m"
@@ -28,7 +29,6 @@
 #define _CYA "\033[46m"
 #define _RES "\033[40m"
 
-#define MAX_INT 2147483647
 #define READ_BUF_SIZE 1024
 
 /* 1 if using system getline() */

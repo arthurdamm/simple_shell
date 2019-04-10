@@ -15,7 +15,7 @@ int _erratoi(char *s)
 	{
 		if (s[i] >= '0' && s[i] <= '9')
 		{
-			if (result > MAX_INT / 10)
+			if (result > INT_MAX / 10)
 				return (-1);
 			result *= 10;
 			result += (s[i] - '0');
