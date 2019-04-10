@@ -36,7 +36,6 @@ int _myexit(info_t *info)
 		{
 			printf("Invalid exit status\n");
 			/* errorfunc functionality here */
-			info->err_count = 98;
 			return (0);
 		}
 		info->err_num = _atoi(info->argv[1]);

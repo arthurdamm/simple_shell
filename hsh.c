@@ -21,20 +21,22 @@ int main(__attribute__((unused))int ac, char **av)
 int hsh(__attribute__((unused))char **av)
 {
 	ssize_t r = 0;
+	size_t len = 0;
 	int builtin_ret = 0;
-	info_t info[] = { {0, 0, 0, 0} };
+	info_t info[] = { INFO_INIT };
 
 	while (r != -1 && builtin_ret != -1)
 	{
+		clear_info(info);
 		if (interactive())
 			_puts("$ ");
-		r = mygetline(&(info->arg), NULL);
+		r = mygetline(&(info->arg), &len);
 		if (r != -1)
 		{
-			set_info(info, info->arg);
+			set_info(info);
 			builtin_ret = find_builtin(info);
 			if (builtin_ret != -1)
-				find_cmd(info->argv);
+				find_cmd(info);
 		}
 		free_info(info);
 		if (0)
@@ -80,22 +82,23 @@ int find_builtin(info_t *info)
 
 /**
  * find_cmd - finds a command in PATH
- * @argv: arg vector
+ * @info: the parameter & return info struct
  *
  * Return: void
  */
-void find_cmd(char **argv)
+void find_cmd(info_t *info)
 {
 	struct stat st;
 	char path[1024], **paths, **_paths;
 	int found = 0;
 
 	_paths = paths = strtow(_getenv("PATH="), ":");
+	info->path = info->argv[0];
 	if (paths)
 	{
-		if (_getenv("PATH=")[0] == ':' && !stat(argv[0], &st))
+		if (_getenv("PATH=")[0] == ':' && !stat(info->argv[0], &st))
 		{
-			fork_cmd(argv, NULL);
+			fork_cmd(info);
 			found++;
 		}
 		else
@@ -104,45 +107,44 @@ void find_cmd(char **argv)
 				path[0] = '\0';
 				strcpy(path, *paths);
 				strcat(path, "/");
-				strcat(path, argv[0]);
+				strcat(path, info->argv[0]);
 				if (!stat(path, &st))
 				{
 					found++;
-					fork_cmd(argv, path);
+					info->path = path;
+					fork_cmd(info);
 					break;
 				}
 				paths++;
 			}
 		ffree(_paths);
 	}
-	if (!found && !stat(argv[0], &st))
-		fork_cmd(argv, NULL);
+	if (!found && !stat(info->argv[0], &st))
+		fork_cmd(info);
 }
 
 /**
  * fork_cmd - forks a an exec thread to run cmd
- * @argv: arg vector
- * @path: the full command path
+ * @info: the parameter & return info struct
  *
  * Return: void
  */
-void fork_cmd(char **argv, char *path)
+void fork_cmd(info_t *info)
 {
 	pid_t child_pid;
 	int status = 0;
 
-	if (!path)
-		path = argv[0];
-
 	child_pid = fork();
 	if (child_pid == -1)
 	{
+		/* TODO: PUT ERROR FUNCTION */
 		perror("Error:");
 		return;
 	}
 	if (child_pid == 0)
 	{
-		execve(path, argv, NULL);
+		execve(info->path, info->argv, NULL);
+		/* TODO: PUT ERROR FUNCTION */
 		exit(98);
 	}
 	else
