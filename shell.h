@@ -11,6 +11,7 @@
 #include <sys/stat.h>
 #include <limits.h>
 
+
 #define BLA "\033[30m"
 #define RED "\033[31m"
 #define GRE "\033[32m"
@@ -20,7 +21,6 @@
 #define CYA "\033[36m"
 #define RES "\033[37m"
 
-
 #define _RED "\033[41m"
 #define _GRE "\033[42m"
 #define _YEL "\033[43m"
@@ -29,10 +29,13 @@
 #define _CYA "\033[46m"
 #define _RES "\033[40m"
 
+
 #define READ_BUF_SIZE 1024
+
 
 /* 1 if using system getline() */
 #define USE_GETLINE 0
+
 
 extern char **environ;
 
@@ -76,49 +79,49 @@ void find_cmd(info_t *);
 void fork_cmd(info_t *);
 
 /* string_functions.c */
-int _strlen(char *s);
-int _strcmp(char *s1, char *s2);
-char *_strstr(char *haystack, char *needle);
-char *starts_with(const char *haystack, const char *needle);
-char *_strcat(char *dest, char *src);
+int _strlen(char *);
+int _strcmp(char *, char *);
+char *_strstr(char *, char *);
+char *starts_with(const char *, const char *);
+char *_strcat(char *, char *);
 
 /* string_functions2.c */
-char *_strcpy(char *dest, char *src);
-char *str_concat(char *s1, char *s2);
-char *_strdup(char *str);
-void _puts(char *str);
-int _putchar(char c);
+char *_strcpy(char *, char *);
+char *str_concat(char *, char *);
+char *_strdup(char *);
+void _puts(char *);
+int _putchar(char);
 
 /* string_functions3.c */
-char *_strncpy(char *dest, char *src, int n);
-char *_strncat(char *dest, char *src, int n);
-char *_strchr(char *s, char c);
-unsigned int _strspn(char *s, char *accept);
-char *_strpbrk(char *s, char *accept);
+char *_strncpy(char *, char *, int);
+char *_strncat(char *, char *, int);
+char *_strchr(char *, char);
+unsigned int _strspn(char *, char *);
+char *_strpbrk(char *, char *);
 
 /* string_functions4.c */
-char **strtow(char *str, char *d);
-char **mystrtok(char *str, char *delim);
+char **strtow(char *, char *);
+char **mystrtok(char *, char *);
 
 /* memory_functions */
-void *_calloc(unsigned int nmemb, unsigned int size);
-char *_memset(char *s, char b, unsigned int n);
-char *_memcpy(char *dest, char *src, unsigned int n);
-void ffree(char **pp);
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+void *_calloc(unsigned int, unsigned int);
+char *_memset(char *, char, unsigned int);
+char *_memcpy(char *, char *, unsigned int);
+void ffree(char **);
+void *_realloc(void *, unsigned int, unsigned int);
 
 /* memory_functions2.c */
-int bfree(void **ptr);
+int bfree(void **);
 
 /* more_functions.c */
-int is_delim(char c, char *delim);
-int _isalpha(int c);
-int _atoi(char *s);
-char *_getenv(const char *name);
+int is_delim(char, char *);
+int _isalpha(int);
+int _atoi(char *);
+char *_getenv(const char *);
 int interactive(void);
 
 /* more_functions2.c */
-int _erratoi(char *s);
+int _erratoi(char *);
 
 /* builtin_emulators.c */
 int _myenv(info_t *);
@@ -133,16 +136,16 @@ int _myunsetenv(info_t *);
 int _myalias(info_t *);
 
 /* print_error.c */
-void print_error(info_t info, char *emsg);
+void print_error(info_t, char *);
 
 /* getline.c module */
-ssize_t mygetline(char **buf, size_t *len);
-int _getline(char **ptr, size_t *len);
+ssize_t mygetline(char **, size_t *);
+int _getline(char **, size_t *);
 
 /* info.c module */
-void clear_info(info_t *info);
-void set_info(info_t *info);
-void free_info(info_t *info);
-void print_info(info_t *info);
+void clear_info(info_t *);
+void set_info(info_t *);
+void free_info(info_t *);
+void print_info(info_t *);
 
 #endif

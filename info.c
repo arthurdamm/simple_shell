@@ -50,6 +50,6 @@ void print_info(info_t *info)
 
 	printf("info->path:[%s]\n", info->path);
 	printf("info->line_count:[%d]\n", info->line_count);
-	printf("info->err_num:[%s]\n", info->err_num);
+	printf("info->err_num:[%d]\n", info->err_num);
 	printf("==========================\n");
 }
