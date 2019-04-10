@@ -67,7 +67,6 @@ typedef struct builtin
 /* hsh.c */
 int hsh(__attribute__((unused))char **av);
 int find_builtin(info_t *info);
-int find_builtin(info_t *info);
 void find_cmd(char **argv);
 void fork_cmd(char **argv, char *path);
 
