@@ -96,9 +96,9 @@ void find_cmd(info_t *info)
 	info->path = info->argv[0];
 	if (paths)
 	{
+		info->line_count++;
 		if (_getenv("PATH=")[0] == ':' && !stat(info->argv[0], &st))
 		{
-			info->line_count++;
 			fork_cmd(info);
 			found++;
 		}
@@ -111,7 +111,6 @@ void find_cmd(info_t *info)
 				_strcat(path, info->argv[0]);
 				if (!stat(path, &st))
 				{
-					info->line_count++;
 					found++;
 					info->path = path;
 					fork_cmd(info);
@@ -119,11 +118,8 @@ void find_cmd(info_t *info)
 				}
 				paths++;
 			}
-		if (!*paths)
-		{
-			info->line_count++;
+		if (!*paths && *(info->arg) != '\n')
 			print_error(info);
-		}
 		ffree(_paths);
 	}
 	if (!found && !stat(info->argv[0], &st))

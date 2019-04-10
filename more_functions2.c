@@ -40,7 +40,8 @@ void print_error(info_t *info)
 	_puts(": ");
 	_puts(info->path);
 	_puts(": ");
-	perror("");
+	_putchar('\n');
+//	perror("");  */
 }
 
 /**
