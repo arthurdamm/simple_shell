@@ -48,6 +48,8 @@ extern char **environ;
  *@argc: the argument count
  *@line_count: the error count
  *@err_num: the error code for exit()s
+ *@fname: the program filename
+ *@env: local copy of environ
  */
 typedef struct passinfo
 {
@@ -58,9 +60,10 @@ typedef struct passinfo
 	unsigned int line_count;
 	int err_num;
 	char *fname;
+	char *env;
 } info_t;
 
-#define INFO_INIT {NULL, NULL, NULL, 0, 0, 0, NULL}
+#define INFO_INIT {NULL, NULL, NULL, 0, 0, 0, NULL, NULL}
 
 /**
  *struct builtin - contains a builtin string and related function
