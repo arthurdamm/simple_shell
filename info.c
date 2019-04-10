@@ -35,4 +35,5 @@ void free_info(info_t *info)
 	bfree((void **)&(info->arg));
 	ffree(info->argv);
 	info->argv = NULL;
+	init_info(info);
 }
