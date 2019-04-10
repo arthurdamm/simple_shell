@@ -7,7 +7,18 @@
  *
  * Return: 0 on success, 1 on error
  */
-int main(__attribute__((unused))int ac, __attribute__((unused))char **av)
+int main(__attribute__((unused))int ac, char **av)
+{
+	return (hsh(av));
+}
+
+/**
+ * hsh - main shell loop
+ * @av: the argument vector from main()
+ *
+ * Return: 0 on success, 1 on error, or error code
+ */
+int hsh(__attribute__((unused))char **av)
 {
 	int builtin_ret = 0;
 	size_t len = 0;
@@ -145,26 +156,4 @@ void fork_cmd(char **argv, char *path)
 	{
 		wait(&status);
 	}
-}
-
-/**
- * mygetline - gets a line minus the newline
- * @buf: address of buffer
- * @len: address of len var
- *
- * Return: bytes read
- */
-ssize_t mygetline(char **buf, size_t *len)
-{
-#if USE_GETLINE
-	ssize_t r = getline(buf, len, stdin);
-#else
-	ssize_t r = _getline(buf, len);
-#endif
-	if (r > 1 && (*buf)[r - 1] == '\n')
-	{
-		(*buf)[r - 1] = '\0'; /* remove trailing newline */
-		r--;
-	}
-	return (r);
 }

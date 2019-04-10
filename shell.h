@@ -65,10 +65,12 @@ typedef struct builtin
 
 
 /* hsh.c */
+int hsh(__attribute__((unused))char **av);
+int find_builtin(info_t *info);
 int find_builtin(info_t *info);
 void find_cmd(char **argv);
 void fork_cmd(char **argv, char *path);
-ssize_t mygetline(char **buf, size_t *len);
+
 
 /* string_functions.c */
 int _strlen(char *s);
@@ -128,6 +130,7 @@ int _myalias(info_t *);
 void print_error(info_t info, char *emsg);
 
 /* getline.c module */
+ssize_t mygetline(char **buf, size_t *len);
 int _getline(char **ptr, size_t *len);
 
 /* info.c module */
