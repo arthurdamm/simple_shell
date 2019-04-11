@@ -73,7 +73,6 @@ int copy_environ(info_t *info)
 
 	for (i = 0; environ[i]; i++)
 		;
-	/* TODO: MALLOC: not freed! */
 	env = malloc(sizeof(char *) * (i + 1));
 	if (!env)
 		return (0);

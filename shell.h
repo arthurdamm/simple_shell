@@ -148,7 +148,7 @@ int _getline(char **, size_t *);
 /* info.c module */
 void clear_info(info_t *);
 void set_info(info_t *, char **);
-void free_info(info_t *info, int all);
+void free_info(info_t *, int);
 void print_info(info_t *);
 
 /* env.c module */

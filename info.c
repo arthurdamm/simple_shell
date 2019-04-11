@@ -18,6 +18,7 @@ void clear_info(info_t *info)
 /**
  * set_info - initializes info_t struct
  * @info: struct address
+ * @av: argument vector
  */
 void set_info(info_t *info, char **av)
 {
@@ -49,7 +50,7 @@ void free_info(info_t *info, int all)
 	{
 		if (info->env)
 			ffree(info->env);
-		info->env = NULL; 
+		info->env = NULL;
 	}
 	clear_info(info);
 }

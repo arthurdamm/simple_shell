@@ -34,7 +34,6 @@ int hsh(char **av)
 		if (r != -1)
 		{
 			set_info(info, av);
-			P;
 			builtin_ret = find_builtin(info);
 			if (builtin_ret == -1)
 				find_cmd(info);
@@ -44,7 +43,6 @@ int hsh(char **av)
 			write(STDOUT_FILENO, info->arg, _strlen(info->arg));
 	}
 	free_info(info, 1);
-	P;
 	if (builtin_ret == -2)
 		exit(info->err_num);
 	if (interactive())
@@ -58,8 +56,8 @@ int hsh(char **av)
  *
  * Return: -1 if builtin not found,
  *			0 if builtin executed successfully,
- 			1 if builtin found but not successful,
- 			-2 if builtin signals exit()
+ *			1 if builtin found but not successful,
+ *			-2 if builtin signals exit()
  */
 int find_builtin(info_t *info)
 {
