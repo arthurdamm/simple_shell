@@ -35,6 +35,8 @@
 /* 1 if using system getline() */
 #define USE_GETLINE 0
 
+#define P (print_info(info))
+
 
 extern char **environ;
 
@@ -146,7 +148,7 @@ int _getline(char **, size_t *);
 /* info.c module */
 void clear_info(info_t *);
 void set_info(info_t *, char **);
-void free_info(info_t *);
+void free_info(info_t *info, int all);
 void print_info(info_t *);
 
 /* env.c module */

@@ -6,13 +6,16 @@
  *          constant function prototype.
  * Return: Always 0
  */
-int _myenv(__attribute__((unused)) info_t *info)
+int _myenv(info_t *info)
 {
 	int i;
 
-	for (i = 0; environ[i]; i++)
+	if (!info->env)
+		return (0);
+
+	for (i = 0; info->env[i]; i++)
 	{
-		_puts(environ[i]);
+		_puts(info->env[i]);
 		_putchar('\n');  /* _puts does not add a newline */
 	}
 	return (0);
@@ -63,12 +66,30 @@ int _myunsetenv(info_t *info)
 int copy_environ(info_t *info)
 {
 	int i = 0;
+	char **env = NULL;
 
 	if (!environ)
-	{
-		return (info->err_num);
-	}
+		return (0);
+
 	for (i = 0; environ[i]; i++)
 		;
+	/* TODO: MALLOC: not freed! */
+	env = malloc(sizeof(char *) * (i + 1));
+	if (!env)
+		return (0);
+	for (i = 0; environ[i]; i++)
+	{
+		env[i] = malloc(_strlen(environ[i]) + 1);
+		if (!env[i])
+		{
+			for (int j = 0; j < i; j++)
+				free(env[j]);
+			return (0);
+		}
+		_strcpy(env[i], environ[i]);
+
+	}
+	env[i] = NULL;
+	info->env = env;
 	return (1);
 }
