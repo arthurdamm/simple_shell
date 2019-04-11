@@ -38,10 +38,8 @@ void print_error(info_t *info)
 	_puts(": ");
 	print_d(info);
 	_puts(": ");
-	_puts(info->path);
+	_puts(info->argv[0]);
 	_puts(": ");
-	_putchar('\n');
-//	perror("");  */
 }
 
 /**

@@ -55,8 +55,8 @@ int hsh(char **av)
  *
  * Return: -1 if builtin not found,
  *			0 if builtin executed successfully,
- 			1 if builtin found but not successful,
- 			-2 if builtin signals exit()
+ *			1 if builtin found but not successful,
+ *			-2 if builtin signals exit()
  */
 int find_builtin(info_t *info)
 {
@@ -121,7 +121,10 @@ void find_cmd(info_t *info)
 				paths++;
 			}
 		if (!*paths && *(info->arg) != '\n')
+		{
 			print_error(info);
+			puts("not found");
+		}
 		ffree(_paths);
 	}
 	if (!found && !stat(info->argv[0], &st))
