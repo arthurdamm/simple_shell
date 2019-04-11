@@ -1,0 +1,12 @@
+.TH "simple_shell" 1 "April 2019" ""
+.SH NAME
+simple_shell - standard command line interpreter
+.SH SYNOPSIS
+hsh [-abcDefg] [-o option]...
+.SH DESCRIPTION
+The hsh utility reads and interprets a command line string, then executes commands based on the input.  Both the local directory and PATH are searched.
+When applicable, the  function prints to stdout, the standard output stream.
+.SH AUTHORS
+Written by Arthur Damm and Jason Cortella.q
+.SH IN PROGRESS
+more to come...
