@@ -8,7 +8,7 @@
  */
 int _myenv(info_t *info)
 {
-	print_list(info->env_node);
+	print_list(info->env);
 	return (0);
 }
 
@@ -22,6 +22,7 @@ int _myenv(info_t *info)
 int _mysetenv(info_t *info)
 {
 	char *buf = NULL;
+
 	if (info->argc != 3)
 		return (_puts("Usage: setenv VARIABLE VALUE\n"), 1);
 
@@ -35,7 +36,7 @@ int _mysetenv(info_t *info)
 	_strcpy(buf, info->argv[1]);
 	_strcat(buf, "=");
 	_strcat(buf, info->argv[2]);
-	add_node_end(&(info->env_node), buf);
+	add_node_end(&(info->env), buf);
 	free(buf);
 	return (0);
 }
@@ -48,14 +49,14 @@ int _mysetenv(info_t *info)
  */
 int _myunsetenv(info_t *info)
 {
-	list_t *node = info->env_node;
+	list_t *node = info->env;
 	size_t i = 0;
 	char *p;
 
 	if (info->argc != 2)
 		return (_puts("Usage: unsetenv VARIABLE\n"), 1);
 
-	if(!node)
+	if (!node)
 		return (1);
 
 	while (node)
@@ -63,9 +64,9 @@ int _myunsetenv(info_t *info)
 		p = starts_with(node->str, info->argv[1]);
 		if (p && *p == '=')
 		{
-			delete_node_at_index(&(info->env_node), i);
+			delete_node_at_index(&(info->env), i);
 			i = 0;
-			node = info->env_node;
+			node = info->env;
 			continue;
 		}
 		node = node->next;
@@ -74,7 +75,12 @@ int _myunsetenv(info_t *info)
 	return (0);
 }
 
-
+/**
+ * populate_env_list - populates env linked list
+ * @info: Structure containing potential arguments. Used to maintain
+ *          constant function prototype.
+ * Return: Always 0
+ */
 int populate_env_list(info_t *info)
 {
 	list_t *node = NULL;
@@ -82,6 +88,6 @@ int populate_env_list(info_t *info)
 
 	for (i = 0; environ[i]; i++)
 		add_node_end(&node, environ[i]);
-	info->env_node = node;
-	return (1);
+	info->env = node;
+	return (0);
 }
