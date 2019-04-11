@@ -11,15 +11,15 @@ int _myexit(info_t *info)
 {
 	int exitcheck;
 
+	info->line_count++;
 	if (info->argv[1])  /* If there is an exit arguement */
 	{
 		exitcheck = _erratoi(info->argv[1]);
 		if (exitcheck == -1)
 		{
-//			print_error(info);
-//			print_info(info);
-			_puts(info->argv[1]);
-			_putchar('\n');
+			print_error(info);
+			_puts("Illegal number: ");
+			puts(info->argv[1]);
 			return (1);
 		}
 		info->err_num = _atoi(info->argv[1]);
