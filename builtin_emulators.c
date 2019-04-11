@@ -36,12 +36,35 @@ int _myexit(info_t *info)
  */
 int _mycd(info_t *info)
 {
-	char **arg_array;
+	char *s;
+	char buffer[1024], buffer_copy[1024];
+	int chdir_ret;
 
-	arg_array = info->argv;
-	_puts("cd call works. Function not yet implemented \n");
-	if (0)
-		puts(*arg_array); /* temp att_unused workaround */
+	s = getcwd(buffer, 1024);
+	if (!s)
+		_puts("TODO: >>getcwd failure emsg here<<\n");
+	if (!info->lastdir)
+		info->lastdir = "/home/vagrant"; /*TODO: $HOME */
+
+	if (!info->argv[1])
+		chdir_ret = chdir("/home/vagrant"); /*TODO: $HOME */
+	else if (_strcmp(info->argv[1], "-") == 0)
+	{
+		_puts(info->lastdir);
+		chdir_ret = chdir(info->lastdir);
+	}
+	else
+		chdir_ret = chdir(info->argv[1]);
+
+	if (chdir_ret == -1)
+	{
+		print_error(info);
+		_puts("can't cd to ");
+		_puts(info->argv[1]);
+		_putchar('\n');
+	}
+	_strcpy(buffer_copy, buffer);
+	info->lastdir = buffer_copy;
 	return (0);
 }
 

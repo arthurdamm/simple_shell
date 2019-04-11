@@ -69,9 +69,10 @@ typedef struct passinfo
 	list_t *env;
 	char **environ;
 	int env_changed;
+	char *lastdir;
 } info_t;
 
-#define INFO_INIT {NULL, NULL, NULL, 0, 0, 0, NULL, NULL, NULL, 0}
+#define INFO_INIT {NULL, NULL, NULL, 0, 0, 0, NULL, NULL, NULL, 0, NULL}
 
 /**
  *struct builtin - contains a builtin string and related function
