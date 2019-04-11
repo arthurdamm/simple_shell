@@ -32,8 +32,6 @@ void set_info(info_t *info, char **av)
 			;
 		info->argc = i;
 	}
-	if (!info->env)
-		copy_environ(info);
 	if (!info->env_node && !info->line_count)
 		populate_env_list(info);
 }
@@ -50,9 +48,6 @@ void free_info(info_t *info, int all)
 	info->argv = NULL;
 	if (all)
 	{
-		if (info->env)
-			ffree(info->env);
-		info->env = NULL;
 		if (info->env_node)
 			free_list(&(info->env_node));
 	}
@@ -76,6 +71,6 @@ void print_info(info_t *info)
 	printf("info->line_count:[%d]\n", info->line_count);
 	printf("info->err_num:[%d]\n", info->err_num);
 	printf("info->fname:[%s]\n", info->fname);
-	printf("info->env:[%p]\n", (void *)info->env);
+	printf("info->env_node:[%p]\n", (void *)info->env_node);
 	printf("==========================\n");
 }

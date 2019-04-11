@@ -85,39 +85,3 @@ int populate_env_list(info_t *info)
 	info->env_node = node;
 	return (1);
 }
-
-/**
- * copy_environ - makes a local copy of environ
- * @info: Structure containing potential arguments. Used to maintain
- *        constant function prototype.
- *  Return: Always 0
- */
-int copy_environ(info_t *info)
-{
-	int i = 0;
-	char **env = NULL;
-
-	if (!environ)
-		return (0);
-
-	for (i = 0; environ[i]; i++)
-		;
-	env = malloc(sizeof(char *) * (i + 1));
-	if (!env)
-		return (0);
-	for (i = 0; environ[i]; i++)
-	{
-		env[i] = malloc(_strlen(environ[i]) + 1);
-		if (!env[i])
-		{
-			for (int j = 0; j < i; j++)
-				free(env[j]);
-			return (0);
-		}
-		_strcpy(env[i], environ[i]);
-
-	}
-	env[i] = NULL;
-	info->env = env;
-	return (1);
-}

@@ -53,7 +53,6 @@ extern char **environ;
  *@line_count: the error count
  *@err_num: the error code for exit()s
  *@fname: the program filename
- *@env: local copy of environ
  *@env_node: linked list local copy of environ
  */
 typedef struct passinfo
@@ -65,11 +64,10 @@ typedef struct passinfo
 	unsigned int line_count;
 	int err_num;
 	char *fname;
-	char **env;
 	list_t *env_node;
 } info_t;
 
-#define INFO_INIT {NULL, NULL, NULL, 0, 0, 0, NULL, NULL, NULL}
+#define INFO_INIT {NULL, NULL, NULL, 0, 0, 0, NULL, NULL}
 
 /**
  *struct builtin - contains a builtin string and related function
@@ -160,6 +158,5 @@ int _myenv(info_t *);
 int _mysetenv(info_t *);
 int _myunsetenv(info_t *);
 int populate_env_list(info_t *);
-int copy_environ(info_t *);
 
 #endif
