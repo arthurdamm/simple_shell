@@ -35,6 +35,8 @@
 /* 1 if using system getline() */
 #define USE_GETLINE 0
 
+#define P (print_info(info))
+
 
 extern char **environ;
 
@@ -60,7 +62,7 @@ typedef struct passinfo
 	unsigned int line_count;
 	int err_num;
 	char *fname;
-	char *env;
+	char **env;
 } info_t;
 
 #define INFO_INIT {NULL, NULL, NULL, 0, 0, 0, NULL, NULL}
@@ -146,7 +148,7 @@ int _getline(char **, size_t *);
 /* info.c module */
 void clear_info(info_t *);
 void set_info(info_t *, char **);
-void free_info(info_t *);
+void free_info(info_t *, int);
 void print_info(info_t *);
 
 /* env.c module */

@@ -38,10 +38,11 @@ int hsh(char **av)
 			if (builtin_ret == -1)
 				find_cmd(info);
 		}
-		free_info(info);
+		free_info(info, 0);
 		if (0)
 			write(STDOUT_FILENO, info->arg, _strlen(info->arg));
 	}
+	free_info(info, 1);
 	if (builtin_ret == -2)
 		exit(info->err_num);
 	if (interactive())

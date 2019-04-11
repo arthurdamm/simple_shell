@@ -18,6 +18,7 @@ void clear_info(info_t *info)
 /**
  * set_info - initializes info_t struct
  * @info: struct address
+ * @av: argument vector
  */
 void set_info(info_t *info, char **av)
 {
@@ -31,17 +32,26 @@ void set_info(info_t *info, char **av)
 			;
 		info->argc = i;
 	}
+	if (!info->env)
+		copy_environ(info);
 }
 
 /**
  * free_info - frees info_t struct fields
  * @info: struct address
+ * @all: true if freeing all fields
  */
-void free_info(info_t *info)
+void free_info(info_t *info, int all)
 {
 	bfree((void **)&(info->arg));
 	ffree(info->argv);
 	info->argv = NULL;
+	if (all)
+	{
+		if (info->env)
+			ffree(info->env);
+		info->env = NULL;
+	}
 	clear_info(info);
 }
 
@@ -62,6 +72,6 @@ void print_info(info_t *info)
 	printf("info->line_count:[%d]\n", info->line_count);
 	printf("info->err_num:[%d]\n", info->err_num);
 	printf("info->fname:[%s]\n", info->fname);
-	printf("info->env:[%s]\n", info->env);
+	printf("info->env:[%p]\n", (void *)info->env);
 	printf("==========================\n");
 }
