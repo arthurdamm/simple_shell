@@ -11,7 +11,7 @@ void clear_info(info_t *info)
 	info->path = NULL;
 	info->argc = 0;
 	/* info->line_count; should not reset */
-	info->err_num = 0;
+	/* info->err_num; should not reset */
 	/* info->fname; should not reset */
 }
 
@@ -62,5 +62,6 @@ void print_info(info_t *info)
 	printf("info->line_count:[%d]\n", info->line_count);
 	printf("info->err_num:[%d]\n", info->err_num);
 	printf("info->fname:[%s]\n", info->fname);
+	printf("info->env:[%s]\n", info->env);
 	printf("==========================\n");
 }

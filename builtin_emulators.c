@@ -38,11 +38,12 @@ int _myexit(info_t *info)
 //			print_info(info);
 			_puts(info->argv[1]);
 			_putchar('\n');
-			return (0);
+			return (1);
 		}
 		info->err_num = _atoi(info->argv[1]);
+		return (-2);
 	}
-	return (-1);
+	return (-2);
 }
 
 /**
