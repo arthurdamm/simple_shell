@@ -29,7 +29,7 @@ size_t list_len(const list_t *h)
 char **list_to_strings(list_t *head)
 {
 	list_t *node = head;
-	size_t i = list_len(head);	
+	size_t i = list_len(head);
 	char **strs;
 
 	if (!head || !i)
@@ -40,6 +40,7 @@ char **list_to_strings(list_t *head)
 	for (i = 0; node; node = node->next, i++)
 	{
 		char *str = malloc(_strlen(node->str) + 1);
+
 		str = _strcpy(str, node->str);
 		strs[i] = str;
 	}

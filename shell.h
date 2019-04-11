@@ -55,6 +55,7 @@ extern char **environ;
  *@fname: the program filename
  *@env: linked list local copy of environ
  *@environ: custom modified copy of environ from LL env
+ *@env_changed: on if environ was changed
  */
 typedef struct passinfo
 {
