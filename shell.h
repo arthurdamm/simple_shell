@@ -131,15 +131,12 @@ void print_error(info_t *);
 int print_d(info_t *);
 
 /* builtin_emulators.c */
-int _myenv(info_t *);
 int _myexit(info_t *);
 int _mycd(info_t *);
 int _myhelp(info_t *);
 
 /* builtin_emulators2.c */
 int _myhistory(info_t *);
-int _mysetenv(info_t *);
-int _myunsetenv(info_t *);
 int _myalias(info_t *);
 
 /* getline.c module */
@@ -151,5 +148,11 @@ void clear_info(info_t *);
 void set_info(info_t *, char **);
 void free_info(info_t *);
 void print_info(info_t *);
+
+/* env.c module */
+int _myenv(info_t *);
+int _mysetenv(info_t *);
+int _myunsetenv(info_t *);
+int copy_environ(info_t *);
 
 #endif

@@ -1,24 +1,6 @@
 #include "shell.h"
 
 /**
- * _myenv - prints the current environment
- * @info: Structure containing potential arguments. Used to maintain
- *          constant function prototype.
- * Return: Always 0
- */
-int _myenv(__attribute__((unused)) info_t *info)
-{
-	int i;
-
-	for (i = 0; environ[i]; i++)
-	{
-		_puts(environ[i]);
-		_putchar('\n');  /* _puts does not add a newline */
-	}
-	return (0);
-}
-
-/**
  * _myexit - exits the shell
  * @info: Structure containing potential arguments. Used to maintain
  *          constant function prototype.

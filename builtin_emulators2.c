@@ -19,41 +19,6 @@ int _myhistory(info_t *info)
 }
 
 /**
- * _mysetenv - Initialize a new environment variable,
- *             or modify an existing one
- * @info: Structure containing potential arguments. Used to maintain
- *        constant function prototype.
- *  Return: Always 0
- */
-int _mysetenv(info_t *info)
-{
-	char **arg_array;
-
-	arg_array = info->argv;
-	_puts("setenv call works. Function not yet implemented \n");
-	if (0)
-		puts(*arg_array);  /* temp att_unused workaround */
-	return (0);
-}
-
-/**
- * _myunsetenv - Remove an environment variable
- * @info: Structure containing potential arguments. Used to maintain
- *        constant function prototype.
- *  Return: Always 0
- */
-int _myunsetenv(info_t *info)
-{
-	char **arg_array;
-
-	arg_array = info->argv;
-	_puts("unsetenv call works. Function not yet implemented \n");
-	if (0)
-		puts(*arg_array);  /* temp att_unused workaround */
-	return (0);
-}
-
-/**
  * _myalias - mimics the alias builtin (man alias)
  * @info: Structure containing potential arguments. Used to maintain
  *          constant function prototype.
