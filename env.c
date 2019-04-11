@@ -21,12 +21,22 @@ int _myenv(info_t *info)
  */
 int _mysetenv(info_t *info)
 {
-	char **arg_array;
+	char *buf = NULL;
+	if (info->argc != 3)
+		return (_puts("Usage: setenv VARIABLE VALUE\n"), 1);
 
-	arg_array = info->argv;
-	_puts("setenv call works. Function not yet implemented \n");
-	if (0)
-		puts(*arg_array);  /* temp att_unused workaround */
+	/* TODO: HACK! LOL ;) */
+	info->argc = 2;
+	_myunsetenv(info);
+	info->argc = 3;
+	buf = malloc(_strlen(info->argv[1]) + _strlen(info->argv[2]) + 2);
+	if (!buf)
+		return (1);
+	_strcpy(buf, info->argv[1]);
+	_strcat(buf, "=");
+	_strcat(buf, info->argv[2]);
+	add_node_end(&(info->env_node), buf);
+	free(buf);
 	return (0);
 }
 
@@ -38,19 +48,29 @@ int _mysetenv(info_t *info)
  */
 int _myunsetenv(info_t *info)
 {
-	char **env = info->env;
+	list_t *node = info->env_node;
+	size_t i = 0;
+	char *p;
 
-	if (!env) /* ERROR? */
-		return (0);
-	while (*env)
+	if (info->argc != 2)
+		return (_puts("Usage: unsetenv VARIABLE\n"), 1);
+
+	if(!node)
+		return (1);
+
+	while (node)
 	{
-		char *s = starts_with(*env, info->argv[1]);
-		if (!s)
+		p = starts_with(node->str, info->argv[1]);
+		if (p && *p == '=')
+		{
+			delete_node_at_index(&(info->env_node), i);
+			i = 0;
+			node = info->env_node;
 			continue;
-		env++;
+		}
+		node = node->next;
+		i++;
 	}
-
-	_puts("unsetenv call works. Function not yet implemented \n");
 	return (0);
 }
 

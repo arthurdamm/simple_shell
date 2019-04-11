@@ -34,7 +34,7 @@ void set_info(info_t *info, char **av)
 	}
 	if (!info->env)
 		copy_environ(info);
-	if (!info->env_node)
+	if (!info->env_node && !info->line_count)
 		populate_env_list(info);
 }
 

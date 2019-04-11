@@ -16,6 +16,7 @@ typedef struct liststr
 list_t *add_node(list_t **, const char *);
 list_t *add_node_end(list_t **, const char *);
 size_t print_list(const list_t *);
+int delete_node_at_index(list_t **, unsigned int);
 void free_list(list_t **);
 
 #endif
