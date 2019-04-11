@@ -32,8 +32,8 @@ void set_info(info_t *info, char **av)
 			;
 		info->argc = i;
 	}
-	if (!info->env && !info->line_count)
-		populate_env_list(info);
+	/* TODO: if (!info->env && !info->line_count)
+		populate_env_list(info); */
 }
 
 /**

@@ -25,6 +25,7 @@ int hsh(char **av)
 	int builtin_ret = 0;
 	info_t info[] = { INFO_INIT };
 
+	populate_env_list(info);
 	while (r != -1 && builtin_ret != -2)
 	{
 		clear_info(info);
@@ -95,12 +96,12 @@ void find_cmd(info_t *info)
 	char path[1024], **paths, **_paths;
 	int found = 0;
 
-	_paths = paths = strtow(_getenv("PATH="), ":");
+	_paths = paths = strtow(_getenv(info, "PATH="), ":");
 	info->path = info->argv[0];
 	if (paths)
 	{
 		info->line_count++;
-		if (_getenv("PATH=")[0] == ':' && !stat(info->argv[0], &st))
+		if (_getenv(info, "PATH=")[0] == ':' && !stat(info->argv[0], &st))
 		{
 			fork_cmd(info);
 			found++;

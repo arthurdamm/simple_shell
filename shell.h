@@ -126,7 +126,6 @@ int bfree(void **);
 int is_delim(char, char *);
 int _isalpha(int);
 int _atoi(char *);
-char *_getenv(const char *);
 int interactive(void);
 
 /* more_functions2.c */
@@ -154,6 +153,7 @@ void free_info(info_t *, int);
 void print_info(info_t *);
 
 /* env.c module */
+char *_getenv(info_t *, const char *);
 int _myenv(info_t *);
 int _mysetenv(info_t *);
 int _myunsetenv(info_t *);
