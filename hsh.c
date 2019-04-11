@@ -25,7 +25,7 @@ int hsh(char **av)
 	int builtin_ret = 0;
 	info_t info[] = { INFO_INIT };
 
-	while (r != -1 && builtin_ret != -1)
+	while (r != -1 && builtin_ret != -2)
 	{
 		clear_info(info);
 		if (interactive())
@@ -35,14 +35,14 @@ int hsh(char **av)
 		{
 			set_info(info, av);
 			builtin_ret = find_builtin(info);
-			if (builtin_ret != -1)
+			if (builtin_ret == -1)
 				find_cmd(info);
 		}
 		free_info(info);
 		if (0)
 			write(STDOUT_FILENO, info->arg, _strlen(info->arg));
 	}
-	if (builtin_ret == -1)
+	if (builtin_ret == -2)
 		exit(info->err_num);
 	if (interactive())
 		printf("return value = %i\n", builtin_ret);
@@ -53,11 +53,14 @@ int hsh(char **av)
  * find_builtin - finds a builtin command
  * @info: the parameter & return info struct
  *
- * Return: 1, 0, or -1 on exit
+ * Return: -1 if builtin not found,
+ *			0 if builtin executed successfully,
+ 			1 if builtin found but not successful,
+ 			-2 if builtin signals exit()
  */
 int find_builtin(info_t *info)
 {
-	int i, built_in_ret = 0;
+	int i, built_in_ret = -1;
 	builtin_table builtintbl[] = {
 		{"exit", _myexit},
 		{"env", _myenv},
@@ -74,8 +77,7 @@ int find_builtin(info_t *info)
 		if (_strcmp(info->argv[0], builtintbl[i].type) == 0)
 		{
 			built_in_ret = builtintbl[i].func(info);
-			if (built_in_ret == -1)
-				break;
+			break;
 		}
 	return (built_in_ret);
 }
