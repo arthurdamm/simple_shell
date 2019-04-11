@@ -60,7 +60,7 @@ typedef struct passinfo
 	unsigned int line_count;
 	int err_num;
 	char *fname;
-	char *env;
+	char **env;
 } info_t;
 
 #define INFO_INIT {NULL, NULL, NULL, 0, 0, 0, NULL, NULL}
