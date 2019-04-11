@@ -34,6 +34,8 @@ void set_info(info_t *info, char **av)
 	}
 	if (!info->env)
 		copy_environ(info);
+	if (!info->env_node)
+		populate_env_list(info);
 }
 
 /**
@@ -51,6 +53,8 @@ void free_info(info_t *info, int all)
 		if (info->env)
 			ffree(info->env);
 		info->env = NULL;
+		if (info->env_node)
+			free_list(&(info->env_node));
 	}
 	clear_info(info);
 }

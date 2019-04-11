@@ -8,16 +8,7 @@
  */
 int _myenv(info_t *info)
 {
-	int i;
-
-	if (!info->env)
-		return (0);
-
-	for (i = 0; info->env[i]; i++)
-	{
-		_puts(info->env[i]);
-		_putchar('\n');  /* _puts does not add a newline */
-	}
+	print_list(info->env_node);
 	return (0);
 }
 
@@ -47,14 +38,32 @@ int _mysetenv(info_t *info)
  */
 int _myunsetenv(info_t *info)
 {
-	char **arg_array;
+	char **env = info->env;
 
-	free(environ[0]);
-	arg_array = info->argv;
+	if (!env) /* ERROR? */
+		return (0);
+	while (*env)
+	{
+		char *s = starts_with(*env, info->argv[1]);
+		if (!s)
+			continue;
+		env++;
+	}
+
 	_puts("unsetenv call works. Function not yet implemented \n");
-	if (0)
-		puts(*arg_array);  /* temp att_unused workaround */
 	return (0);
+}
+
+
+int populate_env_list(info_t *info)
+{
+	list_t *node = NULL;
+	size_t i;
+
+	for (i = 0; environ[i]; i++)
+		add_node_end(&node, environ[i]);
+	info->env_node = node;
+	return (1);
 }
 
 /**
