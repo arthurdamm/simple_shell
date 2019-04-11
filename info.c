@@ -50,6 +50,8 @@ void free_info(info_t *info, int all)
 	{
 		if (info->env)
 			free_list(&(info->env));
+		ffree(info->environ);
+			info->environ = NULL;
 	}
 	clear_info(info);
 }

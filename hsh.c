@@ -153,7 +153,7 @@ void fork_cmd(info_t *info)
 	}
 	if (child_pid == 0)
 	{
-		execve(info->path, info->argv, environ);
+		execve(info->path, info->argv, get_environ(info));
 		/* TODO: PUT ERROR FUNCTION */
 		exit(98);
 	}

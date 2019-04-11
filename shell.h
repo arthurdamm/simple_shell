@@ -54,6 +54,7 @@ extern char **environ;
  *@err_num: the error code for exit()s
  *@fname: the program filename
  *@env: linked list local copy of environ
+ *@environ: custom modified copy of environ from LL env
  */
 typedef struct passinfo
 {
@@ -65,9 +66,11 @@ typedef struct passinfo
 	int err_num;
 	char *fname;
 	list_t *env;
+	char **environ;
+	int env_changed;
 } info_t;
 
-#define INFO_INIT {NULL, NULL, NULL, 0, 0, 0, NULL, NULL}
+#define INFO_INIT {NULL, NULL, NULL, 0, 0, 0, NULL, NULL, NULL, 0}
 
 /**
  *struct builtin - contains a builtin string and related function
@@ -158,5 +161,8 @@ int _myenv(info_t *);
 int _mysetenv(info_t *);
 int _myunsetenv(info_t *);
 int populate_env_list(info_t *);
+
+/* env2.c module */
+char **get_environ(info_t *);
 
 #endif

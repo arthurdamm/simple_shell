@@ -60,6 +60,7 @@ int _mysetenv(info_t *info)
 	_strcat(buf, info->argv[2]);
 	add_node_end(&(info->env), buf);
 	free(buf);
+	info->env_changed = 1;
 	return (0);
 }
 
@@ -89,6 +90,7 @@ int _myunsetenv(info_t *info)
 			_puts("Unsetting: ");
 			_puts(info->argv[1]);
 			printf("<%d>\n", delete_node_at_index(&(info->env), i));
+			info->env_changed = 1;
 			i = 0;
 			node = info->env;
 			continue;
