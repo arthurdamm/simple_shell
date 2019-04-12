@@ -51,10 +51,27 @@ int _mycd(info_t *info)
 
 	/* mimic sh - 'cd' (no arguement) means cd $HOME */
 	if (!info->argv[1])
-		chdir_ret = chdir(_getenv(info, "HOME="));
-
+	{
+		char *dir = _getenv(info, "HOME=");
+		if (!dir)
+		{
+			/* TODO: match shell error msg */
+			print_error(info);
+			_puts("No environmental variables!\n");
+			return (1);
+		}	
+		chdir_ret = chdir(dir);
+	}
 	else if (_strcmp(info->argv[1], "-") == 0)
 	{
+
+		if (!info->lastdir)
+		{
+			/* TODO: match shell error msg */
+			print_error(info);
+			_puts("No environmental variables!\n");
+			return (1);
+		}
 		_puts(info->lastdir);
 		chdir_ret = chdir(info->lastdir);
 	}
