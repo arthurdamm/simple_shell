@@ -46,12 +46,9 @@ int _mycd(info_t *info)
 	{
 		dir = _getenv(info, "HOME=");
 		if (!dir)
-		{
-			print_error(info);
-			_puts("No environmental variables!\n");
-			return (1);
-		}
-		chdir_ret = chdir(dir);
+			chdir_ret = chdir(_getenv(info, "PWD="));
+		else
+			chdir_ret = chdir(dir);
 	}
 	else if (_strcmp(info->argv[1], "-") == 0)
 	{
