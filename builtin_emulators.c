@@ -37,17 +37,22 @@ int _myexit(info_t *info)
 int _mycd(info_t *info)
 {
 	char *s;
-	char buffer[1024], buffer_copy[1024];
+	char buffer[1024];
+	static char  buffer_copy[1024];
 	int chdir_ret;
 
 	s = getcwd(buffer, 1024);
 	if (!s)
 		_puts("TODO: >>getcwd failure emsg here<<\n");
-	if (!info->lastdir)
-		info->lastdir = "/home/vagrant"; /*TODO: $HOME */
 
+	/* mimic sh - cd $HOME on immediate 'cd -' call */
+	if (!info->lastdir)
+		info->lastdir = _getenv(info, "HOME=");
+
+	/* mimic sh - 'cd' (no arguement) means cd $HOME */
 	if (!info->argv[1])
-		chdir_ret = chdir("/home/vagrant"); /*TODO: $HOME */
+		chdir_ret = chdir(_getenv(info, "HOME="));
+
 	else if (_strcmp(info->argv[1], "-") == 0)
 	{
 		_puts(info->lastdir);
@@ -56,6 +61,7 @@ int _mycd(info_t *info)
 	else
 		chdir_ret = chdir(info->argv[1]);
 
+	/* error message on chdir failure */
 	if (chdir_ret == -1)
 	{
 		print_error(info);
@@ -63,6 +69,7 @@ int _mycd(info_t *info)
 		_puts(info->argv[1]);
 		_putchar('\n');
 	}
+
 	_strcpy(buffer_copy, buffer);
 	info->lastdir = buffer_copy;
 	return (0);

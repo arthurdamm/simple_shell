@@ -124,6 +124,7 @@ void find_cmd(info_t *info)
 			}
 		if (!*paths && *(info->arg) != '\n')
 		{
+			print_info(info); /* remove later */
 			print_error(info);
 			puts("not found");
 		}
