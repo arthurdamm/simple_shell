@@ -59,20 +59,13 @@ int _mycd(info_t *info)
 			print_error(info);
 			_puts("No environmental variables!\n");
 			return (1);
-		}	
+		}
 		chdir_ret = chdir(dir);
 	}
 	else if (_strcmp(info->argv[1], "-") == 0)
 	{
 
-		if (!info->lastdir)
-		{
-			/* TODO: match shell error msg */
-			print_error(info);
-			_puts("No environmental variables!\n");
-			return (1);
-		}
-		_puts(info->lastdir);
+		;
 		chdir_ret = chdir(info->lastdir);
 	}
 	else
@@ -89,6 +82,8 @@ int _mycd(info_t *info)
 
 	_strcpy(buffer_copy, buffer);
 	info->lastdir = buffer_copy;
+	_setenv(info, "OLDPWD", info->lastdir);
+	_setenv(info, "PWD", getcwd(buffer, 1024));
 	return (0);
 }
 
