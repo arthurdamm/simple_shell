@@ -36,26 +36,17 @@ int _myexit(info_t *info)
  */
 int _mycd(info_t *info)
 {
-	char *s;
-	char buffer[1024];
-	static char  buffer_copy[1024];
+	char *s, *dir, buffer[1024];
 	int chdir_ret;
 
 	s = getcwd(buffer, 1024);
 	if (!s)
 		_puts("TODO: >>getcwd failure emsg here<<\n");
-
-	/* mimic sh - cd $HOME on immediate 'cd -' call */
-	if (!info->lastdir)
-		info->lastdir = _getenv(info, "HOME=");
-
-	/* mimic sh - 'cd' (no arguement) means cd $HOME */
 	if (!info->argv[1])
 	{
-		char *dir = _getenv(info, "HOME=");
+		dir = _getenv(info, "HOME=");
 		if (!dir)
 		{
-			/* TODO: match shell error msg */
 			print_error(info);
 			_puts("No environmental variables!\n");
 			return (1);
@@ -64,14 +55,12 @@ int _mycd(info_t *info)
 	}
 	else if (_strcmp(info->argv[1], "-") == 0)
 	{
-
-		;
-		chdir_ret = chdir(info->lastdir);
+		_puts(_getenv(info, "OLDPWD="));
+		_putchar('\n');
+		chdir_ret = chdir(_getenv(info, "OLDPWD="));
 	}
 	else
 		chdir_ret = chdir(info->argv[1]);
-
-	/* error message on chdir failure */
 	if (chdir_ret == -1)
 	{
 		print_error(info);
@@ -79,11 +68,11 @@ int _mycd(info_t *info)
 		_puts(info->argv[1]);
 		_putchar('\n');
 	}
-
-	_strcpy(buffer_copy, buffer);
-	info->lastdir = buffer_copy;
-	_setenv(info, "OLDPWD", info->lastdir);
-	_setenv(info, "PWD", getcwd(buffer, 1024));
+	else
+	{
+		_setenv(info, "OLDPWD", _getenv(info, "PWD="));
+		_setenv(info, "PWD", getcwd(buffer, 1024));
+	}
 	return (0);
 }
 
