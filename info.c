@@ -43,18 +43,17 @@ void set_info(info_t *info, char **av)
  */
 void free_info(info_t *info, int all)
 {
-	bfree((void **)&(info->arg));
 	ffree(info->argv);
 	info->argv = NULL;
 	if (all)
 	{
+		free(info->arg);
 		if (info->env)
 			free_list(&(info->env));
 		ffree(info->environ);
 			info->environ = NULL;
+		_putchar(BUF_FLUSH);
 	}
-	clear_info(info);
-	_putchar(BUF_FLUSH);
 }
 
 /**

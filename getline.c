@@ -7,21 +7,60 @@
  *
  * Return: bytes read
  */
-ssize_t mygetline(char **buf, size_t *len)
+ssize_t mygetline(char **buf_p, size_t *len_p)
 {
+	static char *buf;
+	static size_t i, len;
 	ssize_t r = 0;
 
 	_putchar(BUF_FLUSH);
-#if USE_GETLINE
-	r = getline(buf, len, stdin);
-#else
-	r = _getline(buf, len);
-#endif
-	if (r > 1 && (*buf)[r - 1] == '\n')
+	
+	if (!len)
 	{
-		(*buf)[r - 1] = '\0'; /* remove trailing newline */
-		r--;
+		free(buf);
+		buf = NULL;
+#if USE_GETLINE
+		r = getline(&buf, len_p, stdin);
+#else
+		r = _getline(&buf, len_p);
+#endif
+
+		if (r > 1 && buf[r - 1] == '\n')
+		{
+			buf[r - 1] = '\0'; /* remove trailing newline */
+			r--;
+		}
 	}
+	if (r == -1)
+		return (-1);
+	/*printf("buf:[%s] [%d]\n", buf, r);*/
+	if (_strchr(buf, ';'))
+		len = r;
+
+	if (len)
+	{
+		/* init new iterator to current position */
+		size_t j = i;
+		char *p = buf + i;
+
+		/* iterate to semicolon or end */
+		while (j < len)
+		{
+			if(buf[j] == ';')
+			{
+				buf[j] = 0; /* replace semicolon with null */
+				break;
+			}
+			j++;
+		}
+		i = j + 1;
+		if (i >= len)
+			i = len = 0;
+		*buf_p = p;
+		/* printf("p:[%s] _l:[%d] i:[%d] len:[%d]\n", p, _strlen(p), i, len); */
+		return (_strlen(p));
+	}
+	*buf_p = buf;
 	return (r);
 }
 
