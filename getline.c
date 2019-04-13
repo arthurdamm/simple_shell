@@ -9,10 +9,13 @@
  */
 ssize_t mygetline(char **buf, size_t *len)
 {
+	ssize_t r = 0;
+
+	_putchar(BUF_FLUSH);
 #if USE_GETLINE
-	ssize_t r = getline(buf, len, stdin);
+	r = getline(buf, len, stdin);
 #else
-	ssize_t r = _getline(buf, len);
+	r = _getline(buf, len);
 #endif
 	if (r > 1 && (*buf)[r - 1] == '\n')
 	{

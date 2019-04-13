@@ -33,6 +33,8 @@
 
 
 #define READ_BUF_SIZE 1024
+#define WRITE_BUF_SIZE 1024
+#define BUF_FLUSH -1
 
 /* 1 if using system getline() */
 #define USE_GETLINE 0

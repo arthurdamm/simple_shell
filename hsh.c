@@ -47,8 +47,6 @@ int hsh(char **av)
 	free_info(info, 1);
 	if (builtin_ret == -2)
 		exit(info->err_num);
-	if (interactive())
-		printf("return value = %i\n", builtin_ret);
 	return (builtin_ret);
 }
 
