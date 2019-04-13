@@ -19,7 +19,7 @@ int _myexit(info_t *info)
 		{
 			print_error(info);
 			_puts("Illegal number: ");
-			puts(info->argv[1]);
+			_puts(info->argv[1]);
 			return (1);
 		}
 		info->err_num = _atoi(info->argv[1]);
@@ -88,6 +88,6 @@ int _myhelp(info_t *info)
 	arg_array = info->argv;
 	_puts("help call works. Function not yet implemented \n");
 	if (0)
-		puts(*arg_array); /* temp att_unused workaround */
+		_puts(*arg_array); /* temp att_unused workaround */
 	return (0);
 }

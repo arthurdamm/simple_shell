@@ -56,7 +56,7 @@ char *str_concat(char *s1, char *s2)
  *
  * Return: pointer to the duplicated string
  */
-char *_strdup(char *str)
+char *_strdup(const char *str)
 {
 	int length = 0;
 	char *ret;

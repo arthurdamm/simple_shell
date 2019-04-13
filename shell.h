@@ -36,6 +36,7 @@
 
 /* 1 if using system getline() */
 #define USE_GETLINE 0
+#define USE_STRTOK 0
 
 #define P (print_info(info))
 
@@ -102,7 +103,7 @@ char *_strcat(char *, char *);
 /* string_functions2.c */
 char *_strcpy(char *, char *);
 char *str_concat(char *, char *);
-char *_strdup(char *);
+char *_strdup(const char *);
 void _puts(char *);
 int _putchar(char);
 

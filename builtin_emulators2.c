@@ -14,7 +14,7 @@ int _myhistory(info_t *info)
 	arg_array = info->argv;
 	_puts("history call works. Function not yet implemented \n");
 	if (0)
-		puts(*arg_array);  /* temp att_unused workaround */
+		_puts(*arg_array);  /* temp att_unused workaround */
 	return (0);
 }
 
@@ -31,6 +31,6 @@ int _myalias(info_t *info)
 	arg_array = info->argv;
 	_puts("alias call works. Function not yet implemented \n");
 	if (0)
-		puts(*arg_array);  /* temp att_unused workaround */
+		_puts(*arg_array);  /* temp att_unused workaround */
 	return (0);
 }

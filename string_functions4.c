@@ -47,6 +47,7 @@ char **strtow(char *str, char *d)
 	return (s);
 }
 
+#ifdef USE_STRTOK
 /**
  * mystrtok - convert a delimiter separated string into an array by
  *            iteratively using strtok
@@ -82,3 +83,4 @@ char **mystrtok(char *str, char *delim)
 	}
 	return (retarray);
 }
+#endif

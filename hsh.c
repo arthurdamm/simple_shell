@@ -133,7 +133,7 @@ void find_cmd(info_t *info)
 		{
 			print_info(info); /* remove later */
 			print_error(info);
-			puts("not found");
+			_puts("not found");
 		}
 	}
 }
