@@ -123,16 +123,19 @@ void find_cmd(info_t *info)
 				}
 				paths++;
 			}
-		if (!*paths && *(info->arg) != '\n')
+		ffree(_paths);
+	}
+	if (!found)
+	{
+		if(!stat(info->argv[0], &st))
+			fork_cmd(info);
+		else if(*(info->arg) != '\n')
 		{
 			print_info(info); /* remove later */
 			print_error(info);
 			puts("not found");
 		}
-		ffree(_paths);
 	}
-	if (!found && !stat(info->argv[0], &st))
-		fork_cmd(info);
 }
 
 /**
