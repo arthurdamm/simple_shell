@@ -51,6 +51,7 @@ void free_info(info_t *info, int all)
 {
 	ffree(info->argv);
 	info->argv = NULL;
+	info->path = NULL;
 	if (all)
 	{
 		if (!info->cmd_buf)
@@ -82,5 +83,8 @@ void print_info(info_t *info)
 	printf("info->err_num:[%d]\n", info->err_num);
 	printf("info->fname:[%s]\n", info->fname);
 	printf("info->env:[%p]\n", (void *)info->env);
+	printf("info->cmd_buf:[%p]\n", (void *)info->cmd_buf);
+	printf("info->*cmd_buf:[%s]\n",
+			info->cmd_buf ? *(info->cmd_buf) : "NONE");
 	printf("==========================\n");
 }
