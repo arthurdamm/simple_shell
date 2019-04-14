@@ -129,7 +129,6 @@ void find_cmd(info_t *info)
 			fork_cmd(info);
 		else if(*(info->arg) != '\n')
 		{
-			print_info(info); /* remove later */
 			print_error(info);
 			_puts("not found");
 		}

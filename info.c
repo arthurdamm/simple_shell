@@ -27,6 +27,7 @@ void set_info(info_t *info, char **av)
 	info->fname = av[0];
 	if (info->arg)
 	{
+		remove_comments(info);
 		info->argv = strtow(info->arg, " ");
 		if (!info->argv)
 		{
@@ -63,7 +64,6 @@ void free_info(info_t *info, int all)
 		bfree((void **)info->cmd_buf);
 		_putchar(BUF_FLUSH);
 	}
-	
 }
 
 /**
@@ -86,6 +86,6 @@ void print_info(info_t *info)
 	printf("info->env:[%p]\n", (void *)info->env);
 	printf("info->cmd_buf:[%p]\n", (void *)info->cmd_buf);
 	printf("info->*cmd_buf:[%s]\n",
-		info->cmd_buf ? *(info->cmd_buf) : "NONE");
+	       info->cmd_buf ? *(info->cmd_buf) : "NONE");
 	printf("==========================\n");
 }

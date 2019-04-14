@@ -145,6 +145,7 @@ int interactive(void);
 int _erratoi(char *);
 void print_error(info_t *);
 int print_d(info_t *);
+void remove_comments(info_t *);
 
 /* builtin_emulators.c */
 int _myexit(info_t *);

@@ -20,6 +20,7 @@ int _myexit(info_t *info)
 			print_error(info);
 			_puts("Illegal number: ");
 			_puts(info->argv[1]);
+			_putchar('\n');
 			return (1);
 		}
 		info->err_num = _atoi(info->argv[1]);
