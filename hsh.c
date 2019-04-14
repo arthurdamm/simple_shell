@@ -31,7 +31,7 @@ int hsh(char **av)
 		clear_info(info);
 		if (interactive())
 			_puts("$ ");
-		r = mygetline(info);
+		r = get_input(info);
 		if (r != -1)
 		{
 			set_info(info, av);
@@ -43,7 +43,6 @@ int hsh(char **av)
 		if (0)
 			write(STDOUT_FILENO, info->arg, _strlen(info->arg));
 	}
-	P;
 	free_info(info, 1);
 	if (builtin_ret == -2)
 		exit(info->err_num);
