@@ -76,6 +76,7 @@ int find_builtin(info_t *info)
 	for (i = 0; builtintbl[i].type; i++)
 		if (_strcmp(info->argv[0], builtintbl[i].type) == 0)
 		{
+			info->line_count++;
 			built_in_ret = builtintbl[i].func(info);
 			break;
 		}
@@ -125,12 +126,12 @@ void find_cmd(info_t *info)
 	}
 	if (!found)
 	{
-		if(!stat(info->argv[0], &st))
+		if (!stat(info->argv[0], &st))
 			fork_cmd(info);
-		else if(*(info->arg) != '\n')
+		else if (*(info->arg) != '\n')
 		{
-			print_error(info);
-			_puts("not found");
+			print_error(info, "not found");
+			_putchar('\n');
 		}
 	}
 }
