@@ -107,7 +107,7 @@ void find_cmd(info_t *info)
 			found++;
 		}
 		else
-			while (*paths)
+			for (; *paths; paths++)
 			{
 				path[0] = '\0';
 				_strcpy(path, *paths);
@@ -120,7 +120,6 @@ void find_cmd(info_t *info)
 					fork_cmd(info);
 					break;
 				}
-				paths++;
 			}
 		ffree(_paths);
 	}
@@ -129,10 +128,7 @@ void find_cmd(info_t *info)
 		if (!stat(info->argv[0], &st))
 			fork_cmd(info);
 		else if (*(info->arg) != '\n')
-		{
-			print_error(info, "not found");
-			_putchar('\n');
-		}
+			print_error(info, "not found\n");
 	}
 }
 
