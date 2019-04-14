@@ -19,7 +19,7 @@ int _myexit(info_t *info)
 		{
 			print_error(info);
 			_puts("Illegal number: ");
-			puts(info->argv[1]);
+			_puts(info->argv[1]);
 			return (1);
 		}
 		info->err_num = _atoi(info->argv[1]);
@@ -46,7 +46,8 @@ int _mycd(info_t *info)
 	{
 		dir = _getenv(info, "HOME=");
 		if (!dir)
-			chdir_ret = chdir(_getenv(info, "PWD="));
+			chdir_ret = /* TODO: what should this be? */
+				chdir((dir = _getenv(info, "PWD=")) ? dir : "/");
 		else
 			chdir_ret = chdir(dir);
 	}
@@ -54,7 +55,8 @@ int _mycd(info_t *info)
 	{
 		_puts(_getenv(info, "OLDPWD="));
 		_putchar('\n');
-		chdir_ret = chdir(_getenv(info, "OLDPWD="));
+		chdir_ret = /* TODO: what should this be? */
+			chdir((dir = _getenv(info, "OLDPWD=")) ? dir : "/");
 	}
 	else
 		chdir_ret = chdir(info->argv[1]);
@@ -86,6 +88,6 @@ int _myhelp(info_t *info)
 	arg_array = info->argv;
 	_puts("help call works. Function not yet implemented \n");
 	if (0)
-		puts(*arg_array); /* temp att_unused workaround */
+		_puts(*arg_array); /* temp att_unused workaround */
 	return (0);
 }

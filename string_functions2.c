@@ -18,7 +18,7 @@ char *_strcpy(char *dest, char *src)
 		dest[i] = src[i];
 		i++;
 	}
-	dest[i] = src[i];
+	dest[i] = 0;
 	return (dest);
 }
 
@@ -56,7 +56,7 @@ char *str_concat(char *s1, char *s2)
  *
  * Return: pointer to the duplicated string
  */
-char *_strdup(char *str)
+char *_strdup(const char *str)
 {
 	int length = 0;
 	char *ret;
@@ -83,6 +83,8 @@ void _puts(char *str)
 {
 	int i = 0;
 
+	if (!str)
+		return;
 	while (str[i] != '\0')
 	{
 		_putchar(str[i]);
@@ -99,5 +101,15 @@ void _puts(char *str)
  */
 int _putchar(char c)
 {
-	return (write(1, &c, 1));
+	static int i;
+	static char buf[WRITE_BUF_SIZE];
+
+	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	{
+		write(1, buf, i);
+		i = 0;
+	}
+	if (c != BUF_FLUSH)
+		buf[i++] = c;
+	return (1);
 }

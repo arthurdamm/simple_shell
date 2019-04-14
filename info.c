@@ -28,6 +28,12 @@ void set_info(info_t *info, char **av)
 	if (info->arg)
 	{
 		info->argv = strtow(info->arg, " ");
+		if (!info->argv)
+		{
+			info->argv = malloc(sizeof(char *) * 2);
+			info->argv[0] = _strdup(info->arg);
+			info->argv[1] = NULL;
+		}
 		for (i = 0; info->argv && info->argv[i]; i++)
 			;
 		info->argc = i;
@@ -43,17 +49,21 @@ void set_info(info_t *info, char **av)
  */
 void free_info(info_t *info, int all)
 {
-	bfree((void **)&(info->arg));
 	ffree(info->argv);
 	info->argv = NULL;
+	info->path = NULL;
 	if (all)
 	{
+		if (!info->cmd_buf)
+			free(info->arg);
 		if (info->env)
 			free_list(&(info->env));
 		ffree(info->environ);
 			info->environ = NULL;
+		bfree((void **)info->cmd_buf);
+		_putchar(BUF_FLUSH);
 	}
-	clear_info(info);
+	
 }
 
 /**
@@ -74,6 +84,8 @@ void print_info(info_t *info)
 	printf("info->err_num:[%d]\n", info->err_num);
 	printf("info->fname:[%s]\n", info->fname);
 	printf("info->env:[%p]\n", (void *)info->env);
-	printf("info->lastdir:[%s]\n", info->lastdir);
+	printf("info->cmd_buf:[%p]\n", (void *)info->cmd_buf);
+	printf("info->*cmd_buf:[%s]\n",
+		info->cmd_buf ? *(info->cmd_buf) : "NONE");
 	printf("==========================\n");
 }

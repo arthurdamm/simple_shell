@@ -21,7 +21,6 @@ int main(__attribute__((unused))int ac, char **av)
 int hsh(char **av)
 {
 	ssize_t r = 0;
-	size_t len = 0;
 	int builtin_ret = 0;
 	info_t info[] = { INFO_INIT };
 
@@ -32,7 +31,7 @@ int hsh(char **av)
 		clear_info(info);
 		if (interactive())
 			_puts("$ ");
-		r = mygetline(&(info->arg), &len);
+		r = get_input(info);
 		if (r != -1)
 		{
 			set_info(info, av);
@@ -47,8 +46,6 @@ int hsh(char **av)
 	free_info(info, 1);
 	if (builtin_ret == -2)
 		exit(info->err_num);
-	if (interactive())
-		printf("return value = %i\n", builtin_ret);
 	return (builtin_ret);
 }
 
@@ -94,7 +91,8 @@ int find_builtin(info_t *info)
 void find_cmd(info_t *info)
 {
 	struct stat st;
-	char path[1024], **paths, **_paths;
+	static char path[1024];
+	char **paths, **_paths;
 	int found = 0;
 
 	_paths = paths = strtow(_getenv(info, "PATH="), ":");
@@ -123,16 +121,19 @@ void find_cmd(info_t *info)
 				}
 				paths++;
 			}
-		if (!*paths && *(info->arg) != '\n')
+		ffree(_paths);
+	}
+	if (!found)
+	{
+		if(!stat(info->argv[0], &st))
+			fork_cmd(info);
+		else if(*(info->arg) != '\n')
 		{
 			print_info(info); /* remove later */
 			print_error(info);
-			puts("not found");
+			_puts("not found");
 		}
-		ffree(_paths);
 	}
-	if (!found && !stat(info->argv[0], &st))
-		fork_cmd(info);
 }
 
 /**

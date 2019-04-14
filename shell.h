@@ -33,9 +33,12 @@
 
 
 #define READ_BUF_SIZE 1024
+#define WRITE_BUF_SIZE 1024
+#define BUF_FLUSH -1
 
 /* 1 if using system getline() */
 #define USE_GETLINE 0
+#define USE_STRTOK 0
 
 #define P (print_info(info))
 
@@ -56,6 +59,7 @@ extern char **environ;
  *@env: linked list local copy of environ
  *@environ: custom modified copy of environ from LL env
  *@env_changed: on if environ was changed
+ *@cmd_buf: address of pointer to cmd_buf, on if chaining
  */
 typedef struct passinfo
 {
@@ -69,7 +73,8 @@ typedef struct passinfo
 	list_t *env;
 	char **environ;
 	int env_changed;
-	char *lastdir;
+
+	char **cmd_buf; /* pointer to cmd ; chain buffer, for memory mangement */
 } info_t;
 
 #define INFO_INIT {NULL, NULL, NULL, 0, 0, 0, NULL, NULL, NULL, 0, NULL}
@@ -105,7 +110,7 @@ char *_strcat(char *, char *);
 /* string_functions2.c */
 char *_strcpy(char *, char *);
 char *str_concat(char *, char *);
-char *_strdup(char *);
+char *_strdup(const char *);
 void _puts(char *);
 int _putchar(char);
 
@@ -151,7 +156,7 @@ int _myhistory(info_t *);
 int _myalias(info_t *);
 
 /* getline.c module */
-ssize_t mygetline(char **, size_t *);
+ssize_t get_input(info_t *);
 int _getline(char **, size_t *);
 
 /* info.c module */
