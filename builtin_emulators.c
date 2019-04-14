@@ -11,7 +11,6 @@ int _myexit(info_t *info)
 {
 	int exitcheck;
 
-	info->line_count++;
 	if (info->argv[1])  /* If there is an exit arguement */
 	{
 		exitcheck = _erratoi(info->argv[1]);
