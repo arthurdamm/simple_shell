@@ -47,11 +47,14 @@ void free_info(info_t *info, int all)
 	info->argv = NULL;
 	if (all)
 	{
-		free(info->arg);
+
+		if (!info->cmd_buf)
+			free(info->arg);
 		if (info->env)
 			free_list(&(info->env));
 		ffree(info->environ);
 			info->environ = NULL;
+		bfree((void **)info->cmd_buf);
 		_putchar(BUF_FLUSH);
 	}
 }
