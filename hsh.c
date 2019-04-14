@@ -125,12 +125,12 @@ void find_cmd(info_t *info)
 	}
 	if (!found)
 	{
-		if(!stat(info->argv[0], &st))
+		if (!stat(info->argv[0], &st))
 			fork_cmd(info);
-		else if(*(info->arg) != '\n')
+		else if (*(info->arg) != '\n')
 		{
-			print_error(info);
-			_puts("not found");
+			print_error(info, "not found");
+			_putchar('\n');
 		}
 	}
 }

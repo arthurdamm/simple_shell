@@ -34,7 +34,7 @@ int _erratoi(char *s)
  * Return: 0 if no numbers in string, converted number otherwise
  *        -1 on error
  */
-void print_error(info_t *info)
+void print_error(info_t *info, char *estr)
 {
 	_puts(info->fname);
 	_puts(": ");
@@ -42,6 +42,7 @@ void print_error(info_t *info)
 	_puts(": ");
 	_puts(info->argv[0]);
 	_puts(": ");
+	_puts(estr);
 }
 
 /**
@@ -82,7 +83,7 @@ int print_d(info_t *info)
 
 /**
  * remove_comments - function replaces first instance of '#' with '\0'
- * @info - the parameter and return info struct
+ * @info: the parameter and return info struct
  *
  * Return: Always 0;
  */

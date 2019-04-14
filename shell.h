@@ -143,7 +143,7 @@ int interactive(void);
 
 /* more_functions2.c */
 int _erratoi(char *);
-void print_error(info_t *);
+void print_error(info_t *, char *);
 int print_d(info_t *);
 void remove_comments(info_t *);
 
