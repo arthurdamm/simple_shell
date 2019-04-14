@@ -97,6 +97,9 @@ int find_builtin(info_t *);
 void find_cmd(info_t *);
 void fork_cmd(info_t *);
 
+/* loophsh.c */
+int loophsh(char **);
+
 /* string_functions.c */
 int _strlen(char *);
 int _strcmp(char *, char *);

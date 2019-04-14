@@ -91,7 +91,8 @@ int find_builtin(info_t *info)
 void find_cmd(info_t *info)
 {
 	struct stat st;
-	char path[1024], **paths, **_paths;
+	static char path[1024];
+	char **paths, **_paths;
 	int found = 0;
 
 	_paths = paths = strtow(_getenv(info, "PATH="), ":");
