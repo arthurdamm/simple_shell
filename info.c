@@ -47,7 +47,6 @@ void free_info(info_t *info, int all)
 	info->argv = NULL;
 	if (all)
 	{
-
 		if (!info->cmd_buf)
 			free(info->arg);
 		if (info->env)
@@ -77,6 +76,5 @@ void print_info(info_t *info)
 	printf("info->err_num:[%d]\n", info->err_num);
 	printf("info->fname:[%s]\n", info->fname);
 	printf("info->env:[%p]\n", (void *)info->env);
-	printf("info->lastdir:[%s]\n", info->lastdir);
 	printf("==========================\n");
 }
