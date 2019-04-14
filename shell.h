@@ -73,9 +73,11 @@ typedef struct passinfo
 	char **environ;
 	int env_changed;
 	char *lastdir;
+
+	char **cmd_buf; /* pointer to cmd ; chain buffer, for memory mangement */
 } info_t;
 
-#define INFO_INIT {NULL, NULL, NULL, 0, 0, 0, NULL, NULL, NULL, 0, NULL}
+#define INFO_INIT {NULL, NULL, NULL, 0, 0, 0, NULL, NULL, NULL, 0, NULL, NULL}
 
 /**
  *struct builtin - contains a builtin string and related function
@@ -151,7 +153,7 @@ int _myhistory(info_t *);
 int _myalias(info_t *);
 
 /* getline.c module */
-ssize_t mygetline(char **, size_t *);
+ssize_t mygetline(info_t *);
 int _getline(char **, size_t *);
 
 /* info.c module */

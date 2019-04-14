@@ -7,61 +7,59 @@
  *
  * Return: bytes read
  */
-ssize_t mygetline(char **buf_p, size_t *len_p)
+ssize_t mygetline(info_t *info)
 {
-	static char *buf;
+	static char *buf; /* the ';' command chain buffer */
 	static size_t i, len;
 	ssize_t r = 0;
+	size_t len_p = 0;
+	char **buf_p = &(info->arg);
 
-	_putchar(BUF_FLUSH);
-	
-	if (!len)
+	_putchar(BUF_FLUSH);	
+	if (!len) /* if nothing left in the buffer, fill it */
 	{
+		/*bfree((void **)info->cmd_buf);*/
 		free(buf);
 		buf = NULL;
 #if USE_GETLINE
-		r = getline(&buf, len_p, stdin);
+		r = getline(&buf, &len_p, stdin);
 #else
-		r = _getline(&buf, len_p);
+		r = _getline(&buf, &len_p);
 #endif
-
 		if (r > 1 && buf[r - 1] == '\n')
 		{
 			buf[r - 1] = '\0'; /* remove trailing newline */
 			r--;
 		}
-	}
-	if (r == -1)
-		return (-1);
-	/*printf("buf:[%s] [%d]\n", buf, r);*/
-	if (_strchr(buf, ';'))
-		len = r;
-
-	if (len)
-	{
-		/* init new iterator to current position */
-		size_t j = i;
-		char *p = buf + i;
-
-		/* iterate to semicolon or end */
-		while (j < len)
+		if (r > 0 && _strchr(buf, ';'))	/* is this a command chain? */
 		{
-			if(buf[j] == ';')
+			len = r;
+			info->cmd_buf = &buf;
+		}
+	}
+	if (r == -1) /* EOF */
+		return (-1);	
+	if (len)	/* we have commands left in the chain buffer */
+	{
+		size_t j = i; /* init new iterator to current buf position */
+		char *p = buf + i; /* get pointer for return */
+		while (j < len) /* iterate to semicolon or end */
+		{
+			if(buf[j] == ';') /* found end of this command */
 			{
 				buf[j] = 0; /* replace semicolon with null */
 				break;
 			}
 			j++;
 		}
-		i = j + 1;
-		if (i >= len)
-			i = len = 0;
-		*buf_p = p;
-		/* printf("p:[%s] _l:[%d] i:[%d] len:[%d]\n", p, _strlen(p), i, len); */
-		return (_strlen(p));
+		i = j + 1; /* increment past nulled ';'' */
+		if (i >= len) /* reached end of buffer? */
+			i = len = 0; /* reset position and length */
+		*buf_p = p; /* pass back pointer to current command position */
+		return (_strlen(p)); /* return length of current command */
 	}
-	*buf_p = buf;
-	return (r);
+	*buf_p = buf; /* else not a chain, pass back buffer from _getline() */
+	return (r); /* return length of buffer from _getline() */
 }
 
 /**

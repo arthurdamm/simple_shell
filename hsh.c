@@ -21,7 +21,6 @@ int main(__attribute__((unused))int ac, char **av)
 int hsh(char **av)
 {
 	ssize_t r = 0;
-	size_t len = 0;
 	int builtin_ret = 0;
 	info_t info[] = { INFO_INIT };
 
@@ -32,7 +31,7 @@ int hsh(char **av)
 		clear_info(info);
 		if (interactive())
 			_puts("$ ");
-		r = mygetline(&(info->arg), &len);
+		r = mygetline(info);
 		if (r != -1)
 		{
 			set_info(info, av);
@@ -44,6 +43,7 @@ int hsh(char **av)
 		if (0)
 			write(STDOUT_FILENO, info->arg, _strlen(info->arg));
 	}
+	P;
 	free_info(info, 1);
 	if (builtin_ret == -2)
 		exit(info->err_num);
