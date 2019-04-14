@@ -27,6 +27,7 @@ void set_info(info_t *info, char **av)
 	info->fname = av[0];
 	if (info->arg)
 	{
+		remove_comments(info);
 		info->argv = strtow(info->arg, " ");
 		if (!info->argv)
 		{

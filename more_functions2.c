@@ -8,9 +8,11 @@
  */
 int _erratoi(char *s)
 {
-	int i;
+	int i = 0;
 	unsigned int result = 0;
 
+	if (*s == '+')
+		s++;  /* TODO: why does this make main return 255? */
 	for (i = 0;  s[i] != '\0'; i++)
 	{
 		if (s[i] >= '0' && s[i] <= '9')
@@ -76,4 +78,22 @@ int print_d(info_t *info)
 	count++;
 
 	return (count);
+}
+
+/**
+ * remove_comments - function replaces first instance of '#' with '\0'
+ * @info - the parameter and return info struct
+ *
+ * Return: Always 0;
+ */
+void remove_comments(info_t *info)
+{
+	int i;
+
+	for (i = 0; info->arg[i] != '\0'; i++)
+		if (info->arg[i] == '#')
+		{
+			info->arg[i] = '\0';
+			break;
+		}
 }
