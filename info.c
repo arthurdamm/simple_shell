@@ -10,9 +10,6 @@ void clear_info(info_t *info)
 	info->argv = NULL;
 	info->path = NULL;
 	info->argc = 0;
-	/* info->line_count; should not reset */
-	/* info->err_num; should not reset */
-	/* info->fname; should not reset */
 }
 
 /**

@@ -69,6 +69,7 @@ typedef struct passinfo
 	int argc;
 	unsigned int line_count;
 	int err_num;
+	int err_flag;
 	char *fname;
 	list_t *env;
 	char **environ;
@@ -77,7 +78,7 @@ typedef struct passinfo
 	char **cmd_buf; /* pointer to cmd ; chain buffer, for memory mangement */
 } info_t;
 
-#define INFO_INIT {NULL, NULL, NULL, 0, 0, 0, NULL, NULL, NULL, 0, NULL}
+#define INFO_INIT {NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, 0, NULL}
 
 /**
  *struct builtin - contains a builtin string and related function

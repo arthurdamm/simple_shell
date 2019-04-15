@@ -103,7 +103,11 @@ void find_cmd(info_t *info)
 	info->path = info->argv[0];
 	if (paths)
 	{
-		info->line_count++;
+		if (info->err_flag == 1)
+		{
+			info->line_count++;
+			info->err_flag = 0;
+		}
 		if (_getenv(info, "PATH=")[0] == ':' && !stat(info->argv[0], &st))
 		{
 			fork_cmd(info);
