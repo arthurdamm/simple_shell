@@ -146,6 +146,7 @@ int _erratoi(char *);
 void print_error(info_t *, char *);
 int print_d(info_t *);
 void remove_comments(info_t *);
+int write_history(info_t *);
 
 /* builtin_emulators.c */
 int _myexit(info_t *);
@@ -175,7 +176,7 @@ int populate_env_list(info_t *);
 
 /* env2.c module */
 char **get_environ(info_t *);
-int _unsetenv(info_t *info, char *var);
-int _setenv(info_t *info, char *var, char *value);
+int _unsetenv(info_t *, char *);
+int _setenv(info_t *, char *, char *);
 
 #endif

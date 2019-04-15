@@ -99,3 +99,8 @@ void remove_comments(info_t *info)
 			break;
 		}
 }
+
+int write_history( __attribute__((unused)) info_t *info)
+{
+	return (0);
+}

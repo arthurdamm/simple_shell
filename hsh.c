@@ -45,7 +45,10 @@ int hsh(char **av)
 	}
 	free_info(info, 1);
 	if (builtin_ret == -2)
+	{
+		write_history(info);
 		exit(info->err_num);
+	}
 	return (builtin_ret);
 }
 
