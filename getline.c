@@ -28,6 +28,9 @@ ssize_t input_buf(info_t *info, char **buf, size_t *len)
 			(*buf)[r - 1] = '\0'; /* remove trailing newline */
 			r--;
 		}
+		printf("History here? buf = [%s]\n", *buf);
+		/* Append history linked list here!!!!! */
+
 		if (r > 0 && _strchr(*buf, ';')) /* is this a command chain? */
 		{
 			*len = r;
@@ -54,7 +57,6 @@ ssize_t get_input(info_t *info)
 	r = input_buf(info, &buf, &len);
 	if (r == -1) /* EOF */
 		return (-1);
-
 	if (len)	/* we have commands left in the chain buffer */
 	{
 		size_t j = i; /* init new iterator to current buf position */
