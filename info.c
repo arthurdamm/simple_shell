@@ -29,7 +29,6 @@ void set_info(info_t *info, char **av)
 	{
 		remove_comments(info);
 		info->argv = strtow(info->arg, " ");
-		print_info(info);
 		if (!info->argv)
 		{
 			info->argv = malloc(sizeof(char *) * 2);
