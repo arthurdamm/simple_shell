@@ -13,8 +13,6 @@ char **strtow(char *str, char d)
 
 	if (str == NULL || str[0] == 0)
 		return (NULL);
-	if (!d)
-		d = ' ';
 	for (i = 0; str[i] != '\0'; i++)
 		if (str[i] != d && (str[i + 1] == d || !str[i + 1]))
 			numwords++;
@@ -48,9 +46,9 @@ char **strtow(char *str, char d)
 }
 
 /**
- * **strtow2 - splits a string into words. Repeat delimiters create empty strings
+ * **strtow2 - splits a string into words
  * @str: the input string
- * @d: the delimeter string
+ * @d: the delimeter
  * Return: a pointer to an array of strings, or NULL on failure
  */
 char **strtow2(char *str, char d)
@@ -60,10 +58,9 @@ char **strtow2(char *str, char d)
 
 	if (str == NULL || str[0] == 0)
 		return (NULL);
-	if (!d)
-		d = ' ';
 	for (i = 0; str[i] != '\0'; i++)
-		if (str[i] == d)
+		if ((str[i] != d && str[i + 1] == d) ||
+		    (str[i] != d && !str[i + 1]) || str[i + 1] == d)
 			numwords++;
 	if (numwords == 0)
 		return (NULL);
@@ -72,8 +69,10 @@ char **strtow2(char *str, char d)
 		return (NULL);
 	for (i = 0, j = 0; j < numwords; j++)
 	{
+		while (str[i] == d && str[i] != d)
+			i++;
 		k = 0;
-		while (str[i + k] != d && str[i + k])
+		while (str[i + k] != d && str[i + k] && str[i + k] != d)
 			k++;
 		s[j] = malloc((k + 1) * sizeof(char));
 		if (!s[j])

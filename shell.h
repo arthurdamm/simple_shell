@@ -124,6 +124,7 @@ char *_strpbrk(char *, char *);
 /* string_functions4.c */
 char **strtow(char *, char);
 char **mystrtok(char *, char *);
+char **strtow2(char *, char);
 
 /* memory_functions */
 void *_calloc(unsigned int, unsigned int);
