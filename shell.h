@@ -122,7 +122,7 @@ unsigned int _strspn(char *, char *);
 char *_strpbrk(char *, char *);
 
 /* string_functions4.c */
-char **strtow(char *, char *);
+char **strtow(char *, char);
 char **mystrtok(char *, char *);
 
 /* memory_functions */
@@ -136,7 +136,6 @@ void *_realloc(void *, unsigned int, unsigned int);
 int bfree(void **);
 
 /* more_functions.c */
-int is_delim(char, char *);
 int _isalpha(int);
 int _atoi(char *);
 int interactive(void);
