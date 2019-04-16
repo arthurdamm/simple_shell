@@ -72,13 +72,14 @@ typedef struct passinfo
 	int err_flag;
 	char *fname;
 	list_t *env;
+	list_t *history;
 	char **environ;
 	int env_changed;
 
 	char **cmd_buf; /* pointer to cmd ; chain buffer, for memory mangement */
 } info_t;
 
-#define INFO_INIT {NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, 0, NULL}
+#define INFO_INIT {NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, 0, NULL}
 
 /**
  *struct builtin - contains a builtin string and related function
@@ -184,5 +185,7 @@ int _setenv(info_t *, char *, char *);
 /* file_io_functions.c */
 void append_history(info_t *);
 int create_file(const char *, char *);
+int read_textfile(const char *, size_t);
+int append_history_list(info_t *, char *);
 
 #endif

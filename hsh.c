@@ -35,6 +35,7 @@ int hsh(char **av)
 	if (builtin_ret == -2)
 	{
 		append_history(info);
+		print_list(info->history);
 		exit(info->err_num);
 	}
 	return (builtin_ret);
