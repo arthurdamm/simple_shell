@@ -11,6 +11,7 @@ void append_history(__attribute__((unused))info_t *info)
 	char buffer[512], *dir;
 	int line;
 
+	buffer[0] = 0;
 	dir = _getenv(info, "HOME=");
 	_strcpy(buffer, dir);
 	_strcat(buffer, "/");
@@ -67,29 +68,27 @@ int create_file(const char *filename, char *text_content)
 int read_textfile(const char *filename)
 {
 	int i, linecount = 0;
-	ssize_t fd, rdlen, letters = 4096;
-	char *buf;
+	ssize_t fd, rdlen, fsize = 0;
+	char *buf = NULL;
+	struct stat st;
 
 	if (filename == NULL)
 		return (0);
-	buf = malloc(sizeof(char) * (letters + 1));
-	if (!buf)
-		return (0);
+
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 	{
-		free(buf);
 		return (0);
 	}
-	rdlen = read(fd, buf, letters);
-	while (rdlen == letters)
-	{
-		buf = _realloc(buf, sizeof(char) * (letters + 1), sizeof(char) * (letters * 2 + 1));
-		letters *= 2;
-		rdlen = read(fd, buf, letters);
-	}
-//	printf("%zu letters read\n", rdlen);
-	buf[letters] = 0;
+	if (!fstat(fd, &st))
+		fsize = st.st_size;
+
+	buf = malloc(sizeof(char) * (fsize + 1));
+	if (!buf)
+		return (0);
+	rdlen = read(fd, buf, fsize);
+	/* printf("%zu letters read\n", rdlen); */
+	buf[fsize] = 0;
 	if (rdlen == -1)
 	{
 		free(buf);
@@ -113,7 +112,11 @@ int build_history_list(info_t *info, char *buf)
 {
 	list_t *node = NULL;
 
+	if (info->history)
+		node = info->history;
 	add_node_end(&node, buf, 0);
-	info->history = node;
+
+	if (!info->history)
+		info->history = node;
 	return (0);
 }
