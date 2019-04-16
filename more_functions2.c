@@ -37,13 +37,13 @@ int _erratoi(char *s)
  */
 void print_error(info_t *info, char *estr)
 {
-	_puts(info->fname);
-	_puts(": ");
+	_eputs(info->fname);
+	_eputs(": ");
 	print_d(info);
-	_puts(": ");
-	_puts(info->argv[0]);
-	_puts(": ");
-	_puts(estr);
+	_eputs(": ");
+	_eputs(info->argv[0]);
+	_eputs(": ");
+	_eputs(estr);
 }
 
 /**
@@ -61,7 +61,7 @@ int print_d(info_t *info)
 	if (input < 0)
 	{
 		abs = -input;
-		_putchar('-');
+		_eputchar('-');
 		count++;
 	}
 	else
@@ -71,12 +71,12 @@ int print_d(info_t *info)
 	{
 		if (abs / i)
 		{
-			_putchar('0' + current / i);
+			_eputchar('0' + current / i);
 			count++;
 		}
 		current %= i;
 	}
-	_putchar('0' + current);
+	_eputchar('0' + current);
 	count++;
 
 	return (count);

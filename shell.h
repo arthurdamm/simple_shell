@@ -103,6 +103,10 @@ void fork_cmd(info_t *);
 /* loophsh.c */
 int loophsh(char **);
 
+/* err_string_functions.c */
+void _eputs(char *);
+int _eputchar(char);
+
 /* string_functions.c */
 int _strlen(char *);
 int _strcmp(char *, char *);
