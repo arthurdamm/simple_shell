@@ -103,10 +103,6 @@ void fork_cmd(info_t *);
 /* loophsh.c */
 int loophsh(char **);
 
-/* err_string_functions.c */
-void _eputs(char *);
-int _eputchar(char);
-
 /* string_functions.c */
 int _strlen(char *);
 int _strcmp(char *, char *);
@@ -132,6 +128,14 @@ char *_strpbrk(char *, char *);
 char **strtow(char *, char *);
 char **mystrtok(char *, char *);
 char **strtow2(char *, char);
+void _eputs(char *);
+int _eputchar(char);
+
+/* string_functions5.c */
+int _isalpha(int);
+int _atoi(char *);
+int _erratoi(char *);
+int is_delim(char , char *);
 
 /* memory_functions */
 void *_calloc(unsigned int, unsigned int);
@@ -143,31 +147,25 @@ void *_realloc(void *, unsigned int, unsigned int);
 /* memory_functions2.c */
 int bfree(void **);
 
-/* more_functions.c */
-int _isalpha(int);
-int _atoi(char *);
-int interactive(void);
-int is_delim(char , char *);
-
 /* more_functions2.c */
-int _erratoi(char *);
 void print_error(info_t *, char *);
 int print_d(info_t *);
 void remove_comments(char *);
 int write_history(info_t *);
+int interactive(void);
 
 /* builtin_emulators.c */
 int _myexit(info_t *);
 int _mycd(info_t *);
 int _myhelp(info_t *);
-
-/* builtin_emulators2.c */
 int _myhistory(info_t *);
 int _myalias(info_t *);
 
 /* getline.c module */
+ssize_t input_buf(info_t *, char **, size_t *);
 ssize_t get_input(info_t *);
 int _getline(char **, size_t *);
+ssize_t read_buf(char *, size_t *)
 
 /* info.c module */
 void clear_info(info_t *);
