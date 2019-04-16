@@ -99,15 +99,3 @@ void remove_comments(char *buf)
 			break;
 		}
 }
-
-
-/**
- * write_history - upon exiting, writes history linked list to an external list
- * @info: info struct
- *
- * Return: Always 0;
- */
-int write_history(__attribute__((unused)) info_t *info)
-{
-	return (0);
-}

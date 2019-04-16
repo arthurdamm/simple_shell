@@ -29,8 +29,8 @@ ssize_t input_buf(info_t *info, char **buf, size_t *len)
 			r--;
 		}
 		info->err_flag = 1;
-		remove_comments(*buf);
 		/* Append history linked list here!!!!! */
+		remove_comments(*buf);
 
 		if (r > 0 && _strchr(*buf, ';')) /* is this a command chain? */
 		{

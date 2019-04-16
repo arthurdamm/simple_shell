@@ -10,7 +10,7 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 #include <limits.h>
-
+#include <fcntl.h>
 #include "liststr.h"
 
 
@@ -179,5 +179,9 @@ int populate_env_list(info_t *);
 char **get_environ(info_t *);
 int _unsetenv(info_t *, char *);
 int _setenv(info_t *, char *, char *);
+
+/* file_io_functions.c */
+void append_history(info_t *);
+int create_file(const char *, char *);
 
 #endif
