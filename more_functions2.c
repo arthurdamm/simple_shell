@@ -100,6 +100,7 @@ void remove_comments(char *buf)
 		}
 }
 
+
 /**
  * write_history - upon exiting, writes history linked list to an external list
  * @info: info struct
