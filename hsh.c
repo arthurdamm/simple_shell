@@ -105,10 +105,10 @@ void find_cmd(info_t *info)
 	info->path = info->argv[0];
 	if (paths)
 	{
-		if (info->err_flag == 1)
+		if (info->linecount_flag == 1)
 		{
 			info->line_count++;
-			info->err_flag = 0;
+			info->linecount_flag = 0;
 		}
 		if (_getenv(info, "PATH=")[0] == ':' && is_cmd(info->argv[0]))
 		{
