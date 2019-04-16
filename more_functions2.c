@@ -84,18 +84,18 @@ int print_d(info_t *info)
 
 /**
  * remove_comments - function replaces first instance of '#' with '\0'
- * @info: the parameter and return info struct
+ * @buf: address of the string to modify
  *
  * Return: Always 0;
  */
-void remove_comments(info_t *info)
+void remove_comments(char *buf)
 {
 	int i;
 
-	for (i = 0; info->arg[i] != '\0'; i++)
-		if (info->arg[i] == '#')
+	for (i = 0; buf[i] != '\0'; i++)
+		if (buf[i] == '#')
 		{
-			info->arg[i] = '\0';
+			buf[i] = '\0';
 			break;
 		}
 }

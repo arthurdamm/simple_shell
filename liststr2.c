@@ -47,3 +47,27 @@ char **list_to_strings(list_t *head)
 	strs[i] = NULL;
 	return (strs);
 }
+
+
+/**
+ * print_list - prints all elements of a list_t linked list
+ * @h: pointer to first node
+ *
+ * Return: size of list
+ */
+size_t print_list(const list_t *h)
+{
+	size_t i = 0;
+
+	while (h)
+	{
+		_putchar('0' + h->num);
+		_putchar(':');
+		_putchar(' ');
+		_puts(h->str ? h->str : "(nil)");
+		_puts("\n");
+		h = h->next;
+		i++;
+	}
+	return (i);
+}

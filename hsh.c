@@ -45,7 +45,10 @@ int hsh(char **av)
 	}
 	free_info(info, 1);
 	if (builtin_ret == -2)
+	{
+		append_history(info);
 		exit(info->err_num);
+	}
 	return (builtin_ret);
 }
 
@@ -96,11 +99,15 @@ void find_cmd(info_t *info)
 	char **paths, **_paths;
 	int found = 0;
 
-	_paths = paths = strtow(_getenv(info, "PATH="), ":");
+	_paths = paths = strtow(_getenv(info, "PATH="), ':');
 	info->path = info->argv[0];
 	if (paths)
 	{
-		info->line_count++;
+		if (info->err_flag == 1)
+		{
+			info->line_count++;
+			info->err_flag = 0;
+		}
 		if (_getenv(info, "PATH=")[0] == ':' && !stat(info->argv[0], &st))
 		{
 			fork_cmd(info);

@@ -10,7 +10,7 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 #include <limits.h>
-
+#include <fcntl.h>
 #include "liststr.h"
 
 
@@ -69,6 +69,7 @@ typedef struct passinfo
 	int argc;
 	unsigned int line_count;
 	int err_num;
+	int err_flag;
 	char *fname;
 	list_t *env;
 	char **environ;
@@ -77,7 +78,7 @@ typedef struct passinfo
 	char **cmd_buf; /* pointer to cmd ; chain buffer, for memory mangement */
 } info_t;
 
-#define INFO_INIT {NULL, NULL, NULL, 0, 0, 0, NULL, NULL, NULL, 0, NULL}
+#define INFO_INIT {NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, 0, NULL}
 
 /**
  *struct builtin - contains a builtin string and related function
@@ -122,8 +123,9 @@ unsigned int _strspn(char *, char *);
 char *_strpbrk(char *, char *);
 
 /* string_functions4.c */
-char **strtow(char *, char *);
+char **strtow(char *, char);
 char **mystrtok(char *, char *);
+char **strtow2(char *, char);
 
 /* memory_functions */
 void *_calloc(unsigned int, unsigned int);
@@ -136,7 +138,6 @@ void *_realloc(void *, unsigned int, unsigned int);
 int bfree(void **);
 
 /* more_functions.c */
-int is_delim(char, char *);
 int _isalpha(int);
 int _atoi(char *);
 int interactive(void);
@@ -145,7 +146,8 @@ int interactive(void);
 int _erratoi(char *);
 void print_error(info_t *, char *);
 int print_d(info_t *);
-void remove_comments(info_t *);
+void remove_comments(char *);
+int write_history(info_t *);
 
 /* builtin_emulators.c */
 int _myexit(info_t *);
@@ -175,7 +177,11 @@ int populate_env_list(info_t *);
 
 /* env2.c module */
 char **get_environ(info_t *);
-int _unsetenv(info_t *info, char *var);
-int _setenv(info_t *info, char *var, char *value);
+int _unsetenv(info_t *, char *);
+int _setenv(info_t *, char *, char *);
+
+/* file_io_functions.c */
+void append_history(info_t *);
+int create_file(const char *, char *);
 
 #endif
