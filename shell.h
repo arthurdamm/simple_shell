@@ -125,7 +125,7 @@ unsigned int _strspn(char *, char *);
 char *_strpbrk(char *, char *);
 
 /* string_functions4.c */
-char **strtow(char *, char);
+char **strtow(char *, char *);
 char **mystrtok(char *, char *);
 char **strtow2(char *, char);
 
@@ -143,6 +143,7 @@ int bfree(void **);
 int _isalpha(int);
 int _atoi(char *);
 int interactive(void);
+int is_delim(char , char *);
 
 /* more_functions2.c */
 int _erratoi(char *);

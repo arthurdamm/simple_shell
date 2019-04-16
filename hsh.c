@@ -100,7 +100,7 @@ void find_cmd(info_t *info)
 	char **paths, **_paths;
 	int found = 0;
 
-	_paths = paths = strtow(_getenv(info, "PATH="), ':');
+	_paths = paths = strtow(_getenv(info, "PATH="), ":");
 	info->path = info->argv[0];
 	if (paths)
 	{
