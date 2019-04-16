@@ -31,7 +31,7 @@ ssize_t input_buf(info_t *info, char **buf, size_t *len)
 				r--;
 			}
 			info->err_flag = 1;
-			append_history_list(info, *buf);
+//			build_history_list(info, *buf);
 			remove_comments(*buf);
 			if (_strchr(*buf, ';')) /* is this a command chain? */
 			{

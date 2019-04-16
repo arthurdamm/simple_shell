@@ -8,16 +8,17 @@
 
 void append_history(__attribute__((unused))info_t *info)
 {
-	char buffer[1024];
+	char buffer[512], *dir;
 	int line;
 
-//	print_info(info);
-// TODO	dir = _getenv(info, "HOME=");
-	_strcpy(buffer, "/home/vagrant/");
+	dir = _getenv(info, "HOME=");
+	_strcpy(buffer, dir);
+	_strcat(buffer, "/");
 	_strcat(buffer, ".simple_shell_history");
-	line = read_textfile(buffer, 1024) % 4096;
-	create_file(buffer, "Test history\n");
-	printf("lines = %d\n", line);
+	line = read_textfile(buffer) % 4096;
+	create_file(buffer, "123456789\n");
+	if (0)
+		printf("lines = %d\n", line);
 }
 
 /**
@@ -58,22 +59,20 @@ int create_file(const char *filename, char *text_content)
 /**
  * read_textfile - reads a text file and returns the number of lines in the file
  * @filename: the text file to be read
- * @letters: the number of letters to read
  * Return: On success, the number of letters that could be read and printed
  *         (0) if write fails or does not write the expected amount of bytes
  *         (0) if filename is NULL, or if file can not be opened or read
  */
 
-int read_textfile(const char *filename, size_t letters)
+int read_textfile(const char *filename)
 {
 	int i, linecount = 0;
-	ssize_t fd, rdlen;
+	ssize_t fd, rdlen, letters = 4096;
 	char *buf;
 
 	if (filename == NULL)
 		return (0);
-
-	buf = malloc(sizeof(char) * letters);
+	buf = malloc(sizeof(char) * (letters + 1));
 	if (!buf)
 		return (0);
 	fd = open(filename, O_RDONLY);
@@ -83,12 +82,19 @@ int read_textfile(const char *filename, size_t letters)
 		return (0);
 	}
 	rdlen = read(fd, buf, letters);
+	while (rdlen == letters)
+	{
+		buf = _realloc(buf, sizeof(char) * (letters + 1), sizeof(char) * (letters * 2 + 1));
+		letters *= 2;
+		rdlen = read(fd, buf, letters);
+	}
+//	printf("%zu letters read\n", rdlen);
+	buf[letters] = 0;
 	if (rdlen == -1)
 	{
 		free(buf);
 		return (0);
 	}
-
 	close(fd);
 	for (i = 0; buf[i]; i++)
 		if (buf[i] == '\n')
@@ -103,7 +109,7 @@ int read_textfile(const char *filename, size_t letters)
  *          constant function prototype.
  * Return: Always 0
  */
-int append_history_list(info_t *info, char *buf)
+int build_history_list(info_t *info, char *buf)
 {
 	list_t *node = NULL;
 

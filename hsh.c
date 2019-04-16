@@ -31,13 +31,10 @@ int hsh(char **av)
 		if (0)
 			write(STDOUT_FILENO, info->arg, _strlen(info->arg));
 	}
+//	append_history(info);
 	free_info(info, 1);
 	if (builtin_ret == -2)
-	{
-		append_history(info);
-		print_list(info->history);
 		exit(info->err_num);
-	}
 	return (builtin_ret);
 }
 

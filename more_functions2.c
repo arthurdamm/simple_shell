@@ -9,7 +9,7 @@
 int _erratoi(char *s)
 {
 	int i = 0;
-	unsigned int result = 0;
+	unsigned long int result = 0;
 
 	if (*s == '+')
 		s++;  /* TODO: why does this make main return 255? */
@@ -17,10 +17,10 @@ int _erratoi(char *s)
 	{
 		if (s[i] >= '0' && s[i] <= '9')
 		{
-			if (result > INT_MAX / 10)
-				return (-1);
 			result *= 10;
 			result += (s[i] - '0');
+			if (result > INT_MAX)
+				return (-1);
 		}
 		else
 			return (-1);

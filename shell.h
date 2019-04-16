@@ -185,7 +185,7 @@ int _setenv(info_t *, char *, char *);
 /* file_io_functions.c */
 void append_history(info_t *);
 int create_file(const char *, char *);
-int read_textfile(const char *, size_t);
-int append_history_list(info_t *, char *);
+int read_textfile(const char *);
+int build_history_list(info_t *, char *);
 
 #endif
