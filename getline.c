@@ -134,7 +134,7 @@ int _getline(char **ptr, size_t *length)
 		return (-1);
 
 	c = _strchr(buf + i, '\n');
-	k = c ? 1 + (unsigned int)(c - buf) : len - 1;
+	k = c ? 1 + (unsigned int)(c - buf) : len;
 	new_p = _realloc(p, s, s ? s + k : k + 1);
 	if (!new_p) /* MALLOC FAILURE! */
 		return (p ? free(p), -1 : -1);
