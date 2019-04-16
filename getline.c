@@ -23,19 +23,23 @@ ssize_t input_buf(info_t *info, char **buf, size_t *len)
 #else
 		r = _getline(buf, &len_p);
 #endif
-		if (r > 1 && (*buf)[r - 1] == '\n')
+		if (r > 0)
 		{
-			(*buf)[r - 1] = '\0'; /* remove trailing newline */
-			r--;
-		}
-		info->err_flag = 1;
-		/* Append history linked list here!!!!! */
-		remove_comments(*buf);
+			if ((*buf)[r - 1] == '\n')
+			{
+				(*buf)[r - 1] = '\0'; /* remove trailing newline */
+				r--;
+			}
 
-		if (r > 0 && _strchr(*buf, ';')) /* is this a command chain? */
-		{
-			*len = r;
-			info->cmd_buf = buf;
+			info->err_flag = 1;
+			/* Append history linked list here!!!!! */
+			remove_comments(*buf);
+			
+			if (_strchr(*buf, ';')) /* is this a command chain? */
+			{
+				*len = r;
+				info->cmd_buf = buf;
+			}
 		}
 	}
 	return (r);
