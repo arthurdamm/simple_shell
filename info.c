@@ -62,27 +62,3 @@ void free_info(info_t *info, int all)
 		_putchar(BUF_FLUSH);
 	}
 }
-
-/**
- * print_info - prints info_t struct
- * @info: struct address
- */
-void print_info(info_t *info)
-{
-	int i = 0;
-
-	printf("info->arg:[%s]\n", info->arg);
-	printf("info->argv:%s\n", info->argv ? "" : "[(null)]");
-	for (i = 0; info->argv && info->argv[i]; i++)
-		printf("\tinfo->argv[%d]:[%s]\n", i, info->argv[i]);
-	printf("info->path:[%s]\n", info->path);
-	printf("info->argc:[%d]\n", info->argc);
-	printf("info->line_count:[%d]\n", info->line_count);
-	printf("info->err_num:[%d]\n", info->err_num);
-	printf("info->fname:[%s]\n", info->fname);
-	printf("info->env:[%p]\n", (void *)info->env);
-	printf("info->cmd_buf:[%p]\n", (void *)info->cmd_buf);
-	printf("info->*cmd_buf:[%s]\n",
-	       info->cmd_buf ? *(info->cmd_buf) : "NONE");
-	printf("==========================\n");
-}

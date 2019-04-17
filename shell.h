@@ -178,7 +178,6 @@ int _getline(char **, size_t *);
 void clear_info(info_t *);
 void set_info(info_t *, char **);
 void free_info(info_t *, int);
-void print_info(info_t *);
 
 /* env.c module */
 char *_getenv(info_t *, const char *);
