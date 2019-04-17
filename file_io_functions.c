@@ -58,7 +58,7 @@ int create_file(const char *filename, char *text_content)
 }
 
 /**
- * read_textfile - reads a text file and returns the number of lines in the file
+ * read_textfile - reads text file and returns the number of lines in the file
  * @filename: the text file to be read
  * Return: On success, the number of letters that could be read and printed
  *         (0) if write fails or does not write the expected amount of bytes
@@ -103,8 +103,9 @@ int read_textfile(const char *filename)
 }
 
 /**
- * append_history_list - adds entry to a history linked list
+ * build_history_list - adds entry to a history linked list
  * @info: Structure containing potential arguments. Used to maintain
+ * @buf: buffer
  *          constant function prototype.
  * Return: Always 0
  */

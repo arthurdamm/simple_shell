@@ -111,10 +111,7 @@ void find_cmd(info_t *info)
 			info->linecount_flag = 0;
 		}
 		if (_getenv(info, "PATH=")[0] == ':' && is_cmd(info->argv[0]))
-		{
-			fork_cmd(info);
-			found++;
-		}
+			fork_cmd(info), found++;
 		else
 			for (; *paths; paths++)
 			{
