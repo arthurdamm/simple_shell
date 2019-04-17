@@ -87,7 +87,6 @@ int read_textfile(const char *filename)
 	if (!buf)
 		return (0);
 	rdlen = read(fd, buf, fsize);
-	/* printf("%zu letters read\n", rdlen); */
 	buf[fsize] = 0;
 	if (rdlen == -1)
 	{
