@@ -37,7 +37,11 @@ int hsh(char **av)
 	append_history(info);
 	free_info(info, 1);
 	if (builtin_ret == -2)
+	{
+		if (info->err_num == -1)
+			exit(info->status);
 		exit(info->err_num);
+	}
 	return (builtin_ret);
 }
 
@@ -98,7 +102,7 @@ void find_cmd(info_t *info)
 	if (!k)
 		return;
 
-	path = find_path(_getenv(info, "PATH="), info->argv[0]);
+	path = find_path(info, _getenv(info, "PATH="), info->argv[0]);
 	if (path)
 	{
 		info->path = path;
@@ -106,10 +110,13 @@ void find_cmd(info_t *info)
 	}
 	else
 	{
-		if (is_cmd(info->argv[0]))
+		if (is_cmd(info, info->argv[0]))
 			fork_cmd(info);
 		else if (*(info->arg) != '\n')
+		{
+			info->status = 127;
 			print_error(info, "not found\n");
+		}
 	}
 }
 
@@ -122,7 +129,6 @@ void find_cmd(info_t *info)
 void fork_cmd(info_t *info)
 {
 	pid_t child_pid;
-	int status = 0;
 
 	child_pid = fork();
 	if (child_pid == -1)
@@ -142,6 +148,6 @@ void fork_cmd(info_t *info)
 	}
 	else
 	{
-		wait(&status);
+		wait(&(info->status));
 	}
 }

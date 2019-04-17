@@ -6,14 +6,22 @@
  *
  * Return: 1 if true, 0 otherwise
  */
-int is_cmd(char *path)
+int is_cmd(info_t *info, char *path)
 {
 	struct stat st;
 
+	(void)info;
 	if (!path || stat(path, &st))
 		return (0);
 
-	return ((st.st_mode & S_IFREG) && !access(path, X_OK));
+	if (st.st_mode & S_IFREG)
+	{
+		if (!access(path, X_OK))
+		{
+			return (1);
+		}
+	}
+	return (0);
 }
 
 /**
@@ -43,7 +51,7 @@ char *dup_chars(char *pathstr, int start, int stop)
  *
  * Return: full path of cmd if found or NULL
  */
-char *find_path(char *pathstr, char *cmd)
+char *find_path(info_t *info, char *pathstr, char *cmd)
 {
 	int i = 0, curr_pos = 0;
 	char *path;
@@ -62,7 +70,7 @@ char *find_path(char *pathstr, char *cmd)
 				_strcat(path, "/");
 				_strcat(path, cmd);
 			}
-			if (is_cmd(path))
+			if (is_cmd(info, path))
 				return (path);
 			if (!pathstr[i])
 				break;

@@ -50,6 +50,7 @@ typedef struct liststr
  *@environ: custom modified copy of environ from LL env
  *@history: the history node
  *@env_changed: on if environ was changed
+ *@status: the return status of the last exec'd command
  *@cmd_buf: address of pointer to cmd_buf, on if chaining
  */
 typedef struct passinfo
@@ -66,12 +67,13 @@ typedef struct passinfo
 	list_t *history;
 	char **environ;
 	int env_changed;
+	int status;
 
 	char **cmd_buf; /* pointer to cmd ; chain buffer, for memory mangement */
 } info_t;
 
 #define INFO_INIT \
-{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, 0, NULL}
+{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, 0, 0, NULL}
 
 /**
  *struct builtin - contains a builtin string and related function
@@ -92,9 +94,9 @@ void find_cmd(info_t *);
 void fork_cmd(info_t *);
 
 /* path.c */
-int is_cmd(char *);
+int is_cmd(info_t *, char *);
 char *dup_chars(char *, int, int);
-char *find_path(char *, char *);
+char *find_path(info_t *, char *, char *);
 
 /* loophsh.c */
 int loophsh(char **);
