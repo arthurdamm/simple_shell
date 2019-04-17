@@ -84,10 +84,10 @@ void find_cmd(info_t *info)
 	char *path = NULL;
 
 	info->path = info->argv[0];
-	if (info->err_flag == 1)
+	if (info->linecount_flag == 1)
 	{
 		info->line_count++;
-		info->err_flag = 0;
+		info->linecount_flag = 0;
 	}
 	path = find_path(_getenv(info, "PATH="), info->argv[0]);
 	if (path)
