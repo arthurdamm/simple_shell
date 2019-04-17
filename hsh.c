@@ -28,6 +28,8 @@ int hsh(char **av)
 			if (builtin_ret == -1)
 				find_cmd(info);
 		}
+		else
+			_putchar('\n');
 		free_info(info, 0);
 		if (0)
 			write(STDOUT_FILENO, info->arg, _strlen(info->arg));
