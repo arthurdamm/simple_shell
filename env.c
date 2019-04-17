@@ -43,30 +43,10 @@ char *_getenv(info_t *info, const char *name)
  */
 int _mysetenv(info_t *info)
 {
-	char a;
-
-	if (info->argc == 1)
+	if (info->argc != 3)
 	{
-		_myenv(info);
-		return (0);
-	}
-	if (info->argc > 3)
-	{
-		_eputs("setenv: Too many arguements.\n");
-		return (1); /* ?? */
-	}
-	a = info->argv[1][0];
-	if (!_isalpha(a) && a != '_')
-	{
-		print_error(info, "");
-		print_d(_atoi(info->argv[1]));
-		_eputs(": bad variable name\n");
-		return (1); /* ?? */
-	}
-	if (info->argc == 2)
-	{
-		_setenv(info, info->argv[1], "");
-		return (0);
+		_eputs("Incorrect number of arguements\n");
+		return (1);
 	}
 	if (_setenv(info, info->argv[1], info->argv[2]))
 		return (0);
@@ -89,8 +69,8 @@ int _myunsetenv(info_t *info)
 		return (1);
 	}
 	for (i = 1; i <= info->argc; i++)
-		if (!_unsetenv(info, info->argv[i]))
-			return (1);
+		_unsetenv(info, info->argv[i]);
+
 	return (0);
 }
 
