@@ -13,7 +13,7 @@ int hsh(char **av)
 	info_t info[] = { INFO_INIT };
 
 	populate_env_list(info);
-	_setenv(info, "OLDPWD", _getenv(info, "HOME="));
+	/* _setenv(info, "OLDPWD", _getenv(info, "HOME=")); */
 	while (r != -1 && builtin_ret != -2)
 	{
 		clear_info(info);
