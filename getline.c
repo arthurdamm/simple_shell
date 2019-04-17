@@ -30,7 +30,7 @@ ssize_t input_buf(info_t *info, char **buf, size_t *len)
 				(*buf)[r - 1] = '\0'; /* remove trailing newline */
 				r--;
 			}
-			info->err_flag = 1;
+			info->linecount_flag = 1;
 			build_history_list(info, *buf);
 			remove_comments(*buf);
 			if (_strchr(*buf, ';')) /* is this a command chain? */
