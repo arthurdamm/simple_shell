@@ -9,5 +9,6 @@
  */
 int main(__attribute__((unused))int ac, char **av)
 {
-	return (hsh(av));
+	hsh(av);
+	return (0);
 }
