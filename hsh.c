@@ -133,7 +133,7 @@ void fork_cmd(info_t *info)
 	}
 	if (child_pid == 0)
 	{
-		if (execve(info->path, info->argv, get_environ(info)) == -1)
+		if (execve(info->path, info->argv, environ) == -1)
 		{
 			free_info(info, 1);
 			exit(1);
