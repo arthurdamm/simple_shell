@@ -45,6 +45,7 @@ extern char **environ;
 
 /**
  * struct liststr - singly linked list
+ * @num: the number field
  * @str: a string
  * @next: points to the next node
  */
@@ -64,9 +65,11 @@ typedef struct liststr
  *@argc: the argument count
  *@line_count: the error count
  *@err_num: the error code for exit()s
+ *@linecount_flag: if on count this line of input
  *@fname: the program filename
  *@env: linked list local copy of environ
  *@environ: custom modified copy of environ from LL env
+ *@history: the history node
  *@env_changed: on if environ was changed
  *@cmd_buf: address of pointer to cmd_buf, on if chaining
  */
