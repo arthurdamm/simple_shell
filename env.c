@@ -81,16 +81,17 @@ int _mysetenv(info_t *info)
  */
 int _myunsetenv(info_t *info)
 {
+	int i;
+
 	if (info->argc == 1)
 	{
 		_eputs("unsetenv: Too few arguements.\n");
 		return (1);
 	}
-	if (_unsetenv(info, info->argv[1]))
-	{
-		return (0);
-	}
-	return (1);
+	for (i = 1; i <= info->argc; i++)
+		if (!_unsetenv(info, info->argv[i]))
+			return (1);
+	return (0);
 }
 
 /**
