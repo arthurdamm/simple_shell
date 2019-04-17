@@ -11,24 +11,6 @@
 #include <limits.h>
 #include <fcntl.h>
 
-#define BLA "\033[30m"
-#define RED "\033[31m"
-#define GRE "\033[32m"
-#define YEL "\033[33m"
-#define BLU "\033[34m"
-#define MAG "\033[35m"
-#define CYA "\033[36m"
-#define RES "\033[37m"
-
-#define _RED "\033[41m"
-#define _GRE "\033[42m"
-#define _YEL "\033[43m"
-#define _BLU "\033[44m"
-#define _MAG "\033[45m"
-#define _CYA "\033[46m"
-#define _RES "\033[40m"
-
-
 #define READ_BUF_SIZE 1024
 #define WRITE_BUF_SIZE 1024
 #define BUF_FLUSH -1
@@ -36,9 +18,6 @@
 /* 1 if using system getline() */
 #define USE_GETLINE 0
 #define USE_STRTOK 0
-
-#define P (print_info(info))
-
 
 extern char **environ;
 
@@ -143,7 +122,6 @@ char *_strchr(char *, char);
 
 /* string_functions4.c */
 char **strtow(char *, char *);
-char **mystrtok(char *, char *);
 char **strtow2(char *, char);
 
 /* memory_functions */
@@ -212,7 +190,5 @@ void free_list(list_t **);
 size_t list_len(const list_t *);
 char **list_to_strings(list_t *);
 size_t print_list(const list_t *);
-
-void print_info(info_t *);
 
 #endif
