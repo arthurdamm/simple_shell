@@ -19,7 +19,7 @@ void append_history(__attribute__((unused))info_t *info)
 	line = read_textfile(buffer) % 4096;
 	create_file(buffer, "123456789\n");
 	if (0)
-		printf("lines = %d\n", line);
+		_putchar(line); /* debug */
 }
 
 /**
