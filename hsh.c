@@ -74,22 +74,6 @@ int find_builtin(info_t *info)
 }
 
 /**
- * is_cmd - determines if a file is an executable command
- * @path: path to the file
- *
- * Return: 1 if true, 0 otherwise
- */
-int is_cmd(char *path)
-{
-	struct stat st;
-
-	if (!path || stat(path, &st))
-		return (0);
-
-	return ((st.st_mode & S_IFREG) && !access(path, X_OK));
-}
-
-/**
  * find_cmd - finds a command in PATH
  * @info: the parameter & return info struct
  *
@@ -97,42 +81,21 @@ int is_cmd(char *path)
  */
 void find_cmd(info_t *info)
 {
-	static char path[1024];
-	char **paths, **_paths;
-	int found = 0;
+	char *path = NULL;
 
-	_paths = paths = strtow(_getenv(info, "PATH="), ":");
 	info->path = info->argv[0];
-	if (paths)
+	if (info->err_flag == 1)
 	{
-		if (info->err_flag == 1)
-		{
-			info->line_count++;
-			info->err_flag = 0;
-		}
-		if (_getenv(info, "PATH=")[0] == ':' && is_cmd(info->argv[0]))
-		{
-			fork_cmd(info);
-			found++;
-		}
-		else
-			for (; *paths; paths++)
-			{
-				path[0] = '\0';
-				_strcpy(path, *paths);
-				_strcat(path, "/");
-				_strcat(path, info->argv[0]);
-				if (is_cmd(path))
-				{
-					found++;
-					info->path = path;
-					fork_cmd(info);
-					break;
-				}
-			}
-		ffree(_paths);
+		info->line_count++;
+		info->err_flag = 0;
 	}
-	if (!found)
+	path = find_path(_getenv(info, "PATH="), info->argv[0]);
+	if (path)
+	{
+		info->path = path;
+		fork_cmd(info);
+	}
+	else
 	{
 		if (is_cmd(info->argv[0]))
 			fork_cmd(info);
