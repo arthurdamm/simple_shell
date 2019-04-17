@@ -133,18 +133,12 @@ void fork_cmd(info_t *info)
 	}
 	if (child_pid == 0)
 	{
-		int i = 0;
-		char **foo = get_environ(info);
-
-		for (; foo[i]; i++)
+		if (execve(info->path, info->argv, get_environ(info)) == -1)
 		{
-			write(1, foo[i], _strlen(foo[i]));
-			write(1, "\n", 1);
+			free_info(info, 1);
+			exit(1);
 		}
-
-		execve(info->path, info->argv, foo);
 		/* TODO: PUT ERROR FUNCTION */
-		exit(98);
 	}
 	else
 	{
