@@ -1,6 +1,4 @@
 #include "shell.h"
-#include "liststr.h"
-
 
 /**
  * list_len - determines length of linked list

@@ -1,7 +1,6 @@
 #ifndef SHELL_H
 #define SHELL_H
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -11,8 +10,6 @@
 #include <sys/stat.h>
 #include <limits.h>
 #include <fcntl.h>
-#include "liststr.h"
-
 
 #define BLA "\033[30m"
 #define RED "\033[31m"
@@ -45,6 +42,18 @@
 
 extern char **environ;
 
+
+/**
+ * struct liststr - singly linked list
+ * @str: a string
+ * @next: points to the next node
+ */
+typedef struct liststr
+{
+	int num;
+	char *str;
+	struct liststr *next;
+} list_t;
 
 /**
  *struct passinfo - contains pseudo-arguements to pass into a function,
@@ -188,5 +197,17 @@ void append_history(info_t *);
 int create_file(const char *, char *);
 int read_textfile(const char *);
 int build_history_list(info_t *, char *);
+
+/* liststr.c module */
+list_t *add_node(list_t **, const char *, int);
+list_t *add_node_end(list_t **, const char *, int);
+size_t print_list_str(const list_t *);
+int delete_node_at_index(list_t **, unsigned int);
+void free_list(list_t **);
+
+/* liststr2.c module */
+size_t list_len(const list_t *);
+char **list_to_strings(list_t *);
+size_t print_list(const list_t *);
 
 #endif

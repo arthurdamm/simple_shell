@@ -56,20 +56,20 @@ int print_d(info_t *info)
 {
 	int i, count = 0;
 	int input = info->line_count;
-	unsigned int abs, current;
+	unsigned int _abs_, current;
 
 	if (input < 0)
 	{
-		abs = -input;
+		_abs_ = -input;
 		_eputchar('-');
 		count++;
 	}
 	else
-		abs = input;
-	current = abs;
+		_abs_ = input;
+	current = _abs_;
 	for (i = 1000000000; i > 1; i /= 10)
 	{
-		if (abs / i)
+		if (_abs_ / i)
 		{
 			_eputchar('0' + current / i);
 			count++;
