@@ -28,6 +28,8 @@ int hsh(char **av)
 			if (builtin_ret == -1)
 				find_cmd(info);
 		}
+		else
+			_putchar('\n');
 		free_info(info, 0);
 		if (0)
 			write(STDOUT_FILENO, info->arg, _strlen(info->arg));
@@ -131,7 +133,16 @@ void fork_cmd(info_t *info)
 	}
 	if (child_pid == 0)
 	{
-		execve(info->path, info->argv, get_environ(info));
+		int i = 0;
+		char **foo = get_environ(info);
+
+		for (; foo[i]; i++)
+		{
+			write(1, foo[i], _strlen(foo[i]));
+			write(1, "\n", 1);
+		}
+
+		execve(info->path, info->argv, foo);
 		/* TODO: PUT ERROR FUNCTION */
 		exit(98);
 	}
