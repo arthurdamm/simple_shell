@@ -115,13 +115,11 @@ int _eputchar(char);
 /* string_functions.c */
 int _strlen(char *);
 int _strcmp(char *, char *);
-char *_strstr(char *, char *);
 char *starts_with(const char *, const char *);
 char *_strcat(char *, char *);
 
 /* string_functions2.c */
 char *_strcpy(char *, char *);
-char *str_concat(char *, char *);
 char *_strdup(const char *);
 void _puts(char *);
 int _putchar(char);
@@ -130,8 +128,6 @@ int _putchar(char);
 char *_strncpy(char *, char *, int);
 char *_strncat(char *, char *, int);
 char *_strchr(char *, char);
-unsigned int _strspn(char *, char *);
-char *_strpbrk(char *, char *);
 
 /* string_functions4.c */
 char **strtow(char *, char *);
@@ -139,9 +135,7 @@ char **mystrtok(char *, char *);
 char **strtow2(char *, char);
 
 /* memory_functions */
-void *_calloc(unsigned int, unsigned int);
 char *_memset(char *, char, unsigned int);
-char *_memcpy(char *, char *, unsigned int);
 void ffree(char **);
 void *_realloc(void *, unsigned int, unsigned int);
 
@@ -149,8 +143,6 @@ void *_realloc(void *, unsigned int, unsigned int);
 int bfree(void **);
 
 /* more_functions.c */
-int _isalpha(int);
-int _atoi(char *);
 int interactive(void);
 int is_delim(char, char *);
 

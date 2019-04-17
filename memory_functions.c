@@ -1,28 +1,6 @@
 #include "shell.h"
 
 /**
- * _calloc - allocates memory for an array, initialized to 0
- * @nmemb: number of elements
- * @size: byte size of each element
- *
- * Return: void pointer to array space
- */
-void *_calloc(unsigned int nmemb, unsigned int size)
-{
-	char *p;
-
-	if (!nmemb || !size)
-		return (NULL);
-	p = malloc(nmemb * size);
-	if (!p)
-		return (NULL);
-	nmemb *= size;
-	while (nmemb--)
-		p[nmemb] = 0;
-	return (p);
-}
-
-/**
  **_memset - fills memory with a constant byte
  *@s: the pointer to the memory area
  *@b: the byte to fill *s with
@@ -36,22 +14,6 @@ char *_memset(char *s, char b, unsigned int n)
 	for (i = 0; i < n; i++)
 		s[i] = b;
 	return (s);
-}
-
-/**
- **_memcpy - copies memory area
- *@dest: the memory area to be copied to
- *@src: the memory area to be copied
- *@n: the amount of bytes to be filled
- *Return: (dest) a pointer to the memory area dest
- */
-char *_memcpy(char *dest, char *src, unsigned int n)
-{
-	unsigned int i;
-
-	for (i = 0; i < n; i++)
-		dest[i] = src[i];
-	return (dest);
 }
 
 /**
