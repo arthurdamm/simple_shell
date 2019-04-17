@@ -133,9 +133,12 @@ void fork_cmd(info_t *info)
 	}
 	if (child_pid == 0)
 	{
-		execve(info->path, info->argv, get_environ(info));
+		if (execve(info->path, info->argv, get_environ(info)) == -1)
+		{
+			free_info(info, 1);
+			exit(1);
+		}
 		/* TODO: PUT ERROR FUNCTION */
-		exit(98);
 	}
 	else
 	{
