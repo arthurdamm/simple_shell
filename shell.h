@@ -79,7 +79,8 @@ typedef struct passinfo
 	char **cmd_buf; /* pointer to cmd ; chain buffer, for memory mangement */
 } info_t;
 
-#define INFO_INIT {NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, 0, NULL}
+#define INFO_INIT \
+{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, 0, NULL}
 
 /**
  *struct builtin - contains a builtin string and related function
@@ -96,9 +97,13 @@ typedef struct builtin
 /* hsh.c */
 int hsh(char **);
 int find_builtin(info_t *);
-int is_cmd(char *path);
 void find_cmd(info_t *);
 void fork_cmd(info_t *);
+
+/* path.c */
+int is_cmd(char *);
+char *dup_chars(char *, int, int);
+char *find_path(char *, char *);
 
 /* loophsh.c */
 int loophsh(char **);
@@ -147,7 +152,7 @@ int bfree(void **);
 int _isalpha(int);
 int _atoi(char *);
 int interactive(void);
-int is_delim(char , char *);
+int is_delim(char, char *);
 
 /* more_functions2.c */
 int _erratoi(char *);
