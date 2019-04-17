@@ -39,7 +39,7 @@ void print_error(info_t *info, char *estr)
 {
 	_eputs(info->fname);
 	_eputs(": ");
-	print_d(info);
+	print_d(info->line_count);
 	_eputs(": ");
 	_eputs(info->argv[0]);
 	_eputs(": ");
@@ -52,10 +52,9 @@ void print_error(info_t *info, char *estr)
  *
  * Return: number of characters printed
  */
-int print_d(info_t *info)
+int print_d(int input)
 {
 	int i, count = 0;
-	int input = info->line_count;
 	unsigned int _abs_, current;
 
 	if (input < 0)

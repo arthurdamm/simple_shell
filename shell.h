@@ -137,11 +137,13 @@ int bfree(void **);
 /* more_functions.c */
 int interactive(void);
 int is_delim(char, char *);
+int _isalpha(int);
+int _atoi(char *);
 
 /* more_functions2.c */
 int _erratoi(char *);
 void print_error(info_t *, char *);
-int print_d(info_t *);
+int print_d(int);
 void remove_comments(char *);
 int write_history(info_t *);
 

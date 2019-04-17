@@ -43,15 +43,33 @@ char *_getenv(info_t *info, const char *name)
  */
 int _mysetenv(info_t *info)
 {
-	if (info->argc != 3)
-		return (_puts("Usage: setenv VARIABLE VALUE\n"), 1);
+	char a;
 
-	if (_setenv(info, info->argv[1], info->argv[2]))
+	if (info->argc == 1)
 	{
-		_puts("Setting: ");
-		_puts(info->argv[1]);
+		_myenv(info);
 		return (0);
 	}
+	if (info->argc > 3)
+	{
+		_eputs("setenv: Too many arguements.\n");
+		return (1); /* ?? */
+	}
+	a = info->argv[1][0];
+	if (!_isalpha(a) && a != '_')
+	{
+		print_error(info, "");
+		print_d(_atoi(info->argv[1]));
+		_eputs(": bad variable name\n");
+		return (1); /* ?? */
+	}
+	if (info->argc == 2)
+	{
+		_setenv(info, info->argv[1], "");
+		return (0);
+	}
+	if (_setenv(info, info->argv[1], info->argv[2]))
+		return (0);
 	return (1);
 }
 
@@ -63,16 +81,16 @@ int _mysetenv(info_t *info)
  */
 int _myunsetenv(info_t *info)
 {
-	if (info->argc != 2)
-		return (_puts("Usage: unsetenv VARIABLE\n"), 1);
-
+	if (info->argc == 1)
+	{
+		_eputs("unsetenv: Too few arguements.\n");
+		return (1);
+	}
 	if (_unsetenv(info, info->argv[1]))
 	{
-		_puts("Unsetting: ");
-		_puts(info->argv[1]);
-		_puts("\n");
+		return (0);
 	}
-	return (0);
+	return (1);
 }
 
 /**
