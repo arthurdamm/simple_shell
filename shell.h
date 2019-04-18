@@ -159,6 +159,7 @@ int _myalias(info_t *);
 /* getline.c module */
 ssize_t get_input(info_t *);
 int _getline(char **, size_t *);
+void sigintHandler(int);
 
 /* info.c module */
 void clear_info(info_t *);

@@ -18,6 +18,7 @@ ssize_t input_buf(info_t *info, char **buf, size_t *len)
 		/*bfree((void **)info->cmd_buf);*/
 		free(*buf);
 		*buf = NULL;
+		signal(SIGINT, sigintHandler);
 #if USE_GETLINE
 		r = getline(buf, &len_p, stdin);
 #else
@@ -151,4 +152,11 @@ int _getline(char **ptr, size_t *length)
 		*length = s;
 	*ptr = p;
 	return (s);
+}
+
+void sigintHandler( __attribute__((unused))int sig_num)
+{
+	_puts("\n");
+	_puts("$ ");
+	_putchar(BUF_FLUSH);
 }
