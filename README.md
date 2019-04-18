@@ -8,7 +8,7 @@ Clone this repository to your local system and compile using `gcc -Wall -Werror 
 * Function returns with the specified exit status.
 
 ### Features
-The shell handles command line input, including arguements, without the use of most standard library functions such as `printf` or `getline`. In addition to running executables in the PATH, the following features are currently implemented.
+The shell handles command line input, including arguements, without the use of most standard library functions such as `printf`, `strtok`, or `getline`. In addition to running executables in the PATH, the following features are currently implemented.
 
 |  Builtin Commands  |    Functionality                            |
 | ------------------ | ------------------------------------------- |
@@ -36,4 +36,4 @@ The shell handles command line input, including arguements, without the use of m
 ### About
 All files were created and compiled on `Ubuntu 14.04.4 LTS` using `GCC 4.8.4` with the following flags: `-Wall -Werror -Wextra -pedantic`
 ### Authors
-Jason Cortella [Github](https://github.com/jasoncortella) - [Twitter](https://twitter.com/JasonCortella) \|\| Arthur Damm [Github](https://github.com/arthurdamm) - [Twitter](https://twitter.com/arthurdamm)
+Jason Cortella [Github](https://github.com/jasoncortella) - [Twitter](https://twitter.com/JasonCortella) & Arthur Damm [Github](https://github.com/arthurdamm) - [Twitter](https://twitter.com/arthurdamm)
