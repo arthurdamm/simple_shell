@@ -146,6 +146,7 @@ void fork_cmd(info_t *info)
 			free_info(info, 1);
 			if (errno == EACCES)
 				exit(126);
+			exit(1);
 		}
 		/* TODO: PUT ERROR FUNCTION */
 	}
