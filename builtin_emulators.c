@@ -54,6 +54,8 @@ int _mycd(info_t *info)
 	}
 	else if (_strcmp(info->argv[1], "-") == 0)
 	{
+		if (!_getenv(info, "OLDPWD="))
+			return (1);
 		_puts(_getenv(info, "OLDPWD="));
 		_putchar('\n');
 		chdir_ret = /* TODO: what should this be? */
