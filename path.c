@@ -17,10 +17,7 @@ int is_cmd(info_t *info, char *path)
 
 	if (st.st_mode & S_IFREG)
 	{
-		if (!access(path, X_OK))
-		{
-			return (1);
-		}
+		return (1);
 	}
 	return (0);
 }
