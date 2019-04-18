@@ -48,7 +48,7 @@ void print_error(info_t *info, char *estr)
 
 /**
  * print_d - function prints a decimal (integer) number (base 10)
- * @info: the parameter & return info struct
+ * @input: the input
  *
  * Return: number of characters printed
  */

@@ -36,6 +36,8 @@ int hsh(char **av)
 	}
 	append_history(info);
 	free_info(info, 1);
+	if (!interactive() && info->status)
+		exit(info->status);
 	if (builtin_ret == -2)
 	{
 		if (info->err_num == -1)
