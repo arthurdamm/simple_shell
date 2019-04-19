@@ -2,18 +2,16 @@
 
 /**
  * hsh - main shell loop
+ * @info: the parameter & return info struct
  * @av: the argument vector from main()
  *
  * Return: 0 on success, 1 on error, or error code
  */
-int hsh(char **av)
+int hsh(info_t *info, char **av)
 {
 	ssize_t r = 0;
 	int builtin_ret = 0;
-	info_t info[] = { INFO_INIT };
 
-	populate_env_list(info);
-	/* _setenv(info, "OLDPWD", _getenv(info, "HOME=")); */
 	while (r != -1 && builtin_ret != -2)
 	{
 		clear_info(info);

@@ -9,6 +9,9 @@
  */
 int main(__attribute__((unused))int ac, char **av)
 {
-	hsh(av);
+	info_t info[] = { INFO_INIT };
+
+	populate_env_list(info);
+	hsh(info, av);
 	return (0);
 }
