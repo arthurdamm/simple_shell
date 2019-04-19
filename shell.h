@@ -16,6 +16,10 @@
 #define WRITE_BUF_SIZE 1024
 #define BUF_FLUSH -1
 
+#define CMD_OR		0
+#define CMD_AND		1
+#define CMD_CHAIN	2
+
 /* 1 if using system getline() */
 #define USE_GETLINE 0
 #define USE_STRTOK 0
@@ -72,11 +76,12 @@ typedef struct passinfo
 	int status;
 
 	char **cmd_buf; /* pointer to cmd ; chain buffer, for memory mangement */
+	int cmd_buf_type; /* CMD_type ||, &&, ; */
 	int readfd;
 } info_t;
 
 #define INFO_INIT \
-{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, 0, 0, NULL, 0}
+{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, 0, 0, NULL, 0, 0}
 
 /**
  *struct builtin - contains a builtin string and related function

@@ -34,7 +34,7 @@ ssize_t input_buf(info_t *info, char **buf, size_t *len)
 			info->linecount_flag = 1;
 			remove_comments(*buf);
 			build_history_list(info, *buf);
-			if (_strchr(*buf, ';')) /* is this a command chain? */
+			/* if (_strchr(*buf, ';')) is this a command chain? */
 			{
 				*len = r;
 				info->cmd_buf = buf;
@@ -69,9 +69,24 @@ ssize_t get_input(info_t *info)
 
 		while (j < len) /* iterate to semicolon or end */
 		{
+			if (buf[j] == '|' && buf[j + 1] == '|')
+			{
+				j++;
+				buf[j] = 0;
+				info->cmd_buf_type = CMD_OR;
+				break;
+			}
+			if (buf[j] == '&' && buf[j + 1] == '&')
+			{
+				j++;
+				buf[j] = 0;
+				info->cmd_buf_type = CMD_AND;
+				break;
+			}
 			if (buf[j] == ';') /* found end of this command */
 			{
 				buf[j] = 0; /* replace semicolon with null */
+				info->cmd_buf_type = CMD_CHAIN;
 				break;
 			}
 			j++;
