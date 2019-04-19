@@ -14,8 +14,6 @@ int main(int ac, char **av)
 
 	if (interactive(info) && (ac == 2))
 	{
-		info->arg = av[0];
-		set_info(info, av);
 		fd = open(av[1], O_RDONLY);
 		if (fd == -1)
 		{
