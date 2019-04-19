@@ -53,6 +53,7 @@ typedef struct liststr
  *@env_changed: on if environ was changed
  *@status: the return status of the last exec'd command
  *@cmd_buf: address of pointer to cmd_buf, on if chaining
+ *@readfd: the fd from which to read line input
  */
 typedef struct passinfo
 {
@@ -71,10 +72,11 @@ typedef struct passinfo
 	int status;
 
 	char **cmd_buf; /* pointer to cmd ; chain buffer, for memory mangement */
+	int readfd;
 } info_t;
 
 #define INFO_INIT \
-{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, 0, 0, NULL}
+{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, 0, 0, NULL, 0}
 
 /**
  *struct builtin - contains a builtin string and related function
@@ -159,7 +161,7 @@ int _myalias(info_t *);
 
 /* getline.c module */
 ssize_t get_input(info_t *);
-int _getline(char **, size_t *);
+int _getline(info_t *, char **, size_t *);
 void sigintHandler(int);
 
 /* info.c module */
