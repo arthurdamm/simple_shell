@@ -16,9 +16,10 @@
 #define WRITE_BUF_SIZE 1024
 #define BUF_FLUSH -1
 
-#define CMD_OR		0
-#define CMD_AND		1
-#define CMD_CHAIN	2
+#define CMD_NORM	0
+#define CMD_OR		1
+#define CMD_AND		2
+#define CMD_CHAIN	3
 
 /* 1 if using system getline() */
 #define USE_GETLINE 0

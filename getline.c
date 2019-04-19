@@ -67,19 +67,36 @@ ssize_t get_input(info_t *info)
 		j = i; /* init new iterator to current buf position */
 		p = buf + i; /* get pointer for return */
 
+		if (info->cmd_buf_type == CMD_AND)
+		{
+			if (info->status)
+			{
+				buf[i] = 0;
+				j = len - 1;
+			}
+		}
+		if (info->cmd_buf_type == CMD_OR)
+		{
+			if (!info->status)
+			{
+				buf[i] = 0;
+				j = len - 1;
+			}
+		}
+
 		while (j < len) /* iterate to semicolon or end */
 		{
 			if (buf[j] == '|' && buf[j + 1] == '|')
 			{
-				j++;
 				buf[j] = 0;
+				j++;
 				info->cmd_buf_type = CMD_OR;
 				break;
 			}
 			if (buf[j] == '&' && buf[j + 1] == '&')
 			{
-				j++;
 				buf[j] = 0;
+				j++;
 				info->cmd_buf_type = CMD_AND;
 				break;
 			}
@@ -94,7 +111,10 @@ ssize_t get_input(info_t *info)
 
 		i = j + 1; /* increment past nulled ';'' */
 		if (i >= len) /* reached end of buffer? */
+		{
 			i = len = 0; /* reset position and length */
+			info->cmd_buf_type = CMD_NORM;
+		}
 
 		*buf_p = p; /* pass back pointer to current command position */
 		return (_strlen(p)); /* return length of current command */
