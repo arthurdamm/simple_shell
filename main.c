@@ -12,7 +12,7 @@ int main(int ac, char **av)
 	info_t info[] = { INFO_INIT };
 	int fd;
 
-	if (interactive(info) && (ac == 2))
+	if (ac == 2)
 	{
 		fd = open(av[1], O_RDONLY);
 		if (fd == -1)
