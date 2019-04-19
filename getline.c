@@ -55,8 +55,7 @@ ssize_t get_input(info_t *info)
 	static char *buf; /* the ';' command chain buffer */
 	static size_t i, j, len;
 	ssize_t r = 0;
-	char **buf_p = &(info->arg);
-	char *p;
+	char **buf_p = &(info->arg), *p;
 
 	_putchar(BUF_FLUSH);
 	r = input_buf(info, &buf, &len);
@@ -67,45 +66,11 @@ ssize_t get_input(info_t *info)
 		j = i; /* init new iterator to current buf position */
 		p = buf + i; /* get pointer for return */
 
-		if (info->cmd_buf_type == CMD_AND)
-		{
-			if (info->status)
-			{
-				buf[i] = 0;
-				j = len - 1;
-			}
-		}
-		if (info->cmd_buf_type == CMD_OR)
-		{
-			if (!info->status)
-			{
-				buf[i] = 0;
-				j = len - 1;
-			}
-		}
-
+		check_chain(info, buf, &j, i, len);
 		while (j < len) /* iterate to semicolon or end */
 		{
-			if (buf[j] == '|' && buf[j + 1] == '|')
-			{
-				buf[j] = 0;
-				j++;
-				info->cmd_buf_type = CMD_OR;
+			if (is_chain(info, buf, &j))
 				break;
-			}
-			if (buf[j] == '&' && buf[j + 1] == '&')
-			{
-				buf[j] = 0;
-				j++;
-				info->cmd_buf_type = CMD_AND;
-				break;
-			}
-			if (buf[j] == ';') /* found end of this command */
-			{
-				buf[j] = 0; /* replace semicolon with null */
-				info->cmd_buf_type = CMD_CHAIN;
-				break;
-			}
 			j++;
 		}
 
