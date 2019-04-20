@@ -31,6 +31,8 @@
 #define USE_GETLINE 0
 #define USE_STRTOK 0
 
+#define HIST_FILE	".simple_shell_history"
+
 extern char **environ;
 
 
@@ -67,6 +69,7 @@ typedef struct liststr
  *@cmd_buf: address of pointer to cmd_buf, on if chaining
  *@cmd_buf_type: CMD_type ||, &&, ;
  *@readfd: the fd from which to read line input
+ *@histcount: the history line number count
  */
 typedef struct passinfo
 {
@@ -88,10 +91,11 @@ typedef struct passinfo
 	char **cmd_buf; /* pointer to cmd ; chain buffer, for memory mangement */
 	int cmd_buf_type; /* CMD_type ||, &&, ; */
 	int readfd;
+	int histcount;
 } info_t;
 
 #define INFO_INIT \
-{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, 0, 0}
+{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, 0, 0, 0}
 
 /**
  *struct builtin - contains a builtin string and related function
@@ -197,10 +201,11 @@ int _unsetenv(info_t *, char *);
 int _setenv(info_t *, char *, char *);
 
 /* file_io_functions.c */
-void append_history(info_t *);
-int create_file(const char *, char *);
-int read_textfile(const char *);
-int build_history_list(info_t *, char *);
+char *get_history_file(info_t *info);
+int write_history(info_t *info);
+int read_history(info_t *info);
+int build_history_list(info_t *info, char *buf, int linecount);
+
 
 /* liststr.c module */
 list_t *add_node(list_t **, const char *, int);

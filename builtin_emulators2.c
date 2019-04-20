@@ -9,12 +9,7 @@
  */
 int _myhistory(info_t *info)
 {
-	char **arg_array;
-
-	arg_array = info->argv;
-	_puts("history call works. Function not yet implemented \n");
-	if (0)
-		_puts(*arg_array);  /* temp att_unused workaround */
+	print_list(info->history);
 	return (0);
 }
 
