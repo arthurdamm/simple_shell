@@ -25,59 +25,40 @@ char *get_history_file(info_t *info)
 }
 
 /**
- * create_file - creates a file, or appends to an existing file
- * @filename: the name of the file to create
- * @text_content: a NULL terminated string to wtire to the file
- * Return: (1) On success, the number of letters that could be read and printed
- *        (-1) On failure (file can not be created, file can not be written,
- *             write “fails”, etc…)
- *        (-1) if filename is NULL
+ * write_history - creates a file, or appends to an existing file
+ * @info: the parameter struct
+ *
+ * Return: 1 on success, else -1
  */
-
 int write_history(info_t *info)
 {
-	ssize_t fd, wrlen = -1;
-	int i = 0, j = 0;
-	char *filename = get_history_file(info), buf[WRITE_BUF_SIZE];
+	ssize_t fd;
+	char *filename = get_history_file(info);
 	list_t *node = NULL;
 
 	if (!filename)
 		return (-1);
 
-	fd = open(filename, O_CREAT | O_WRONLY, 0600);
+	fd = open(filename, O_CREAT | O_TRUNC | O_RDWR, 0644);
 	free(filename);
 	if (fd == -1)
 		return (-1);
-	buf[0] = 0;
-	for (i = 0, node = info->history; node; node = node->next)
+	for (node = info->history; node; node = node->next)
 	{
-		if (i + _strlen(node->str) + 1 > WRITE_BUF_SIZE)
-		{
-			wrlen = write(fd, buf, i);
-			buf[i = 0] = 0;
-		}
-
-		for (j = 0; node->str[j]; i++, j++)
-			buf[i] = node->str[j];
-		buf[i++] = '\n';
+		_putsfd(node->str, fd);
+		_putfd('\n', fd);
 	}
-	if (i)
-		wrlen = write(fd, buf, i);
+	_putfd(BUF_FLUSH, fd);
 	close(fd);
-	if (wrlen == -1)
-		return (-1);
-
 	return (1);
 }
 
 /**
- * read_textfile - reads text file and returns the number of lines in the file
- * @filename: the text file to be read
- * Return: On success, the number of letters that could be read and printed
- *         (0) if write fails or does not write the expected amount of bytes
- *         (0) if filename is NULL, or if file can not be opened or read
+ * read_history - reads history from file
+ * @info: the parameter struct
+ *
+ * Return: histcount on success, 0 otherwise
  */
-
 int read_history(info_t *info)
 {
 	int i, last = 0, linecount = 0;
@@ -115,16 +96,18 @@ int read_history(info_t *info)
 		build_history_list(info, buf + last, linecount++);
 	free(buf);
 	info->histcount = linecount;
-	while (linecount-- >= 4096)
-		delete_node_at_index(&info->history, 0);
-	return (linecount);
+	while (info->histcount-- >= HIST_MAX)
+		delete_node_at_index(&(info->history), 0);
+	renumber_history(info);
+	return (info->histcount);
 }
 
 /**
  * build_history_list - adds entry to a history linked list
  * @info: Structure containing potential arguments. Used to maintain
  * @buf: buffer
- *          constant function prototype.
+ * @linecount: the history linecount, histcount
+ *
  * Return: Always 0
  */
 int build_history_list(info_t *info, char *buf, int linecount)
@@ -138,4 +121,23 @@ int build_history_list(info_t *info, char *buf, int linecount)
 	if (!info->history)
 		info->history = node;
 	return (0);
+}
+
+/**
+ * renumber_history - renumbers the history linked list after changes
+ * @info: Structure containing potential arguments. Used to maintain
+ *
+ * Return: the new histcount
+ */
+int renumber_history(info_t *info)
+{
+	list_t *node = info->history;
+	int i = 0;
+
+	while (node)
+	{
+		node->num = i++;
+		node = node->next;
+	}
+	return (info->histcount = i);
 }

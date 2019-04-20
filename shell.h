@@ -32,6 +32,7 @@
 #define USE_STRTOK 0
 
 #define HIST_FILE	".simple_shell_history"
+#define HIST_MAX	10
 
 extern char **environ;
 
@@ -95,7 +96,8 @@ typedef struct passinfo
 } info_t;
 
 #define INFO_INIT \
-{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, 0, 0, 0}
+{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
+	0, 0, 0}
 
 /**
  *struct builtin - contains a builtin string and related function
@@ -126,6 +128,8 @@ int loophsh(char **);
 /* err_string_functions.c */
 void _eputs(char *);
 int _eputchar(char);
+int _putfd(char c, int fd);
+int _putsfd(char *str, int fd);
 
 /* string_functions.c */
 int _strlen(char *);
@@ -205,7 +209,7 @@ char *get_history_file(info_t *info);
 int write_history(info_t *info);
 int read_history(info_t *info);
 int build_history_list(info_t *info, char *buf, int linecount);
-
+int renumber_history(info_t *info);
 
 /* liststr.c module */
 list_t *add_node(list_t **, const char *, int);
