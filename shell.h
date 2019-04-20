@@ -12,14 +12,20 @@
 #include <fcntl.h>
 #include <errno.h>
 
+/* for read/write buffers */
 #define READ_BUF_SIZE 1024
 #define WRITE_BUF_SIZE 1024
 #define BUF_FLUSH -1
 
+/* for command chaining */
 #define CMD_NORM	0
 #define CMD_OR		1
 #define CMD_AND		2
 #define CMD_CHAIN	3
+
+/* for convert_number() */
+#define CONVERT_LOWERCASE	1
+#define CONVERT_UNSIGNED	2
 
 /* 1 if using system getline() */
 #define USE_GETLINE 0
@@ -155,9 +161,9 @@ int _atoi(char *);
 /* more_functions2.c */
 int _erratoi(char *);
 void print_error(info_t *, char *);
-int print_d(int);
+int print_d(int, int);
+char *convert_number(long int, int, int);
 void remove_comments(char *);
-int write_history(info_t *);
 
 /* builtin_emulators.c */
 int _myexit(info_t *);
@@ -213,6 +219,8 @@ ssize_t get_node_index(list_t *, list_t *);
 /* chain.c */
 int is_chain(info_t *, char *, size_t *);
 void check_chain(info_t *, char *, size_t *, size_t, size_t);
-int replace_alias(info_t *info);
+int replace_alias(info_t *);
+int replace_vars(info_t *);
+int replace_string(char **, char *);
 
 #endif
